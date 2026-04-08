@@ -2,71 +2,125 @@
 <html lang="he">
 <head>
   <meta charset="UTF-8">
-  <title>Idan Ohana</title>
+  <title>Idan Ohana | IT Infrastructure</title>
 
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      direction: rtl;
-      background: #f4f4f4;
-      text-align: center;
+      background: #0f172a;
+      color: white;
     }
 
-    .container {
-      margin-top: 100px;
-      background: white;
-      padding: 40px;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    nav {
+      background: #020617;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: #cbd5f5;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    nav button:hover {
+      color: white;
+    }
+
+    .content {
+      display: none;
+      padding: 50px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .active {
+      display: block;
     }
 
     h1 {
-      margin-bottom: 10px;
+      color: #38bdf8;
     }
 
-    p {
-      font-size: 18px;
-      line-height: 1.6;
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
     }
 
-    .footer {
-      margin-top: 30px;
-      font-size: 14px;
-      color: gray;
+    .highlight {
+      color: #38bdf8;
+      font-weight: bold;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
-    <h1>היי, אני אידן 👋</h1>
+<nav>
+  <button onclick="showTab('home')">Home</button>
+  <button onclick="showTab('about')">About</button>
+  <button onclick="showTab('lab')">Lab</button>
+</nav>
 
+<div id="home" class="content active">
+  <h1>Idan Ohana</h1>
+  <p class="highlight">IT Infrastructure | Active Directory | Virtualization</p>
+
+  <div class="card">
     <p>
-      בן 34, נשוי ואבא לשני ילדים.
+      מתמחה בתכנון, הקמה וניהול של תשתיות ארגוניות,
+      כולל Active Directory, סביבות וירטואליות ופתרונות רשת.
     </p>
-
-    <p>
-      עובד בחברת מובילאיי בתחום ה-IT, עם ניסיון בתמיכה טכנית, מערכות ופתרון בעיות.
-    </p>
-
-    <p>
-      אוהב ללמוד דברים חדשים, להתפתח ולבנות פרויקטים באונליין.
-    </p>
-
-    <p>
-      זה הבלוג האישי שלי — כאן אשתף מחשבות, טיפים וניסיון מהדרך שלי.
-    </p>
-
-    <div class="footer">
-      © 2026 Idan Ohana
-    </div>
   </div>
+</div>
+
+<div id="about" class="content">
+  <h1>About</h1>
+
+  <div class="card">
+    <p>
+      איש IT עם התמחות בתשתיות מערכות וניהול סביבות ארגוניות.
+      בעל ניסיון מעשי בעבודה עם Active Directory, DNS, DHCP וסביבות וירטואליות.
+    </p>
+  </div>
+</div>
+
+<div id="lab" class="content">
+  <h1>Enterprise Lab</h1>
+
+  <div class="card">
+    <p>
+      סביבת עבודה המדמה תשתית ארגונית מלאה הכוללת Domain Controller,
+      תחנות קצה ושירותי רשת מרכזיים.
+    </p>
+  </div>
+
+  <div class="card">
+    <p>
+      הסביבה מאפשרת בדיקות תצורה, פתרון תקלות ויישום Best Practices
+      בסביבת Enterprise אמיתית.
+    </p>
+  </div>
+</div>
+
+<script>
+  function showTab(tabId) {
+    let tabs = document.querySelectorAll('.content');
+    tabs.forEach(tab => tab.classList.remove('active'));
+
+    document.getElementById(tabId).classList.add('active');
+  }
+</script>
 
 </body>
 </html>
