@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="he">
 <head>
@@ -27,7 +28,6 @@
       color: #cbd5f5;
       font-size: 16px;
       cursor: pointer;
-      transition: 0.3s;
     }
 
     nav button:hover {
@@ -37,7 +37,7 @@
     .content {
       display: none;
       padding: 50px;
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
     }
 
@@ -72,44 +72,86 @@
   <button onclick="showTab('lab')">Lab</button>
 </nav>
 
+<!-- HOME -->
 <div id="home" class="content active">
   <h1>Idan Ohana</h1>
   <p class="highlight">IT Infrastructure | Active Directory | Virtualization</p>
 
   <div class="card">
     <p>
-      מתמחה בתכנון, הקמה וניהול של תשתיות ארגוניות,
-      כולל Active Directory, סביבות וירטואליות ופתרונות רשת.
+      מתמחה בתכנון, הקמה וניהול של תשתיות ארגוניות, כולל Active Directory,
+      סביבות וירטואליות וניהול רשתות.
+    </p>
+  </div>
+
+  <div class="card">
+    <p>
+      בעל ניסיון מעשי בהקמה של סביבות Domain מלאות, פתרון תקלות רשת
+      ועבודה עם מערכות קריטיות בארגון.
     </p>
   </div>
 </div>
 
+<!-- ABOUT -->
 <div id="about" class="content">
   <h1>About</h1>
 
   <div class="card">
     <p>
-      איש IT עם התמחות בתשתיות מערכות וניהול סביבות ארגוניות.
-      בעל ניסיון מעשי בעבודה עם Active Directory, DNS, DHCP וסביבות וירטואליות.
+      איש IT המתמחה בתשתיות מערכות וניהול סביבות ארגוניות.
+      עובד עם Active Directory, DNS, DHCP וסביבות וירטואליות.
+    </p>
+  </div>
+
+  <div class="card">
+    <p>
+      מתמקד בבנייה ותחזוקה של מערכות יציבות, פתרון תקלות בזמן אמת
+      ויישום Best Practices בעולם התשתיות.
     </p>
   </div>
 </div>
 
+<!-- LAB -->
 <div id="lab" class="content">
-  <h1>Enterprise Lab</h1>
+  <h1>Enterprise Lab Environment</h1>
 
   <div class="card">
-    <p>
-      סביבת עבודה המדמה תשתית ארגונית מלאה הכוללת Domain Controller,
-      תחנות קצה ושירותי רשת מרכזיים.
-    </p>
+    <h3>🏗️ Architecture</h3>
+    <ul>
+      <li>Domain Controller (Windows Server)</li>
+      <li>Multiple Client Machines</li>
+      <li>Centralized DNS & DHCP</li>
+      <li>Domain-based network structure</li>
+    </ul>
   </div>
 
   <div class="card">
-    <p>
-      הסביבה מאפשרת בדיקות תצורה, פתרון תקלות ויישום Best Practices
-      בסביבת Enterprise אמיתית.
-    </p>
+    <h3>⚙️ Implementation</h3>
+    <ul>
+      <li>Full Active Directory deployment</li>
+      <li>Client domain join configuration</li>
+      <li>User and OU management</li>
+      <li>DNS configuration and troubleshooting</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>🧪 Lab Capabilities</h3>
+    <ul>
+      <li>Network troubleshooting scenarios</li>
+      <li>Testing enterprise configurations</li>
+      <li>Simulating real-world IT environments</li>
+      <li>Infrastructure validation</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>🚀 Future Enhancements</h3>
+    <ul>
+      <li>Automation scripts (PowerShell)</li>
+      <li>Advanced permissions</li>
+      <li>File Server / Web Server</li>
+    </ul>
   </div>
 </div>
 
@@ -117,7 +159,6 @@
   function showTab(tabId) {
     let tabs = document.querySelectorAll('.content');
     tabs.forEach(tab => tab.classList.remove('active'));
-
     document.getElementById(tabId).classList.add('active');
   }
 </script>
