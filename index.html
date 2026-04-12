@@ -3,755 +3,996 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f1eb">
-  <title>עידן אוחנה | IT Infrastructure</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="theme-color" content="#1e3a5f">
+  <meta name="description" content="עידן אוחנה — פתרונות מחשוב מקצועיים בירושלים והסביבה. זמינות 24 שעות. תיקון, תמיכה ותשתיות.">
+  <title>עידן אוחנה | פתרונות מחשוב מקצועיים</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-deep: #ebe6dc;
-      --bg-page: linear-gradient(165deg, #faf8f4 0%, #eef3f6 48%, #f5f0ea 100%);
-      --bg-nav: rgba(255, 252, 248, 0.88);
-      --surface: #ffffff;
-      --surface-hover: #fafaf8;
-      --border: rgba(30, 41, 59, 0.1);
+      --hero-bg: linear-gradient(145deg, #0f172a 0%, #1e3a5f 45%, #3d6a9c 100%);
       --text: #1e293b;
       --muted: #64748b;
-      --accent: #0d9488;
-      --accent-soft: #14b8a6;
-      --accent-dim: rgba(13, 148, 136, 0.12);
-      --accent-strong: #0f766e;
-      --radius: 16px;
-      --shadow: 0 10px 40px rgba(30, 41, 59, 0.08);
-      --shadow-hover: 0 14px 44px rgba(30, 41, 59, 0.11);
+      --surface: #ffffff;
+      --surface-alt: #eef3f9;
+      --border: #dbe4f0;
+      --accent: #4a90c8;
+      --accent-soft: #6ba9db;
+      --accent-strong: #2d6a9c;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --shadow: 0 4px 20px rgba(30, 58, 95, 0.07);
+      --shadow-hover: 0 10px 32px rgba(30, 58, 95, 0.1);
       --font: "Heebo", system-ui, sans-serif;
+      --max: 800px;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      min-height: 100vh;
       font-family: var(--font);
-      background: var(--bg-deep);
-      background-image: var(--bg-page);
       color: var(--text);
-      line-height: 1.65;
+      line-height: 1.55;
+      background: var(--surface-alt);
       -webkit-font-smoothing: antialiased;
     }
 
-    body::before {
-      content: "";
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      right: 16px;
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      z-index: 100;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      top: 16px;
+    }
+
+    /* ——— נגישות (דומה ל־pc1948) ——— */
+    .a11y-widget {
       position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 90% 60% at 0% 0%, rgba(13, 148, 136, 0.09), transparent 55%),
-        radial-gradient(ellipse 70% 50% at 100% 10%, rgba(234, 88, 12, 0.06), transparent 50%),
-        radial-gradient(ellipse 80% 45% at 50% 100%, rgba(14, 165, 233, 0.07), transparent 55%);
-      pointer-events: none;
-      z-index: 0;
+      bottom: 16px;
+      left: 16px;
+      z-index: 90;
+      font-size: 0.9rem;
+    }
+
+    [dir="rtl"] .a11y-widget {
+      left: auto;
+      right: 16px;
+    }
+
+    .a11y-toggle {
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+
+    .a11y-toggle[aria-expanded="true"] {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .a11y-panel {
+      display: none;
+      margin-top: 10px;
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-hover);
+      max-width: 280px;
+    }
+
+    .a11y-panel.is-open {
+      display: block;
+    }
+
+    .a11y-panel h3 {
+      margin: 0 0 12px;
+      font-size: 0.95rem;
+    }
+
+    .a11y-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .a11y-btns button {
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface-alt);
+      cursor: pointer;
+    }
+
+    .a11y-btns button:hover {
+      border-color: var(--accent);
+      color: var(--accent-strong);
+    }
+
+    .a11y-statement {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: var(--accent-strong);
+    }
+
+    html.a11y-font-1 { font-size: 106%; }
+    html.a11y-font-2 { font-size: 114%; }
+    html.a11y-font-3 { font-size: 122%; }
+
+    html.a11y-contrast {
+      --text: #0f172a;
+      --muted: #334155;
+      --surface-alt: #f1f5f9;
+    }
+
+    html.a11y-contrast .hero {
+      background: #0f172a;
+    }
+
+    html.a11y-links a:not(.a11y-toggle):not(.header-cta):not(.btn-primary):not(.btn-secondary) {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    html.a11y-reduce *,
+    html.a11y-reduce *::before,
+    html.a11y-reduce *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    html.a11y-dyslexic body {
+      font-family: "Comic Sans MS", "Trebuchet MS", var(--font);
     }
 
     .shell {
-      position: relative;
-      z-index: 1;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
+    /* ——— Header (דומה ל־pc1948: לוגו + ניווט + כפתור) ——— */
     header.site-header {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid var(--border);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      background: var(--bg-nav);
-      border-bottom: 1px solid var(--border);
     }
 
     .header-inner {
-      max-width: 920px;
+      max-width: var(--max);
       margin: 0 auto;
-      padding: 14px 22px;
+      padding: 8px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .brand {
-      font-weight: 700;
-      font-size: 1.05rem;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .brand span {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    nav.tabs {
+    .header-end {
       display: flex;
-      gap: 6px;
-      padding: 4px;
-      background: var(--surface);
-      border-radius: 999px;
-      border: 1px solid var(--border);
+      align-items: center;
+      gap: 8px 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
-    nav.tabs button {
-      font-family: inherit;
-      background: transparent;
-      border: none;
+    .nav-main {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 8px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-main a {
       color: var(--muted);
-      font-size: 0.9rem;
+      text-decoration: none;
+      font-size: 0.8rem;
       font-weight: 500;
-      cursor: pointer;
-      padding: 8px 18px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-main a:hover,
+    .nav-main a:focus-visible {
+      color: var(--accent-strong);
+      background: rgba(74, 144, 200, 0.1);
+    }
+
+    .header-cta {
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 8px 16px;
+      border: none;
       border-radius: 999px;
-      transition: color 0.2s, background 0.2s;
-    }
-
-    nav.tabs button:hover {
-      color: var(--text);
-      background: rgba(30, 41, 59, 0.06);
-    }
-
-    nav.tabs button:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    nav.tabs button.active {
-      color: #fff;
       background: linear-gradient(135deg, var(--accent) 0%, var(--accent-soft) 100%);
-      font-weight: 600;
-      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+      color: #fff;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 4px 14px rgba(45, 106, 156, 0.3);
     }
 
-    main {
-      flex: 1;
-      max-width: 920px;
-      margin: 0 auto;
-      width: 100%;
-      padding: 36px 22px 56px;
+    .header-cta:hover {
+      filter: brightness(1.05);
     }
 
-    .content {
+    /* ——— Hero ——— */
+    .hero {
+      background: var(--hero-bg);
+      color: #f1f5f9;
+      padding: clamp(24px, 5vw, 40px) 16px clamp(28px, 4vw, 40px);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* תמונת פרופיל — צד ימין המסך, קטנה בתוך האזור הכחול */
+    .hero-photo-layer {
+      position: absolute;
+      left: auto;
+      right: clamp(32px, 10vw, 72px);
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(88px, 22vw, 132px);
+      height: clamp(88px, 22vw, 132px);
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @media (min-width: 640px) {
+      .hero-photo-layer {
+        right: clamp(56px, 14vw, 160px);
+        width: clamp(100px, 16vw, 140px);
+        height: clamp(100px, 16vw, 140px);
+      }
+    }
+
+    .hero-photo-layer.no-img {
       display: none;
-      animation: fadeIn 0.35s ease;
     }
 
-    .content.is-visible {
+    .hero-bg-profile {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
       display: block;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* כהה לכיוון מרכז־שמאל; פינה ימנית יותר בהירה ליד התמונה */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to left,
+        transparent 0%,
+        transparent 14%,
+        rgba(15, 23, 42, 0.35) 32%,
+        rgba(15, 23, 42, 0.72) 58%,
+        rgba(15, 23, 42, 0.9) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
     }
 
-    .page-title {
-      font-size: clamp(1.85rem, 4vw, 2.35rem);
-      font-weight: 700;
-      margin: 0 0 8px;
-      letter-spacing: -0.03em;
-      color: var(--text);
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 65% 50% at 72% 35%, rgba(255, 255, 255, 0.08), transparent 60%);
+      z-index: 1;
+      pointer-events: none;
     }
 
-    .lede {
-      margin: 0 0 28px;
-      font-size: 1.05rem;
-      color: var(--accent-strong);
-      font-weight: 500;
+    .hero-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
     }
 
-    .lab .lede {
-      color: var(--muted);
-      font-weight: 400;
-      max-width: 52ch;
-    }
-
-    .lab .lede strong {
-      color: var(--accent);
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.8rem;
       font-weight: 600;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 8px;
+      padding: 5px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
-    .card {
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.35rem, 4vw, 1.85rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+    }
+
+    .hero-lead {
+      margin: 0 0 14px;
+      font-size: 0.88rem;
+      max-width: 26rem;
+      color: rgba(241, 245, 249, 0.9);
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--accent-strong);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-secondary {
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 10px 18px;
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      border-radius: 999px;
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* ——— Sections generic ——— */
+    .section {
+      padding: clamp(22px, 3.5vw, 36px) 16px;
+    }
+
+    .section-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .section-kicker {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-strong);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 4px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.2rem, 3vw, 1.55rem);
+      font-weight: 800;
+      margin: 0 0 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: var(--muted);
+      max-width: 24rem;
+      margin: 0 auto 18px;
+      font-size: 0.84rem;
+    }
+
+    /* ——— Service cards (חלונות כמו pc1948) ——— */
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .service-card {
       background: var(--surface);
-      padding: 22px 24px;
-      border-radius: var(--radius);
-      margin-top: 16px;
       border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px;
       box-shadow: var(--shadow);
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .card:hover {
-      border-color: rgba(13, 148, 136, 0.22);
+    .service-card:hover {
+      transform: translateY(-2px);
       box-shadow: var(--shadow-hover);
     }
 
-    .card:first-of-type {
-      margin-top: 0;
-    }
-
-    .home-hero .intro-text .page-title {
-      margin-bottom: 6px;
-    }
-
-    .home-subnav {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 6px 12px;
-      margin: 0 0 18px;
-      font-size: 0.95rem;
-    }
-
-    .home-subnav a {
-      color: var(--accent-strong);
-      font-weight: 600;
-      text-decoration: none;
-      padding: 4px 2px;
-      border-bottom: 2px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
-    }
-
-    .home-subnav a:hover {
-      color: var(--accent);
-    }
-
-    .home-subnav a.active {
-      color: var(--accent);
-      border-bottom-color: rgba(13, 148, 136, 0.5);
-    }
-
-    .home-subnav .sep {
-      color: var(--muted);
-      font-weight: 400;
-      user-select: none;
-    }
-
-    .home-blurb {
-      margin: 0 0 12px;
-      font-size: 1.02rem;
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 46ch;
-    }
-
-    .home-blurb:last-child {
-      margin-bottom: 0;
-    }
-
-    .hero-intro {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      gap: 28px 32px;
-    }
-
-    .hero-intro .intro-text {
-      flex: 1;
-      min-width: min(100%, 280px);
-    }
-
-    .home-photo-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      flex-shrink: 0;
-    }
-
-    .home-under-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      max-width: 220px;
-    }
-
-    .home-under-tab {
-      flex: 1;
-      min-width: 88px;
-      text-align: center;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--accent-strong);
-      text-decoration: none;
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(13, 148, 136, 0.35);
-      background: rgba(255, 255, 255, 0.9);
-      transition: color 0.15s, background 0.15s, border-color 0.15s, box-shadow 0.15s;
-    }
-
-    .home-under-tab:hover {
-      color: var(--accent);
-      border-color: rgba(13, 148, 136, 0.55);
-      box-shadow: 0 2px 10px rgba(13, 148, 136, 0.12);
-    }
-
-    .home-under-tab.active {
-      color: #fff;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-soft) 100%);
-      border-color: transparent;
-      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.3);
-    }
-
-    .home-about-rows {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 10px 14px;
-      margin-top: 4px;
-      width: 100%;
-    }
-
-    .home-about-line {
-      margin: 0;
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.55;
-      padding: 10px 12px;
-      background: rgba(255, 255, 255, 0.65);
-      border: 1px solid rgba(30, 41, 59, 0.08);
+    .service-icon {
+      width: 44px;
+      height: 44px;
       border-radius: 10px;
-    }
-
-    .profile-photo-wrap {
-      flex-shrink: 0;
-    }
-
-    .profile-photo {
-      display: block;
-      width: 168px;
-      height: 168px;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: center top;
-      border: 3px solid #fff;
-      outline: 1px solid rgba(13, 148, 136, 0.22);
-      box-shadow: 0 8px 28px rgba(30, 41, 59, 0.1);
-      background: var(--surface);
-    }
-
-    .profile-photo-wrap.no-photo .profile-photo {
-      display: none;
-    }
-
-    .profile-photo-wrap.no-photo::after {
-      content: "שמור תמונה כ־profile.jpg";
+      background: linear-gradient(135deg, rgba(74, 144, 200, 0.18) 0%, rgba(107, 169, 219, 0.12) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 168px;
-      height: 168px;
-      border-radius: 50%;
-      border: 1px dashed rgba(13, 148, 136, 0.3);
-      background: rgba(255, 255, 255, 0.65);
-      color: var(--muted);
-      font-size: 0.8rem;
-      text-align: center;
-      padding: 16px;
-      line-height: 1.4;
-      box-sizing: border-box;
+      font-size: 1.4rem;
+      line-height: 1;
     }
 
-    .lab h2 {
-      color: var(--accent-strong);
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin: 0 0 10px;
-      letter-spacing: -0.02em;
+    .service-card--wide {
+      grid-column: 1 / -1;
     }
 
-    .lab .card ul {
-      margin: 6px 0 0;
-      padding-right: 1.25rem;
-      color: var(--muted);
-    }
-
-    .lab .card li {
-      margin-bottom: 8px;
-    }
-
-    .lab .card li:last-child {
-      margin-bottom: 0;
-    }
-
-    .lab .card p {
-      margin: 0 0 8px;
-      color: var(--muted);
-    }
-
-    .lab-column > .card:first-child {
-      margin-top: 0;
-    }
-
-    .linux-page .lede {
-      color: var(--muted);
-      font-weight: 400;
-      max-width: 52ch;
-    }
-
-    .linux-page h2 {
-      color: var(--accent-strong);
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin: 0 0 10px;
-    }
-
-    .linux-page .card ul {
-      margin: 6px 0 0;
-      padding-right: 1.25rem;
-      color: var(--muted);
-    }
-
-    .linux-page .card li {
-      margin-bottom: 8px;
-    }
-
-    .linux-page .card p {
-      margin: 0 0 8px;
-      color: var(--muted);
-    }
-
-    .linux-stack-card {
-      border-color: rgba(13, 148, 136, 0.18);
-      background: linear-gradient(180deg, #ffffff 0%, rgba(13, 148, 136, 0.03) 100%);
-    }
-
-    .lab code {
-      font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
-      font-size: 0.88em;
-      background: rgba(13, 148, 136, 0.1);
-      padding: 2px 6px;
-      border-radius: 6px;
-    }
-
-    .about-page .card h2 {
-      color: var(--accent-strong);
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin: 0 0 10px;
-      letter-spacing: -0.02em;
-    }
-
-    .about-page .card ul {
-      margin: 6px 0 0;
-      padding-right: 1.25rem;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    .about-page .card li {
-      margin-bottom: 8px;
-    }
-
-    .about-page .card p {
-      margin: 0 0 10px;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    .about-page .card p:last-child {
-      margin-bottom: 0;
-    }
-
-    .about-page .card a {
-      color: var(--accent-strong);
-      font-weight: 500;
-      text-decoration: none;
-      border-bottom: 1px solid rgba(13, 148, 136, 0.35);
-    }
-
-    .about-page .card a:hover {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    .footer-copy {
-      margin: 0;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    .highlight {
-      color: var(--accent-strong);
-      font-weight: 600;
-    }
-
-    footer.site-footer {
-      text-align: center;
-      padding: 22px;
-      color: var(--muted);
-      font-size: 0.85rem;
-      border-top: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-
-    .resources-note {
-      margin-top: 28px;
-      padding: 20px 22px;
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.75);
+    .service-card-visual {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
       border: 1px solid var(--border);
-      box-shadow: var(--shadow);
+      background: var(--surface-alt);
+      aspect-ratio: 21 / 9;
+      max-height: min(200px, 42vw);
     }
 
-    .resources-note h2 {
-      font-size: 1rem;
+    .service-card-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .service-card h3 {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .service-card p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .badge-pop {
+      align-self: flex-start;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(234, 88, 12, 0.12);
+      color: #c2410c;
+    }
+
+    .about-body {
+      max-width: 28rem;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .about-body .role {
+      color: var(--accent-strong);
       font-weight: 600;
-      margin: 0 0 12px;
+      margin: 0 0 10px;
+      font-size: 0.88rem;
+    }
+
+    .about-body p {
+      margin: 0 0 10px;
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 0.88rem;
+    }
+
+    .about-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      justify-content: center;
+    }
+
+    .about-badges span {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
       color: var(--text);
     }
 
-    .resources-note ul {
-      margin: 0;
-      padding-right: 1.25rem;
+    /* ——— Contact ——— */
+    .contact-split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 720px) {
+      .contact-split {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .contact-form-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-form-wrap h3 {
+      margin: 0 0 6px;
+      font-size: 1.02rem;
+    }
+
+    .form-note {
+      font-size: 0.78rem;
       color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.7;
+      margin: 0 0 14px;
     }
 
-    .resources-note a {
-      color: var(--accent-strong);
-      font-weight: 500;
+    .field {
+      margin-bottom: 11px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      font-family: inherit;
+      font-size: 0.88rem;
+      padding: 9px 11px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-alt);
+    }
+
+    .field textarea {
+      min-height: 72px;
+      resize: vertical;
+    }
+
+    .btn-submit {
+      font-family: inherit;
+      font-weight: 700;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-soft) 100%);
+      color: #fff;
+      cursor: not-allowed;
+      opacity: 0.75;
+      width: 100%;
+    }
+
+    .contact-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .contact-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 11px 13px;
+    }
+
+    .contact-block strong {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .contact-block span {
+      font-weight: 600;
+    }
+
+    .whatsapp-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      color: #fff;
+      background: #25d366;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .whatsapp-link:hover {
+      filter: brightness(1.08);
+      transform: scale(1.06);
+    }
+
+    .whatsapp-link:focus-visible {
+      outline: 2px solid var(--accent-strong);
+      outline-offset: 3px;
+    }
+
+    .whatsapp-link svg {
+      width: 30px;
+      height: 30px;
+      display: block;
+    }
+
+    /* ——— Footer ——— */
+    footer.site-footer {
+      background: linear-gradient(180deg, #152a45 0%, #0f172a 100%);
+      color: #94a3b8;
+      padding: 22px 16px 16px;
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 18px;
+    }
+
+    .footer-col h4 {
+      color: #f1f5f9;
+      font-size: 0.9rem;
+      margin: 0 0 14px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-col li {
+      margin-bottom: 8px;
+    }
+
+    .footer-col a {
+      color: #94a3b8;
       text-decoration: none;
-      border-bottom: 1px solid rgba(13, 148, 136, 0.35);
+      font-size: 0.88rem;
     }
 
-    .resources-note a:hover {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
+    .footer-col a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      max-width: var(--max);
+      margin: 18px auto 0;
+      padding-top: 12px;
+      border-top: 1px solid rgba(148, 163, 184, 0.2);
+      text-align: center;
+      font-size: 0.82rem;
     }
   </style>
 </head>
 
 <body>
+  <a class="skip-link" href="#main">דלג לתוכן הראשי</a>
+
+  <div class="a11y-widget">
+    <button type="button" class="a11y-toggle" id="a11y-toggle" aria-expanded="false" aria-controls="a11y-panel">הגדרות נגישות</button>
+    <div class="a11y-panel" id="a11y-panel" role="region" aria-label="הגדרות נגישות" hidden>
+      <h3>הגדרות נגישות</h3>
+      <div class="a11y-btns">
+        <button type="button" data-a11y-action="font-up">הגדל גופן</button>
+        <button type="button" data-a11y-action="font-down">הקטן גופן</button>
+        <button type="button" data-a11y-action="contrast">ניגודיות גבוהה</button>
+        <button type="button" data-a11y-action="links">הדגשת קישורים</button>
+        <button type="button" data-a11y-action="motion">עצור אנימציות</button>
+        <button type="button" data-a11y-action="dyslexic">גופן קריא</button>
+        <button type="button" data-a11y-action="reset">אפס הגדרות</button>
+      </div>
+      <a href="#footer-a11y" class="a11y-statement">הצהרת נגישות</a>
+    </div>
+  </div>
+
   <div class="shell">
     <header class="site-header">
       <div class="header-inner">
-        <a href="#home" class="brand" id="brand-home" data-tab="home">עידן אוחנה <span>· IT</span></a>
-        <nav class="tabs" aria-label="ניווט ראשי">
-          <button type="button" data-tab="home" class="active">בית</button>
-          <button type="button" data-tab="about">אודות</button>
-        </nav>
+        <div class="header-end">
+          <nav aria-label="ניווט ראשי">
+            <ul class="nav-main">
+              <li><a href="#top">דף הבית</a></li>
+              <li><a href="#services">שירותים</a></li>
+              <li><a href="#about">אודות</a></li>
+              <li><a href="#contact">צור קשר</a></li>
+            </ul>
+          </nav>
+          <a href="tel:+972544549014" class="header-cta">התקשר עכשיו</a>
+        </div>
       </div>
     </header>
 
-    <main>
-      <!-- HOME -->
-      <section id="home" class="content home-hero is-visible" aria-labelledby="home-title">
-        <div class="hero-intro">
-          <div class="home-photo-col">
-            <div class="profile-photo-wrap" id="profile-photo-wrap">
-              <img
-                src="profile.jpg"
-                alt="עידן אוחנה — תמונת פרופיל"
-                class="profile-photo"
-                width="168"
-                height="168"
-                decoding="async"
-                onerror="document.getElementById('profile-photo-wrap').classList.add('no-photo')">
-            </div>
-            <div class="home-under-tabs" role="group" aria-label="מעבדה ולינוקס">
-              <a href="#lab" class="home-under-tab" data-tab="lab">מעבדה</a>
-              <a href="#linux" class="home-under-tab" data-tab="linux">לינוקס</a>
-            </div>
-          </div>
-          <div class="intro-text">
-            <h1 id="home-title" class="page-title">עידן אוחנה</h1>
-            <nav class="home-subnav" aria-label="מעבר בין מקטעים">
-              <a href="#home" data-tab="home" class="active">בית</a>
-              <span class="sep" aria-hidden="true">·</span>
-              <a href="#about" data-tab="about">אודות</a>
-            </nav>
-            <div class="home-about-rows" aria-label="אודות מקוצר">
-              <p class="home-about-line">IT — תשתיות, Windows Server, Active Directory ורשת ארגונית.</p>
-              <p class="home-about-line">מעבדה ביתית: דומיין, DC, קליינטים, DNS ו-DHCP; VM ו-snapshots לפני שינויים.</p>
-              <p class="home-about-line">PowerShell וסקריפטים לחזרתיות — משתמשים, OU, אוטומציה.</p>
-              <p class="home-about-line">נושאים: זהות ומדיניות ב-AD, DNS/DHCP, וירטואליזציה, חומת אש במעבדה.</p>
-              <p class="home-about-line">כלים: Hyper-V / VMware, RSAT, Git ו-GitHub לאתר ולתיעוד.</p>
-              <p class="home-about-line">האתר מרכז הערות, תצורות וקישורים; מקורות מפורטים ב<strong class="highlight">אודות</strong>.</p>
-            </div>
+    <main id="main">
+      <!-- ——— Hero ——— -->
+      <section id="top" class="hero" aria-labelledby="hero-title">
+        <div class="hero-photo-layer" id="hero-profile-layer">
+          <img
+            src="profile.jpg"
+            alt=""
+            class="hero-bg-profile"
+            width="400"
+            height="400"
+            decoding="async"
+            onerror="document.getElementById('hero-profile-layer').classList.add('no-img')">
+        </div>
+        <div class="hero-inner">
+          <h1 id="hero-title">עידן אוחנה</h1>
+          <p class="hero-lead">פתרונות מחשוב מקצועיים</p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn-primary">צור קשר</a>
+            <a href="#services" class="btn-secondary">השירותים</a>
           </div>
         </div>
       </section>
 
-      <!-- ABOUT -->
-      <section id="about" class="content about-page" aria-labelledby="about-title">
-        <h1 id="about-title" class="page-title">אודות</h1>
-        <p class="lede">מקורות למידה ותבניות — הסיכום האישי ליד התמונה בדף הבית</p>
+      <!-- ——— Services ——— -->
+      <section id="services" class="section" aria-labelledby="services-title">
+        <div class="section-inner">
+          <p class="section-kicker">מה אני מציע</p>
+          <h2 id="services-title" class="section-title">השירותים שלי</h2>
+          <p class="section-sub">תיקון · תמיכה · רשתות · תוכנה</p>
 
-        <div class="card">
-          <h2>מקורות למידה</h2>
-          <ul>
-            <li><a href="https://learn.microsoft.com/en-us/training/" target="_blank" rel="noopener noreferrer">Microsoft Learn</a> — מסלולים על Windows Server, זהות, רשת ועוד</li>
-            <li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a> — השראה לסקריפטים, תבניות אתרים ושיתוף קוד</li>
-            <li><a href="https://www.rfc-editor.org/" target="_blank" rel="noopener noreferrer">RFC</a> — כשרוצים להבין פרוטוקולים (DNS וכו’) מהשורש</li>
-            <li><a href="https://lab.github.com/" target="_blank" rel="noopener noreferrer">GitHub Skills / Labs</a> — תרגול Git ועבודה עם ריפוזיטורי</li>
-          </ul>
+          <div class="service-grid">
+            <article class="service-card">
+              <span class="service-icon" aria-hidden="true">🖥</span>
+              <h3>תיקון מחשבים</h3>
+              <p>נייד ונייח, אבחון, החלפת רכיבים ושדרוג חומרה.</p>
+            </article>
+
+            <article class="service-card">
+              <span class="service-icon" aria-hidden="true">🛟</span>
+              <span class="badge-pop">מבוקש</span>
+              <h3>תמיכה טכנית</h3>
+              <p>מרחוק או אצלך — תוכנה, וירוסים והגדרות מערכת.</p>
+            </article>
+
+            <article class="service-card">
+              <span class="service-icon" aria-hidden="true">🌐</span>
+              <h3>רשתות וגיבוי</h3>
+              <p>WiFi ושרתים, גיבוי ושחזור מידע, אבטחה בסיסית.</p>
+            </article>
+
+            <article class="service-card service-card--wide">
+              <div class="service-card-visual">
+                <img src="service-it-business.jpg" alt="סביבת עבודה מקצועית — מחשוב ותוכנה לעסק" width="720" height="479" loading="lazy" decoding="async">
+              </div>
+              <h3>תוכנה ו־IT לעסק</h3>
+              <p><strong>התקנה והגדרה</strong> — Windows ו־Microsoft 365.<br><strong>אבטחה</strong> — אנטי־וירוס ועדכונים.<br><strong>ליווי</strong> — תמיכה שוטפת לעסק קטן.</p>
+            </article>
+          </div>
         </div>
-
-        <aside class="resources-note" aria-labelledby="resources-heading">
-          <h2 id="resources-heading">תבניות לאתר סטטי</h2>
-          <ul>
-            <li><a href="https://html5up.net/" target="_blank" rel="noopener noreferrer">HTML5 UP</a> — תבניות HTML/CSS חינמיות</li>
-            <li><a href="https://pages.github.com/themes/" target="_blank" rel="noopener noreferrer">ערכות נושא ל-GitHub Pages</a></li>
-            <li><a href="https://github.com/CynthiaNiaz/portfolio-template" target="_blank" rel="noopener noreferrer">portfolio-template (CynthiaNiaz)</a></li>
-            <li><a href="https://github.com/lowinertia/free-to-engineer-portfolio-template" target="_blank" rel="noopener noreferrer">free-to-engineer-portfolio-template</a></li>
-            <li><a href="https://github.com/nilaachandra/minimalio" target="_blank" rel="noopener noreferrer">minimalio</a></li>
-            <li><a href="https://carrd.co/" target="_blank" rel="noopener noreferrer">Carrd</a> · <a href="https://sites.google.com/" target="_blank" rel="noopener noreferrer">Google Sites</a></li>
-          </ul>
-        </aside>
       </section>
 
-      <!-- LAB -->
-      <section id="lab" class="content lab" aria-labelledby="lab-title">
-        <h1 id="lab-title" class="page-title">מעבדה</h1>
-        <p class="lede">חומר מסכם על תשתית טיפוסית במעבדת Windows: שרתים, דומיין, רשת וקלאסטר כרעיון — בלי לייחס ציוד או גרסאות שלא תועדו כאן. ל<strong class="highlight">לינוקס</strong> יש לשונית נפרדת.</p>
-
-        <div class="lab-column lab-column-windows">
-            <div class="card">
-              <h2>מבט כללי</h2>
-              <p>מעבדה כזו משמשת לחקות חלק מסביבת ארגון: זהות (Active Directory), שירותי רשת בסיסיים, ותחנות קצה. רוב הרכיבים מרוצים כמכונות וירטואליות כדי לאפשר צילום מצב (snapshot) לפני שינוי והחזרה אחורה.</p>
-            </div>
-
-            <div class="card">
-              <h2>שרתים — מה זה אומר במעבדה</h2>
-              <p><span class="highlight">שרת</span> בתכליתו הוא מחשב (פיזי או וירטואלי) שמריץ שירותים קבועים לרשת: אימות, שמות, הקצאת כתובות, קבצים וכו'. במעבדה ביתית נפוץ לרכז כמה תפקידים על מעט מכונות; בארגון אמיתי מפורקים לפי רישוי, ביצועים וזמינות.</p>
-              <ul>
-                <li><span class="highlight">מכונה וירטואלית</span> — קובץ דיסק + הגדרות חומרה מדומה; רץ מעל Hyper-V, VMware Workstation/Fusion, או מארח עם KVM. מאפשר כמה “שרתים” על מחשב אחד.</li>
-                <li><span class="highlight">תפקידי Windows Server</span> שמופיעים בתרחיש AD: בקר דומיין (DC), לעיתים אותו שרת גם מחזיק DNS ו-DHCP; אפשר להוסיף שרת קבצים, שרת יישומים וכו' לפי מה שנלמד.</li>
-                <li><span class="highlight">יותר משרת אחד</span> — בתרגול זמינות אפשר להקים שני DC לאותו דומיין; כל DC מחזיק עותק של AD ומסנכרן עם השותף.</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2>קלאסטר — עקרון (Windows ועולם מיכלים)</h2>
-              <p><span class="highlight">קלאסטר</span> הוא קבוצת מחשבים (צמתים) שמתואמת כך שאותו שירות או עומס יכול לעבור ביניהם או לרוץ במקביל — כדי לשפר זמינות או להרחיב קיבולת.</p>
-              <ul>
-                <li><span class="highlight">Windows Failover Clustering</span> — טכנולוגיה של Microsoft לזוג או יותר שרתי Windows שחולקים משאבים (למשל דיסק משותף או תצורת SMB). נדרש <span class="highlight">quorum</span> (מנגנון הצבעה) כדי שהקלאסטר יחליט מי “בעלים” על המשאבים וימנע split-brain. שימושים מתועדים: למשל זמינות ל-SQL Server, או קבוצת מארחי Hyper-V.</li>
-                <li><span class="highlight">קלאסטר מול מעבדת AD בלבד</span> — AD עם כמה DC הוא כבר רפליקציה וזמינות בשכבת הזהות; Failover Clustering הוא שכבה נפרדת לשירותים ספציפיים שמוגדרים כמשאב מקובצ.</li>
-                <li><span class="highlight">Kubernetes (בדרך כלל על לינוקס)</span> — מערכת לאורכסטרציה של מיכלים על מספר מארחים: מתאימה לפריסת מיקרו-שירותים, לא לחלופה של Active Directory. נלמדת בנפרד מתשתית דומיין Windows.</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2>הקמת סביבת עבודה (דומיין)</h2>
-              <p>תרחיש בסיס שמופיע במעבדות מסוג זה:</p>
-              <ul>
-                <li><span class="highlight">Domain Controller (DC)</span> — מחזיק את Active Directory, מנפיק Kerberos, משרת LDAP, ומנהל מדיניות.</li>
-                <li><span class="highlight">קליינטים</span> — Windows 10/11 (או שרת נוסף) מצורפים לדומיין כדי לבדוק כניסה, מדיניות קבוצתית, ושיתוף משאבים.</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2>DNS ו־DHCP</h2>
-              <ul>
-                <li><span class="highlight">DNS</span> — מתרגם שמות לכתובות IP; בדומיין Active Directory אזורי DNS מסונכרנים בדרך כלל עם שם הדומיין והרשומות של שירותי Microsoft.</li>
-                <li><span class="highlight">DHCP</span> — מקצה לתחנות כתובת, מסכת רשת, שרת DNS ושער ברירת מחדל; מקל על הרחבת המעבדה בלי קונפיג ידני לכל קליינט.</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2>תקשורת וחומת אש</h2>
-              <ul>
-                <li>בדיקות גילוי (למשל ping, שיתוף קבצים, RPC ל-AD) דורשות שכל הרכיבים באותה רשת לוגית או עם ניתוב מתאים.</li>
-                <li><span class="highlight">Windows Defender Firewall</span> — חוסם כברירת מחדל חלק מהתעבורה; במעבדה לעיתים מרככים כללים זמנית לצורך debug, ואז מחמירים שוב.</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h2>סקריפטים ואוטומציה</h2>
-              <ul>
-                <li><span class="highlight">יצירת משתמשים</span> ב-AD — אוטומציה ב-PowerShell (למשל <code dir="ltr">New-ADUser</code>) לעומת יצירה ידנית ב-ADUC.</li>
-                <li><span class="highlight">יצירת OU</span> — סקריפטים שמייצרים מבנה יחידות ארגוניות באופן חוזר, כדי לשמור על אחידות בין סביבות.</li>
-              </ul>
+      <!-- ——— About ——— -->
+      <section id="about" class="section" style="background: var(--surface-alt);" aria-label="אודות">
+        <div class="section-inner">
+          <div class="about-body">
+            <p class="role">פתרונות מחשוב מקצועיים</p>
+            <p>אני עוסק בתיקון מחשבים, תמיכה טכנית, רשתות וגיבוי — לפרטיים ולעסקים קטנים. שירות אישי, הסבר בשפה פשוטה ומחיר לפני שמתחילים.</p>
+            <div class="about-badges">
+              <span>מרחוק ובאתר הלקוח</span>
+              <span>זמינות ושקיפות</span>
             </div>
           </div>
+
+          <p style="text-align: center; margin-top: 14px;">
+            <a href="#contact" class="header-cta" style="display: inline-flex;">דבר איתי</a>
+          </p>
+        </div>
       </section>
 
-      <!-- LINUX -->
-      <section id="linux" class="content linux-page" aria-labelledby="linux-title">
-        <h1 id="linux-title" class="page-title">לינוקס</h1>
-        <p class="lede">עקרונות, עמדת לינוקס לצד מעבדת Windows, ובלי לייחס מה בדיוק מותקן אצלך.</p>
+      <!-- ——— Contact ——— -->
+      <section id="contact" class="section" style="background: var(--surface-alt);" aria-labelledby="contact-title">
+        <div class="section-inner">
+          <h2 id="contact-title" class="section-title">צור קשר</h2>
 
-        <div class="card linux-stack-card">
-          <h2>עמדת לינוקס — מה המערכת ואיך זה ליד Windows</h2>
-          <p><span class="highlight">לינוקס</span> הוא מערכת הפעלה ממשפחת Unix: הליבה (Linux kernel) מנהלת חומרה ותהליכים; מעליה רצות תוכניות ושירותים. “הפצה” (למשל Debian, Ubuntu, RHEL, AlmaLinux, Fedora) היא שילוב של ליבה, ספריית חבילות, כלי ניהול ולעיתים ממשק גרפי אופציונלי.</p>
-          <p>בניגוד ל-Windows Server, רישוי ומודל תמיכה שונים, ודגש חזק על שורת פקודה, קבצי קונפיגורציה טקסטואליים ושירותים שמנוהלים לרוב עם <span class="highlight">systemd</span> (בהפצות מודרניות רבות). גישה מרחוק טיפוסית היא <span class="highlight">SSH</span> (מוצפן), לעומת RDP ב-Windows.</p>
-          <p><span class="highlight">שימושים טיפוסיים במעבדות</span> (כל אחד קיים בעולם האמיתי; לא מציין כאן מה בדיוק מותקן אצלך):</p>
-          <ul>
-            <li>שרת אינטרנט — nginx או Apache HTTP Server.</li>
-            <li>DNS — למשל BIND (named); חלופה/תוספת ל-DNS של Windows כשלומדים רקורסיה והגדרות אזור.</li>
-            <li>DHCP — למשל isc-dhcp-server; עקרון ההקצאה דומה ל-Windows DHCP.</li>
-            <li>סקריפטים — Bash או שפות אחרות; אוטומציה דרך cron או systemd timers.</li>
-            <li>מיכלים — Docker או Podman להרצת יישומים מבודדים; Kubernetes לארגון מספר מארחים.</li>
-          </ul>
-          <p>Active Directory הוא שירות שמיקרוסופט מממשת בעיקר ב-Windows; לינוקס יכול להצטרף לדומיין עם כלים כמו SSSD/Winbind (תלוי בתרחיש), או לעבוד כשרת עצמאי באותה רשת IP — חשוב להבדיל בין “אותה רשת פיזית” לבין “אותו דומיין מנוהל”.</p>
+          <div class="contact-split">
+            <div class="contact-form-wrap">
+              <h3>השאר פרטים ואחזור אליך</h3>
+              <p class="form-note">בדף סטטי השליחה לא פעילה.</p>
+              <form action="#" method="get" onsubmit="return false;">
+                <div class="field">
+                  <label for="c-name">שם מלא</label>
+                  <input id="c-name" type="text" name="name" autocomplete="name" placeholder="יש להזין שם">
+                </div>
+                <div class="field">
+                  <label for="c-phone">טלפון</label>
+                  <input id="c-phone" type="tel" name="phone" autocomplete="tel" placeholder="054-454-9014">
+                </div>
+                <div class="field">
+                  <label for="c-msg">תיאור הבעיה / הבקשה</label>
+                  <textarea id="c-msg" name="message" placeholder="פרט בקצרה — אחזור אליך"></textarea>
+                </div>
+                <button type="submit" class="btn-submit" disabled aria-disabled="true">שלח הודעה</button>
+              </form>
+            </div>
+            <div class="contact-aside">
+              <div class="contact-block">
+                <strong>טלפון</strong>
+                <span><a href="tel:+972544549014">054-454-9014</a></span>
+              </div>
+              <div class="contact-block">
+                <strong>וואטסאפ</strong>
+                <span>
+                  <a href="https://wa.me/972544549014" class="whatsapp-link" target="_blank" rel="noopener noreferrer" aria-label="פתיחת שיחה בוואטסאפ" title="WhatsApp">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                  </a>
+                </span>
+              </div>
+              <div class="contact-block">
+                <strong>אימייל</strong>
+                <span><a href="mailto:Idan1991ohana@gmail.com">Idan1991ohana@gmail.com</a></span>
+              </div>
+              <div class="contact-block">
+                <strong>אזור שירות</strong>
+                <span>ירושלים והסביבה</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <p class="footer-copy">עידן אוחנה · IT Infrastructure</p>
+      <div class="footer-inner">
+        <div class="footer-col">
+          <h4>עידן</h4>
+          <p style="margin: 0; font-size: 0.82rem; line-height: 1.5;">פתרונות מחשוב מקצועיים.</p>
+        </div>
+        <div class="footer-col">
+          <h4>ניווט</h4>
+          <ul>
+            <li><a href="#top">דף הבית</a></li>
+            <li><a href="#services">שירותים</a></li>
+            <li><a href="#about">אודות</a></li>
+            <li><a href="#contact">צור קשר</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>יצירת קשר</h4>
+          <p style="margin: 0; font-size: 0.88rem;"><a href="tel:+972544549014" style="color: #94a3b8;">054-454-9014</a></p>
+          <p style="margin: 8px 0 0; font-size: 0.88rem;">עידן</p>
+        </div>
+      </div>
+      <p id="footer-a11y" class="footer-bottom">© <span id="y"></span> עידן · פתרונות מחשוב מקצועיים · <a href="#" style="color: #94a3b8;">הצהרת נגישות</a></p>
     </footer>
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const tabTriggers = document.querySelectorAll("[data-tab]");
-      const headerTabs = document.querySelectorAll("nav.tabs button[data-tab]");
-      const homeSubnav = document.querySelectorAll(".home-subnav a[data-tab]");
-      const homeUnderTabs = document.querySelectorAll(".home-under-tab[data-tab]");
-      const sections = document.querySelectorAll("main .content");
+    (function () {
+      var y = document.getElementById("y");
+      if (y) y.textContent = new Date().getFullYear();
 
-      function showTab(tabId) {
-        sections.forEach(function (sec) {
-          sec.classList.toggle("is-visible", sec.id === tabId);
-        });
-        headerTabs.forEach(function (btn) {
-          btn.classList.toggle("active", btn.getAttribute("data-tab") === tabId);
-        });
-        homeSubnav.forEach(function (a) {
-          a.classList.toggle("active", a.getAttribute("data-tab") === tabId);
-        });
-        homeUnderTabs.forEach(function (a) {
-          a.classList.toggle("active", a.getAttribute("data-tab") === tabId);
-        });
-        try {
-          history.replaceState(null, "", "#" + tabId);
-        } catch (e) { /* ignore */ }
-        window.scrollTo(0, 0);
+      var root = document.documentElement;
+      var toggle = document.getElementById("a11y-toggle");
+      var panel = document.getElementById("a11y-panel");
+      var fontLevel = 0;
+
+      function setPanel(open) {
+        if (!toggle || !panel) return;
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        panel.classList.toggle("is-open", open);
+        if (open) panel.removeAttribute("hidden");
+        else panel.setAttribute("hidden", "");
       }
 
-      tabTriggers.forEach(function (el) {
-        el.addEventListener("click", function (e) {
-          e.preventDefault();
-          showTab(el.getAttribute("data-tab"));
+      if (toggle && panel) {
+        toggle.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var open = toggle.getAttribute("aria-expanded") !== "true";
+          setPanel(open);
+        });
+        document.addEventListener("click", function (e) {
+          if (!panel.contains(e.target) && e.target !== toggle) setPanel(false);
+        });
+      }
+
+      document.querySelectorAll("[data-a11y-action]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var act = btn.getAttribute("data-a11y-action");
+          if (act === "font-up" && fontLevel < 3) {
+            fontLevel++;
+            root.classList.remove("a11y-font-1", "a11y-font-2", "a11y-font-3");
+            if (fontLevel > 0) root.classList.add("a11y-font-" + fontLevel);
+          }
+          if (act === "font-down" && fontLevel > 0) {
+            fontLevel--;
+            root.classList.remove("a11y-font-1", "a11y-font-2", "a11y-font-3");
+            if (fontLevel > 0) root.classList.add("a11y-font-" + fontLevel);
+          }
+          if (act === "contrast") root.classList.toggle("a11y-contrast");
+          if (act === "links") root.classList.toggle("a11y-links");
+          if (act === "motion") root.classList.toggle("a11y-reduce");
+          if (act === "dyslexic") root.classList.toggle("a11y-dyslexic");
+          if (act === "reset") {
+            fontLevel = 0;
+            root.classList.remove(
+              "a11y-font-1", "a11y-font-2", "a11y-font-3",
+              "a11y-contrast", "a11y-links", "a11y-reduce", "a11y-dyslexic"
+            );
+          }
         });
       });
-
-      var hash = (location.hash || "").replace(/^#/, "");
-      if (hash === "about" || hash === "lab" || hash === "linux" || hash === "home") {
-        showTab(hash);
-      } else {
-        showTab("home");
-      }
-    });
+    })();
   </script>
 </body>
 </html>
