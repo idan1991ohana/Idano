@@ -1,143 +1,757 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>Idan Ohana | IT Infrastructure</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1eb">
+  <title>עידן אוחנה | IT Infrastructure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg-deep: #ebe6dc;
+      --bg-page: linear-gradient(165deg, #faf8f4 0%, #eef3f6 48%, #f5f0ea 100%);
+      --bg-nav: rgba(255, 252, 248, 0.88);
+      --surface: #ffffff;
+      --surface-hover: #fafaf8;
+      --border: rgba(30, 41, 59, 0.1);
+      --text: #1e293b;
+      --muted: #64748b;
+      --accent: #0d9488;
+      --accent-soft: #14b8a6;
+      --accent-dim: rgba(13, 148, 136, 0.12);
+      --accent-strong: #0f766e;
+      --radius: 16px;
+      --shadow: 0 10px 40px rgba(30, 41, 59, 0.08);
+      --shadow-hover: 0 14px 44px rgba(30, 41, 59, 0.11);
+      --font: "Heebo", system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
+      min-height: 100vh;
+      font-family: var(--font);
+      background: var(--bg-deep);
+      background-image: var(--bg-page);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
 
-    nav {
-      background: #020617;
-      padding: 15px;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 60% at 0% 0%, rgba(13, 148, 136, 0.09), transparent 55%),
+        radial-gradient(ellipse 70% 50% at 100% 10%, rgba(234, 88, 12, 0.06), transparent 50%),
+        radial-gradient(ellipse 80% 45% at 50% 100%, rgba(14, 165, 233, 0.07), transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
-      gap: 30px;
-      border-bottom: 1px solid #1e293b;
+      flex-direction: column;
     }
 
-    nav button {
-      background: none;
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: var(--bg-nav);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .brand span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    nav.tabs {
+      display: flex;
+      gap: 6px;
+      padding: 4px;
+      background: var(--surface);
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    nav.tabs button {
+      font-family: inherit;
+      background: transparent;
       border: none;
-      color: #94a3b8;
-      font-size: 16px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 500;
       cursor: pointer;
-      padding: 5px 10px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      transition: color 0.2s, background 0.2s;
     }
 
-    nav button.active {
-      color: #38bdf8;
-      border-bottom: 2px solid #38bdf8;
+    nav.tabs button:hover {
+      color: var(--text);
+      background: rgba(30, 41, 59, 0.06);
     }
 
-    nav button:hover {
-      color: white;
+    nav.tabs button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    nav.tabs button.active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-soft) 100%);
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+    }
+
+    main {
+      flex: 1;
+      max-width: 920px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 36px 22px 56px;
     }
 
     .content {
       display: none;
-      padding: 50px;
-      max-width: 1000px;
-      margin: auto;
+      animation: fadeIn 0.35s ease;
     }
 
-    h1 {
-      color: #38bdf8;
+    .content.is-visible {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-title {
+      font-size: clamp(1.85rem, 4vw, 2.35rem);
+      font-weight: 700;
+      margin: 0 0 8px;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .lede {
+      margin: 0 0 28px;
+      font-size: 1.05rem;
+      color: var(--accent-strong);
+      font-weight: 500;
+    }
+
+    .lab .lede {
+      color: var(--muted);
+      font-weight: 400;
+      max-width: 52ch;
+    }
+
+    .lab .lede strong {
+      color: var(--accent);
+      font-weight: 600;
     }
 
     .card {
-      background: #1e293b;
-      padding: 20px;
+      background: var(--surface);
+      padding: 22px 24px;
+      border-radius: var(--radius);
+      margin-top: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: rgba(13, 148, 136, 0.22);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card:first-of-type {
+      margin-top: 0;
+    }
+
+    .home-hero .intro-text .page-title {
+      margin-bottom: 6px;
+    }
+
+    .home-subnav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 12px;
+      margin: 0 0 18px;
+      font-size: 0.95rem;
+    }
+
+    .home-subnav a {
+      color: var(--accent-strong);
+      font-weight: 600;
+      text-decoration: none;
+      padding: 4px 2px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .home-subnav a:hover {
+      color: var(--accent);
+    }
+
+    .home-subnav a.active {
+      color: var(--accent);
+      border-bottom-color: rgba(13, 148, 136, 0.5);
+    }
+
+    .home-subnav .sep {
+      color: var(--muted);
+      font-weight: 400;
+      user-select: none;
+    }
+
+    .home-blurb {
+      margin: 0 0 12px;
+      font-size: 1.02rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 46ch;
+    }
+
+    .home-blurb:last-child {
+      margin-bottom: 0;
+    }
+
+    .hero-intro {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 28px 32px;
+    }
+
+    .hero-intro .intro-text {
+      flex: 1;
+      min-width: min(100%, 280px);
+    }
+
+    .home-photo-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .home-under-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 220px;
+    }
+
+    .home-under-tab {
+      flex: 1;
+      min-width: 88px;
+      text-align: center;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--accent-strong);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(13, 148, 136, 0.35);
+      background: rgba(255, 255, 255, 0.9);
+      transition: color 0.15s, background 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .home-under-tab:hover {
+      color: var(--accent);
+      border-color: rgba(13, 148, 136, 0.55);
+      box-shadow: 0 2px 10px rgba(13, 148, 136, 0.12);
+    }
+
+    .home-under-tab.active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-soft) 100%);
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.3);
+    }
+
+    .home-about-rows {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px 14px;
+      margin-top: 4px;
+      width: 100%;
+    }
+
+    .home-about-line {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.55;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(30, 41, 59, 0.08);
       border-radius: 10px;
-      margin-top: 20px;
+    }
+
+    .profile-photo-wrap {
+      flex-shrink: 0;
+    }
+
+    .profile-photo {
+      display: block;
+      width: 168px;
+      height: 168px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 3px solid #fff;
+      outline: 1px solid rgba(13, 148, 136, 0.22);
+      box-shadow: 0 8px 28px rgba(30, 41, 59, 0.1);
+      background: var(--surface);
+    }
+
+    .profile-photo-wrap.no-photo .profile-photo {
+      display: none;
+    }
+
+    .profile-photo-wrap.no-photo::after {
+      content: "שמור תמונה כ־images/profile.jpeg";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 168px;
+      height: 168px;
+      border-radius: 50%;
+      border: 1px dashed rgba(13, 148, 136, 0.3);
+      background: rgba(255, 255, 255, 0.65);
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 16px;
+      line-height: 1.4;
+      box-sizing: border-box;
+    }
+
+    .lab h2 {
+      color: var(--accent-strong);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .lab .card ul {
+      margin: 6px 0 0;
+      padding-right: 1.25rem;
+      color: var(--muted);
+    }
+
+    .lab .card li {
+      margin-bottom: 8px;
+    }
+
+    .lab .card li:last-child {
+      margin-bottom: 0;
+    }
+
+    .lab .card p {
+      margin: 0 0 8px;
+      color: var(--muted);
+    }
+
+    .lab-column > .card:first-child {
+      margin-top: 0;
+    }
+
+    .linux-page .lede {
+      color: var(--muted);
+      font-weight: 400;
+      max-width: 52ch;
+    }
+
+    .linux-page h2 {
+      color: var(--accent-strong);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0 0 10px;
+    }
+
+    .linux-page .card ul {
+      margin: 6px 0 0;
+      padding-right: 1.25rem;
+      color: var(--muted);
+    }
+
+    .linux-page .card li {
+      margin-bottom: 8px;
+    }
+
+    .linux-page .card p {
+      margin: 0 0 8px;
+      color: var(--muted);
+    }
+
+    .linux-stack-card {
+      border-color: rgba(13, 148, 136, 0.18);
+      background: linear-gradient(180deg, #ffffff 0%, rgba(13, 148, 136, 0.03) 100%);
+    }
+
+    .lab code {
+      font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+      font-size: 0.88em;
+      background: rgba(13, 148, 136, 0.1);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .about-page .card h2 {
+      color: var(--accent-strong);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .about-page .card ul {
+      margin: 6px 0 0;
+      padding-right: 1.25rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .about-page .card li {
+      margin-bottom: 8px;
+    }
+
+    .about-page .card p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .about-page .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-page .card a {
+      color: var(--accent-strong);
+      font-weight: 500;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(13, 148, 136, 0.35);
+    }
+
+    .about-page .card a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .footer-copy {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
     }
 
     .highlight {
-      color: #38bdf8;
-      font-weight: bold;
+      color: var(--accent-strong);
+      font-weight: 600;
+    }
+
+    footer.site-footer {
+      text-align: center;
+      padding: 22px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .resources-note {
+      margin-top: 28px;
+      padding: 20px 22px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .resources-note h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 12px;
+      color: var(--text);
+    }
+
+    .resources-note ul {
+      margin: 0;
+      padding-right: 1.25rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .resources-note a {
+      color: var(--accent-strong);
+      font-weight: 500;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(13, 148, 136, 0.35);
+    }
+
+    .resources-note a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
     }
   </style>
 </head>
 
 <body>
+  <div class="shell">
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="#home" class="brand" id="brand-home" data-tab="home">עידן אוחנה <span>· IT</span></a>
+        <nav class="tabs" aria-label="ניווט ראשי">
+          <button type="button" data-tab="home" class="active">בית</button>
+          <button type="button" data-tab="about">אודות</button>
+        </nav>
+      </div>
+    </header>
 
-<nav>
-  <button data-tab="home">Home</button>
-  <button data-tab="about">About</button>
-  <button data-tab="lab">Lab</button>
-</nav>
+    <main>
+      <!-- HOME -->
+      <section id="home" class="content home-hero is-visible" aria-labelledby="home-title">
+        <div class="hero-intro">
+          <div class="home-photo-col">
+            <div class="profile-photo-wrap" id="profile-photo-wrap">
+              <img
+                src="images/profile.jpeg"
+                alt="עידן אוחנה — תמונת פרופיל"
+                class="profile-photo"
+                width="168"
+                height="168"
+                decoding="async"
+                onerror="document.getElementById('profile-photo-wrap').classList.add('no-photo')">
+            </div>
+            <div class="home-under-tabs" role="group" aria-label="מעבדה ולינוקס">
+              <a href="#lab" class="home-under-tab" data-tab="lab">מעבדה</a>
+              <a href="#linux" class="home-under-tab" data-tab="linux">לינוקס</a>
+            </div>
+          </div>
+          <div class="intro-text">
+            <h1 id="home-title" class="page-title">עידן אוחנה</h1>
+            <nav class="home-subnav" aria-label="מעבר בין מקטעים">
+              <a href="#home" data-tab="home" class="active">בית</a>
+              <span class="sep" aria-hidden="true">·</span>
+              <a href="#about" data-tab="about">אודות</a>
+            </nav>
+            <div class="home-about-rows" aria-label="אודות מקוצר">
+              <p class="home-about-line">IT — תשתיות, Windows Server, Active Directory ורשת ארגונית.</p>
+              <p class="home-about-line">מעבדה ביתית: דומיין, DC, קליינטים, DNS ו-DHCP; VM ו-snapshots לפני שינויים.</p>
+              <p class="home-about-line">PowerShell וסקריפטים לחזרתיות — משתמשים, OU, אוטומציה.</p>
+              <p class="home-about-line">נושאים: זהות ומדיניות ב-AD, DNS/DHCP, וירטואליזציה, חומת אש במעבדה.</p>
+              <p class="home-about-line">כלים: Hyper-V / VMware, RSAT, Git ו-GitHub לאתר ולתיעוד.</p>
+              <p class="home-about-line">האתר מרכז הערות, תצורות וקישורים; מקורות מפורטים ב<strong class="highlight">אודות</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<!-- HOME -->
-<div id="home" class="content">
-  <h1>Idan Ohana</h1>
-  <p class="highlight">IT Infrastructure | Active Directory | Virtualization</p>
+      <!-- ABOUT -->
+      <section id="about" class="content about-page" aria-labelledby="about-title">
+        <h1 id="about-title" class="page-title">אודות</h1>
+        <p class="lede">מקורות למידה ותבניות — הסיכום האישי ליד התמונה בדף הבית</p>
 
-  <div class="card">
-    מתמחה בתכנון, הקמה וניהול של תשתיות ארגוניות כולל Active Directory וסביבות וירטואליות.
+        <div class="card">
+          <h2>מקורות למידה</h2>
+          <ul>
+            <li><a href="https://learn.microsoft.com/en-us/training/" target="_blank" rel="noopener noreferrer">Microsoft Learn</a> — מסלולים על Windows Server, זהות, רשת ועוד</li>
+            <li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a> — השראה לסקריפטים, תבניות אתרים ושיתוף קוד</li>
+            <li><a href="https://www.rfc-editor.org/" target="_blank" rel="noopener noreferrer">RFC</a> — כשרוצים להבין פרוטוקולים (DNS וכו’) מהשורש</li>
+            <li><a href="https://lab.github.com/" target="_blank" rel="noopener noreferrer">GitHub Skills / Labs</a> — תרגול Git ועבודה עם ריפוזיטורי</li>
+          </ul>
+        </div>
+
+        <aside class="resources-note" aria-labelledby="resources-heading">
+          <h2 id="resources-heading">תבניות לאתר סטטי</h2>
+          <ul>
+            <li><a href="https://html5up.net/" target="_blank" rel="noopener noreferrer">HTML5 UP</a> — תבניות HTML/CSS חינמיות</li>
+            <li><a href="https://pages.github.com/themes/" target="_blank" rel="noopener noreferrer">ערכות נושא ל-GitHub Pages</a></li>
+            <li><a href="https://github.com/CynthiaNiaz/portfolio-template" target="_blank" rel="noopener noreferrer">portfolio-template (CynthiaNiaz)</a></li>
+            <li><a href="https://github.com/lowinertia/free-to-engineer-portfolio-template" target="_blank" rel="noopener noreferrer">free-to-engineer-portfolio-template</a></li>
+            <li><a href="https://github.com/nilaachandra/minimalio" target="_blank" rel="noopener noreferrer">minimalio</a></li>
+            <li><a href="https://carrd.co/" target="_blank" rel="noopener noreferrer">Carrd</a> · <a href="https://sites.google.com/" target="_blank" rel="noopener noreferrer">Google Sites</a></li>
+          </ul>
+        </aside>
+      </section>
+
+      <!-- LAB -->
+      <section id="lab" class="content lab" aria-labelledby="lab-title">
+        <h1 id="lab-title" class="page-title">מעבדה</h1>
+        <p class="lede">חומר מסכם על תשתית טיפוסית במעבדת Windows: שרתים, דומיין, רשת וקלאסטר כרעיון — בלי לייחס ציוד או גרסאות שלא תועדו כאן. ל<strong class="highlight">לינוקס</strong> יש לשונית נפרדת.</p>
+
+        <div class="lab-column lab-column-windows">
+            <div class="card">
+              <h2>מבט כללי</h2>
+              <p>מעבדה כזו משמשת לחקות חלק מסביבת ארגון: זהות (Active Directory), שירותי רשת בסיסיים, ותחנות קצה. רוב הרכיבים מרוצים כמכונות וירטואליות כדי לאפשר צילום מצב (snapshot) לפני שינוי והחזרה אחורה.</p>
+            </div>
+
+            <div class="card">
+              <h2>שרתים — מה זה אומר במעבדה</h2>
+              <p><span class="highlight">שרת</span> בתכליתו הוא מחשב (פיזי או וירטואלי) שמריץ שירותים קבועים לרשת: אימות, שמות, הקצאת כתובות, קבצים וכו'. במעבדה ביתית נפוץ לרכז כמה תפקידים על מעט מכונות; בארגון אמיתי מפורקים לפי רישוי, ביצועים וזמינות.</p>
+              <ul>
+                <li><span class="highlight">מכונה וירטואלית</span> — קובץ דיסק + הגדרות חומרה מדומה; רץ מעל Hyper-V, VMware Workstation/Fusion, או מארח עם KVM. מאפשר כמה “שרתים” על מחשב אחד.</li>
+                <li><span class="highlight">תפקידי Windows Server</span> שמופיעים בתרחיש AD: בקר דומיין (DC), לעיתים אותו שרת גם מחזיק DNS ו-DHCP; אפשר להוסיף שרת קבצים, שרת יישומים וכו' לפי מה שנלמד.</li>
+                <li><span class="highlight">יותר משרת אחד</span> — בתרגול זמינות אפשר להקים שני DC לאותו דומיין; כל DC מחזיק עותק של AD ומסנכרן עם השותף.</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h2>קלאסטר — עקרון (Windows ועולם מיכלים)</h2>
+              <p><span class="highlight">קלאסטר</span> הוא קבוצת מחשבים (צמתים) שמתואמת כך שאותו שירות או עומס יכול לעבור ביניהם או לרוץ במקביל — כדי לשפר זמינות או להרחיב קיבולת.</p>
+              <ul>
+                <li><span class="highlight">Windows Failover Clustering</span> — טכנולוגיה של Microsoft לזוג או יותר שרתי Windows שחולקים משאבים (למשל דיסק משותף או תצורת SMB). נדרש <span class="highlight">quorum</span> (מנגנון הצבעה) כדי שהקלאסטר יחליט מי “בעלים” על המשאבים וימנע split-brain. שימושים מתועדים: למשל זמינות ל-SQL Server, או קבוצת מארחי Hyper-V.</li>
+                <li><span class="highlight">קלאסטר מול מעבדת AD בלבד</span> — AD עם כמה DC הוא כבר רפליקציה וזמינות בשכבת הזהות; Failover Clustering הוא שכבה נפרדת לשירותים ספציפיים שמוגדרים כמשאב מקובצ.</li>
+                <li><span class="highlight">Kubernetes (בדרך כלל על לינוקס)</span> — מערכת לאורכסטרציה של מיכלים על מספר מארחים: מתאימה לפריסת מיקרו-שירותים, לא לחלופה של Active Directory. נלמדת בנפרד מתשתית דומיין Windows.</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h2>הקמת סביבת עבודה (דומיין)</h2>
+              <p>תרחיש בסיס שמופיע במעבדות מסוג זה:</p>
+              <ul>
+                <li><span class="highlight">Domain Controller (DC)</span> — מחזיק את Active Directory, מנפיק Kerberos, משרת LDAP, ומנהל מדיניות.</li>
+                <li><span class="highlight">קליינטים</span> — Windows 10/11 (או שרת נוסף) מצורפים לדומיין כדי לבדוק כניסה, מדיניות קבוצתית, ושיתוף משאבים.</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h2>DNS ו־DHCP</h2>
+              <ul>
+                <li><span class="highlight">DNS</span> — מתרגם שמות לכתובות IP; בדומיין Active Directory אזורי DNS מסונכרנים בדרך כלל עם שם הדומיין והרשומות של שירותי Microsoft.</li>
+                <li><span class="highlight">DHCP</span> — מקצה לתחנות כתובת, מסכת רשת, שרת DNS ושער ברירת מחדל; מקל על הרחבת המעבדה בלי קונפיג ידני לכל קליינט.</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h2>תקשורת וחומת אש</h2>
+              <ul>
+                <li>בדיקות גילוי (למשל ping, שיתוף קבצים, RPC ל-AD) דורשות שכל הרכיבים באותה רשת לוגית או עם ניתוב מתאים.</li>
+                <li><span class="highlight">Windows Defender Firewall</span> — חוסם כברירת מחדל חלק מהתעבורה; במעבדה לעיתים מרככים כללים זמנית לצורך debug, ואז מחמירים שוב.</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h2>סקריפטים ואוטומציה</h2>
+              <ul>
+                <li><span class="highlight">יצירת משתמשים</span> ב-AD — אוטומציה ב-PowerShell (למשל <code dir="ltr">New-ADUser</code>) לעומת יצירה ידנית ב-ADUC.</li>
+                <li><span class="highlight">יצירת OU</span> — סקריפטים שמייצרים מבנה יחידות ארגוניות באופן חוזר, כדי לשמור על אחידות בין סביבות.</li>
+              </ul>
+            </div>
+          </div>
+      </section>
+
+      <!-- LINUX -->
+      <section id="linux" class="content linux-page" aria-labelledby="linux-title">
+        <h1 id="linux-title" class="page-title">לינוקס</h1>
+        <p class="lede">עקרונות, עמדת לינוקס לצד מעבדת Windows, ובלי לייחס מה בדיוק מותקן אצלך.</p>
+
+        <div class="card linux-stack-card">
+          <h2>עמדת לינוקס — מה המערכת ואיך זה ליד Windows</h2>
+          <p><span class="highlight">לינוקס</span> הוא מערכת הפעלה ממשפחת Unix: הליבה (Linux kernel) מנהלת חומרה ותהליכים; מעליה רצות תוכניות ושירותים. “הפצה” (למשל Debian, Ubuntu, RHEL, AlmaLinux, Fedora) היא שילוב של ליבה, ספריית חבילות, כלי ניהול ולעיתים ממשק גרפי אופציונלי.</p>
+          <p>בניגוד ל-Windows Server, רישוי ומודל תמיכה שונים, ודגש חזק על שורת פקודה, קבצי קונפיגורציה טקסטואליים ושירותים שמנוהלים לרוב עם <span class="highlight">systemd</span> (בהפצות מודרניות רבות). גישה מרחוק טיפוסית היא <span class="highlight">SSH</span> (מוצפן), לעומת RDP ב-Windows.</p>
+          <p><span class="highlight">שימושים טיפוסיים במעבדות</span> (כל אחד קיים בעולם האמיתי; לא מציין כאן מה בדיוק מותקן אצלך):</p>
+          <ul>
+            <li>שרת אינטרנט — nginx או Apache HTTP Server.</li>
+            <li>DNS — למשל BIND (named); חלופה/תוספת ל-DNS של Windows כשלומדים רקורסיה והגדרות אזור.</li>
+            <li>DHCP — למשל isc-dhcp-server; עקרון ההקצאה דומה ל-Windows DHCP.</li>
+            <li>סקריפטים — Bash או שפות אחרות; אוטומציה דרך cron או systemd timers.</li>
+            <li>מיכלים — Docker או Podman להרצת יישומים מבודדים; Kubernetes לארגון מספר מארחים.</li>
+          </ul>
+          <p>Active Directory הוא שירות שמיקרוסופט מממשת בעיקר ב-Windows; לינוקס יכול להצטרף לדומיין עם כלים כמו SSSD/Winbind (תלוי בתרחיש), או לעבוד כשרת עצמאי באותה רשת IP — חשוב להבדיל בין “אותה רשת פיזית” לבין “אותו דומיין מנוהל”.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p class="footer-copy">עידן אוחנה · IT Infrastructure</p>
+    </footer>
   </div>
-</div>
 
-<!-- ABOUT -->
-<div id="about" class="content">
-  <h1>About</h1>
-  <div class="card">
-    איש IT עם ניסיון מעשי בתשתיות מערכות, DNS, DHCP וניהול סביבות ארגוניות.
-  </div>
-</div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const tabTriggers = document.querySelectorAll("[data-tab]");
+      const headerTabs = document.querySelectorAll("nav.tabs button[data-tab]");
+      const homeSubnav = document.querySelectorAll(".home-subnav a[data-tab]");
+      const homeUnderTabs = document.querySelectorAll(".home-under-tab[data-tab]");
+      const sections = document.querySelectorAll("main .content");
 
-<!-- LAB -->
-<div id="lab" class="content">
-  <h1>Enterprise Lab</h1>
+      function showTab(tabId) {
+        sections.forEach(function (sec) {
+          sec.classList.toggle("is-visible", sec.id === tabId);
+        });
+        headerTabs.forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-tab") === tabId);
+        });
+        homeSubnav.forEach(function (a) {
+          a.classList.toggle("active", a.getAttribute("data-tab") === tabId);
+        });
+        homeUnderTabs.forEach(function (a) {
+          a.classList.toggle("active", a.getAttribute("data-tab") === tabId);
+        });
+        try {
+          history.replaceState(null, "", "#" + tabId);
+        } catch (e) { /* ignore */ }
+        window.scrollTo(0, 0);
+      }
 
-  <div class="card">
-    <b>Architecture:</b>
-    <ul>
-      <li>Domain Controller</li>
-      <li>Clients</li>
-      <li>DNS / DHCP</li>
-    </ul>
-  </div>
+      tabTriggers.forEach(function (el) {
+        el.addEventListener("click", function (e) {
+          e.preventDefault();
+          showTab(el.getAttribute("data-tab"));
+        });
+      });
 
-  <div class="card">
-    <b>Capabilities:</b>
-    <ul>
-      <li>Active Directory deployment</li>
-      <li>Network troubleshooting</li>
-      <li>Real-world simulations</li>
-    </ul>
-  </div>
-</div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  const buttons = document.querySelectorAll("nav button");
-  const sections = document.querySelectorAll(".content");
-
-  function showTab(tabId) {
-    sections.forEach(sec => sec.style.display = "none");
-    buttons.forEach(btn => btn.classList.remove("active"));
-
-    document.getElementById(tabId).style.display = "block";
-    document.querySelector(`[data-tab="${tabId}"]`).classList.add("active");
-  }
-
-  buttons.forEach(button => {
-    button.addEventListener("click", () => {
-      const tab = button.getAttribute("data-tab");
-      showTab(tab);
+      var hash = (location.hash || "").replace(/^#/, "");
+      if (hash === "about" || hash === "lab" || hash === "linux" || hash === "home") {
+        showTab(hash);
+      } else {
+        showTab("home");
+      }
     });
-  });
-
-  // ברירת מחדל
-  showTab("home");
-});
-</script>
-
+  </script>
 </body>
 </html>
