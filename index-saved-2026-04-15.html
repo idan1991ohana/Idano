@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="theme-color" content="#1e3a5f">
+  <meta name="description" content="עידן אוחנה — פתרונות מחשוב מקצועיים בירושלים והסביבה.">
+  <title>עידן אוחנה | פתרונות מחשוב מקצועיים</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --hero-bg: linear-gradient(145deg, #0f172a 0%, #1e3a5f 45%, #3d6a9c 100%);
+      --text: #1e293b;
+      --muted: #64748b;
+      --surface: #fff;
+      --surface-alt: #eef3f9;
+      --border: #dbe4f0;
+      --accent: #4a90c8;
+      --accent-soft: #6ba9db;
+      --accent-strong: #2d6a9c;
+      --radius-lg: 16px;
+      --shadow: 0 4px 20px rgba(30, 58, 95, 0.07);
+      --font: "Heebo", system-ui, sans-serif;
+      --font-review: "Assistant", "Heebo", system-ui, sans-serif;
+      --max: 800px;
+      --nav-rail-w: 184px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: var(--font); color: var(--text); line-height: 1.55; background: var(--surface-alt); }
+    .skip-link { position: absolute; top: -100px; right: 16px; background: var(--accent); color: #fff; padding: 10px 18px; border-radius: 8px; font-weight: 600; z-index: 100; text-decoration: none; }
+    .skip-link:focus { top: 16px; }
+    @media (min-width: 900px) { .skip-link { right: auto; left: 16px; } }
+    .u-visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .shell { min-height: 100vh; display: flex; flex-direction: column; overflow-x: clip; }
+    header.site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+    .header-inner { max-width: var(--max); margin: 0 auto; padding: 8px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .header-end { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-main { display: flex; flex-wrap: wrap; gap: 4px 8px; list-style: none; margin: 0; padding: 0; }
+    .nav-main a { color: var(--muted); text-decoration: none; font-size: 0.8rem; font-weight: 500; padding: 6px 8px; border-radius: 8px; }
+    .nav-main a:hover { color: var(--accent-strong); background: rgba(74,144,200,.1); }
+    .header-cta { font-weight: 700; font-size: 0.8rem; padding: 8px 16px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-soft)); color: #fff; text-decoration: none; display: inline-flex; align-items: center; }
+    @media (min-width: 900px) {
+      header.site-header { position: fixed; top: 0; right: 0; bottom: 0; left: auto; width: var(--nav-rail-w); border-bottom: none; border-inline-end: 1px solid var(--border); display: flex; align-items: stretch; }
+      .header-inner { flex-direction: column; max-width: none; width: 100%; margin: 0; padding: 28px 14px 32px; flex: 1; }
+      .header-end { flex-direction: column; gap: 20px; width: 100%; flex-wrap: nowrap; }
+      .nav-main { flex-direction: column; gap: 8px; width: 100%; }
+      .nav-main li { width: 100%; }
+      .nav-main a { display: block; text-align: center; font-size: 0.92rem; font-weight: 600; padding: 12px 10px; }
+      .header-cta { font-size: 0.82rem; padding: 12px; justify-content: center; width: 100%; }
+      .shell { padding-inline-start: var(--nav-rail-w); }
+      [dir="rtl"] .a11y-widget { right: auto; left: 16px; }
+    }
+    .hero { background: var(--hero-bg); color: #f1f5f9; padding: clamp(24px,5vw,40px) 16px; position: relative; overflow: hidden; isolation: isolate; }
+    .hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to left, transparent 0%, transparent 10%, rgba(15,23,42,.32) 28%, rgba(15,23,42,.72) 54%, rgba(15,23,42,.9) 100%); z-index: 1; pointer-events: none; }
+    .hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 52% 50% at 78% 36%, rgba(255,255,255,.08), transparent 58%); z-index: 1; pointer-events: none; }
+    .hero-inner { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; display: flex; flex-direction: row; align-items: center; gap: clamp(14px,3.5vw,28px); flex-wrap: wrap; }
+    .hero-photo-layer { flex: 0 0 auto; width: clamp(88px,22vw,132px); height: clamp(88px,22vw,132px); border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,.28); box-shadow: 0 6px 24px rgba(0,0,0,.28); pointer-events: none; align-self: center; }
+    @media (min-width: 640px) { .hero-photo-layer { width: clamp(100px,16vw,140px); height: clamp(100px,16vw,140px); } }
+    @media (min-width: 900px) {
+      .hero::before {
+        background: linear-gradient(to left, transparent 0%, transparent 4%, rgba(15,23,42,.22) 22%, rgba(15,23,42,.65) 48%, rgba(15,23,42,.92) 78%, rgba(15,23,42,.96) 100%);
+      }
+      .hero-inner {
+        max-width: min(1120px, calc(100vw - var(--nav-rail-w) - 32px));
+        width: 100%;
+        margin-inline-end: auto;
+        margin-inline-start: 0;
+        justify-content: flex-start;
+        gap: clamp(24px, 4vw, 52px);
+        padding-inline-end: clamp(12px, 3vw, 40px);
+        padding-inline-start: clamp(16px, 2.5vw, 32px);
+      }
+      .hero-photo-layer {
+        width: clamp(128px, 12vw, 176px);
+        height: clamp(128px, 12vw, 176px);
+      }
+      .hero h1 { font-size: clamp(1.65rem, 2.8vw, 2.35rem); }
+      .hero-lead { font-size: clamp(0.92rem, 1.4vw, 1.08rem); max-width: 36rem; }
+      .hero-copy { flex: 1 1 280px; }
+      .hero-inner:has(.hero-photo-layer.no-img) {
+        margin-inline: auto;
+        justify-content: center;
+      }
+    }
+    .hero-photo-layer.no-img { display: none; }
+    .hero-bg-profile { width: 100%; height: 100%; object-fit: cover; object-position: 46% top; display: block; }
+    .hero-copy { flex: 1 1 200px; min-width: 0; }
+    .hero h1 { margin: 0 0 8px; font-size: clamp(1.35rem,4vw,1.85rem); font-weight: 800; }
+    .hero-lead { margin: 0 0 14px; font-size: 0.88rem; max-width: 26rem; color: rgba(241,245,249,.9); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn-primary { font-weight: 700; font-size: 0.82rem; padding: 10px 18px; border-radius: 999px; background: #fff; color: var(--accent-strong); text-decoration: none; display: inline-flex; }
+    .btn-secondary { font-weight: 600; font-size: 0.82rem; padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,.35); color: #f1f5f9; text-decoration: none; display: inline-flex; }
+    @media (max-width: 480px) {
+      .hero-inner { justify-content: center; text-align: center; }
+      .hero-copy { flex-basis: 100%; text-align: center; }
+      .hero-actions { justify-content: center; }
+    }
+    .hero-inner:has(.hero-photo-layer.no-img) { justify-content: center; }
+    .hero-inner:has(.hero-photo-layer.no-img) .hero-copy { text-align: center; }
+    .hero-inner:has(.hero-photo-layer.no-img) .hero-actions { justify-content: center; }
+    .section { padding: clamp(22px,3.5vw,36px) 16px; }
+    .section-inner { max-width: var(--max); margin: 0 auto; }
+    @media (min-width: 900px) {
+      .section-inner { max-width: min(1120px, calc(100vw - var(--nav-rail-w) - 32px)); }
+    }
+    .section-kicker { text-align: center; font-size: 0.72rem; font-weight: 700; color: var(--accent-strong); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 4px; }
+    .section-title { text-align: center; font-size: clamp(1.2rem,3vw,1.55rem); font-weight: 800; margin: 0 0 6px; }
+    .section-sub { text-align: center; color: var(--muted); max-width: 24rem; margin: 0 auto 18px; font-size: 0.84rem; }
+    .services-stack {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(20px, 3vw, 32px);
+    }
+    .services-stack__intro { text-align: center; }
+    @media (min-width: 900px) {
+      .services-stack__intro .section-kicker,
+      .services-stack__intro .section-title,
+      .services-stack__intro .section-sub {
+        text-align: right;
+      }
+      .services-stack__intro .section-sub {
+        margin-inline-start: 0;
+        margin-inline-end: auto;
+        max-width: 34rem;
+      }
+    }
+    #services.section--services {
+      background: var(--surface-alt);
+      color: var(--text);
+    }
+    #services.section--services .t-testimonials-block {
+      max-width: none;
+      width: 100%;
+    }
+    @media (min-width: 900px) {
+      #services.section--services .t-carousel-main,
+      #services.section--services .t-panorama {
+        max-width: min(900px, 100%);
+      }
+    }
+    .service-showcase {
+      display: grid;
+      gap: clamp(14px, 2.2vw, 22px);
+      grid-template-columns: 1fr;
+      width: 100%;
+    }
+    @media (min-width: 680px) {
+      .service-showcase { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (min-width: 1024px) {
+      .service-showcase { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    .service-hero-card {
+      display: flex;
+      flex-direction: column;
+      border-radius: 18px;
+      overflow: hidden;
+      min-height: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .service-hero-card__visual {
+      aspect-ratio: 16 / 10;
+      min-height: clamp(150px, 22vw, 220px);
+      max-height: min(280px, 38vw);
+      overflow: hidden;
+      background: linear-gradient(145deg, #e8f0fa, #d4e6f4);
+    }
+    .service-hero-card__visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .about-body { max-width: 36rem; margin: 0 auto; text-align: center; }
+    .about-body .role { color: var(--accent-strong); font-weight: 600; margin: 0 0 10px; }
+    .contact-split { display: grid; gap: 18px; align-items: start; }
+    @media (min-width: 768px) {
+      .contact-split {
+        grid-template-columns: minmax(0, min(300px, 30%)) minmax(0, 1fr);
+        gap: 20px 28px;
+      }
+    }
+    .contact-form-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px 14px;
+      box-shadow: var(--shadow);
+      max-width: 300px;
+      width: 100%;
+      margin-inline: auto;
+    }
+    @media (min-width: 768px) {
+      .contact-form-wrap { margin-inline: 0; }
+    }
+    .contact-form-wrap h3 { margin: 0 0 6px; font-size: 0.92rem; }
+    .form-note { font-size: 0.65rem; color: var(--muted); margin: 0 0 8px; padding: 6px 8px; border: 1px dashed var(--border); border-radius: 8px; line-height: 1.35; }
+    .contact-form-wrap .field { margin-bottom: 8px; }
+    .contact-form-wrap .field label { font-size: 0.72rem; margin-bottom: 3px; }
+    .contact-form-wrap .field input,
+    .contact-form-wrap .field textarea { padding: 6px 9px; font-size: 0.82rem; border-radius: 7px; }
+    .field { margin-bottom: 10px; }
+    .field label { display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 4px; }
+    .field input, .field textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.88rem; }
+    .contact-form-wrap .field textarea { min-height: 64px; resize: vertical; }
+    .btn-submit { width: 100%; margin-top: 4px; padding: 8px 12px; border: none; border-radius: 999px; background: var(--accent-strong); color: #fff; font-weight: 700; font-size: 0.78rem; cursor: not-allowed; opacity: 0.7; }
+    .contact-channels { display: flex; flex-direction: column; gap: 12px; }
+    .contact-channel { display: block; background: var(--surface); border: 1px solid rgba(219,228,240,.95); border-radius: 16px; padding: 16px 18px; text-decoration: none; color: inherit; box-shadow: 0 4px 20px rgba(30,58,95,.05); }
+    .contact-channel--static { cursor: default; }
+    .contact-channel-label { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .contact-channel-value { font-size: 1.05rem; font-weight: 700; color: var(--accent-strong); }
+    .contact-channel-value--email { font-size: 0.88rem; font-weight: 600; word-break: break-word; }
+    .contact-reveal-btn { font: inherit; font-size: 1.05rem; font-weight: 700; color: var(--accent-strong); background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+    a.contact-reveal-target { text-decoration: none; color: var(--accent-strong); }
+    a.contact-reveal-target:hover { text-decoration: underline; }
+    .whatsapp-link { display: inline-flex; width: 54px; height: 54px; color: #fff; background: #25d366; border-radius: 16px; align-items: center; justify-content: center; }
+    .whatsapp-link svg { width: 30px; height: 30px; }
+    .contact-wa-hint { margin: 0; font-size: 0.78rem; color: var(--muted); }
+    .t-carousel-title { text-align: center; margin: 0 0 16px; font-size: 0.78rem; font-weight: 800; color: var(--accent-strong); text-transform: uppercase; letter-spacing: 0.06em; }
+    /* בלוק המלצות: קרוסלה בשורה מלאה, מתחתיה טופס ביקורת ממורכז ונקי */
+    .t-testimonials-block {
+      margin-top: 28px;
+      margin-inline: auto;
+      width: 100%;
+      max-width: min(720px, 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+    .t-carousel-standalone {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 0;
+    }
+    .t-carousel-main {
+      width: 100%;
+      max-width: 640px;
+      margin-inline: auto;
+      min-width: 0;
+    }
+    /* קרוסלת המלצות — 3 כרטיסים; מעבר מחוספס = fade חלק על כל השכבה */
+    .t-wheel-viewport {
+      overflow: hidden;
+      width: 100%;
+      padding: 12px 0 8px;
+      position: relative;
+      perspective: 1000px;
+      opacity: 1;
+      filter: none;
+      transition: opacity 0.65s cubic-bezier(0.33, 1, 0.68, 1), filter 0.65s ease;
+    }
+    .t-panorama {
+      display: flex;
+      flex-direction: row;
+      direction: ltr;
+      align-items: stretch;
+      justify-content: center;
+      gap: clamp(6px, 1.8vw, 12px);
+      width: 100%;
+      max-width: 640px;
+      margin-inline: auto;
+      will-change: transform;
+      transform-style: preserve-3d;
+    }
+    .t-slot {
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: 34%;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      transition:
+        filter 0.55s ease,
+        opacity 0.55s ease,
+        transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .t-slot--prev,
+    .t-slot--next {
+      filter: blur(5px);
+      -webkit-filter: blur(5px);
+      opacity: 0.68;
+      transform: scale(0.93) rotateY(12deg);
+      z-index: 1;
+    }
+    .t-slot--next {
+      transform: scale(0.93) rotateY(-12deg);
+    }
+    .t-slot--curr {
+      filter: none;
+      -webkit-filter: none;
+      opacity: 1;
+      transform: scale(1.05) rotateY(0deg);
+      z-index: 2;
+      max-width: 38%;
+    }
+    .t-slot .t-card {
+      direction: rtl;
+      background: var(--surface);
+      border: 2px solid var(--accent-strong);
+      border-radius: 18px;
+      padding: 12px 12px 11px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      width: 100%;
+      margin: 0 auto;
+    }
+    @media (max-width: 560px) {
+      .t-slot .t-card { padding: 10px 8px; border-radius: 14px; }
+      .t-card-quote { font-size: 0.78rem !important; line-height: 1.45 !important; }
+      .t-card-name { font-size: 0.72rem !important; }
+      .t-slot--prev,
+      .t-slot--next {
+        filter: blur(4px);
+        -webkit-filter: blur(4px);
+        opacity: 0.62;
+        transform: scale(0.88) rotateY(10deg);
+      }
+      .t-slot--next {
+        transform: scale(0.88) rotateY(-10deg);
+      }
+    }
+    .t-card-stars { font-size: 0.95rem; letter-spacing: 3px; margin: 0 0 8px; direction: ltr; }
+    .star-full { color: #e6b800; }
+    .star-empty { color: #d4d4d8; }
+    .t-card-quote { margin: 0 0 8px; font-size: 0.88rem; line-height: 1.55; }
+    .t-card-name { margin: 0; font-size: 0.8rem; font-weight: 700; color: var(--muted); }
+    .t-carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .t-carousel-dot { width: 8px; height: 8px; border-radius: 50%; border: none; background: var(--border); cursor: pointer; padding: 0; }
+    .t-carousel-dot.is-active { background: var(--accent-strong); }
+    /* טופס הוספת ביקורת — קומפקטי, ממורכז מתחת לקרוסלה */
+    .t-review-box {
+      font-family: var(--font-review);
+      font-size: 0.82rem;
+      line-height: 1.45;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      padding: 12px 14px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      scroll-margin-top: 96px;
+    }
+    .t-review-box:focus-within {
+      border-color: rgba(74, 144, 200, 0.45);
+      box-shadow: 0 6px 28px rgba(30, 58, 95, 0.08);
+    }
+    .t-review-box__head {
+      text-align: center;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .t-review-box__title {
+      margin: 0;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .t-review-box .field {
+      margin-bottom: 8px;
+    }
+    .t-review-box .field label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .t-review-box .field input,
+    .t-review-box .field textarea {
+      font-family: var(--font-review);
+      font-size: 0.8rem;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      width: 100%;
+      background: #fafbfc;
+    }
+    .t-review-box .field textarea {
+      min-height: 56px;
+      resize: vertical;
+      line-height: 1.45;
+    }
+    .t-review-box .field input:focus,
+    .t-review-box .field textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+    .t-review-stars-field {
+      margin: 0;
+      padding: 8px 6px 6px;
+      background: var(--surface-alt);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .t-review-stars-track {
+      display: flex;
+      flex-direction: row;
+      direction: ltr;
+      justify-content: center;
+      gap: 3px;
+      flex-wrap: wrap;
+    }
+    .t-review-star-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 1.05rem;
+      line-height: 1;
+      cursor: pointer;
+      color: #cbd5e1;
+      padding: 4px 7px;
+      min-width: 32px;
+      border-radius: 8px;
+      transition: color 0.15s ease, transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+    .t-review-star-btn:hover {
+      transform: scale(1.04);
+      border-color: rgba(74, 144, 200, 0.35);
+    }
+    .t-review-star-btn.is-on {
+      color: #e6b800;
+      background: rgba(230, 184, 0, 0.1);
+      border-color: rgba(230, 184, 0, 0.45);
+    }
+    .t-review-star-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .t-review-box__foot {
+      margin: 8px 0 0;
+      font-size: 0.62rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.4;
+    }
+    .t-review-box__foot a {
+      color: var(--accent-strong);
+      font-weight: 600;
+    }
+    footer.site-footer { background: linear-gradient(180deg, #152a45 0%, #0f172a 100%); color: #94a3b8; padding: 22px 16px; margin-top: auto; }
+    .footer-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 18px; }
+    @media (min-width: 900px) {
+      .footer-inner,
+      .footer-bottom { max-width: min(1120px, calc(100vw - var(--nav-rail-w) - 32px)); }
+    }
+    .footer-col h4 { color: #f1f5f9; font-size: 0.9rem; margin: 0 0 14px; }
+    .footer-col ul { list-style: none; margin: 0; padding: 0; }
+    .footer-col a { color: #94a3b8; text-decoration: none; font-size: 0.88rem; }
+    .footer-bottom { max-width: var(--max); margin: 18px auto 0; padding-top: 12px; border-top: 1px solid rgba(148,163,184,.2); text-align: center; font-size: 0.82rem; }
+    .a11y-widget { position: fixed; bottom: 16px; right: 16px; z-index: 90; font-size: 0.85rem; }
+    @media (prefers-reduced-motion: reduce) {
+      .t-wheel-viewport { transition-duration: 0.15s !important; }
+      .t-slot { transition: none !important; }
+    }
+    /* בועות סמכויות בצד (מול סרגל הניווט) */
+    .cred-bubbles { display: none; }
+    @media (min-width: 900px) {
+      .cred-bubbles {
+        display: block;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: max(10px, env(safe-area-inset-left, 0px));
+        margin-block: auto;
+        height: fit-content;
+        z-index: 25;
+        width: min(158px, calc((100vw - var(--nav-rail-w)) * 0.22));
+        max-height: min(88vh, 520px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: thin;
+        pointer-events: none;
+      }
+      .cred-bubbles__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+      .cred-bubbles__item {
+        pointer-events: auto;
+        margin: 0;
+        padding: 9px 11px;
+        border-radius: 999px;
+        text-align: center;
+        font-size: 0.68rem;
+        font-weight: 600;
+        line-height: 1.38;
+        letter-spacing: 0.01em;
+        color: #1a4a72;
+        background: linear-gradient(160deg, rgba(240, 248, 255, 0.94), rgba(220, 236, 252, 0.9));
+        border: 1px solid rgba(74, 144, 200, 0.28);
+        box-shadow:
+          0 3px 14px rgba(30, 74, 120, 0.07),
+          inset 0 1px 0 rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      .cred-bubbles__item:nth-child(even) {
+        margin-inline-start: 10px;
+      }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      @media (min-width: 900px) {
+        .cred-bubbles__item {
+          animation: cred-float 7s ease-in-out infinite;
+        }
+        .cred-bubbles__item:nth-child(2) { animation-delay: -1.2s; }
+        .cred-bubbles__item:nth-child(3) { animation-delay: -2.4s; }
+        .cred-bubbles__item:nth-child(4) { animation-delay: -3.6s; }
+        .cred-bubbles__item:nth-child(5) { animation-delay: -4.8s; }
+      }
+    }
+    @keyframes cred-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cred-bubbles__item { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">דלג לתוכן הראשי</a>
+  <div class="a11y-widget"><span class="u-visually-hidden">נגישות בסיסית</span></div>
+  <div class="shell">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-end">
+          <nav aria-label="ניווט ראשי">
+            <ul class="nav-main">
+              <li><a href="#top">דף הבית</a></li>
+              <li><a href="#services">שירותים</a></li>
+              <li><a href="#about">אודות</a></li>
+              <li><a href="#contact">צור קשר</a></li>
+            </ul>
+          </nav>
+          <a href="tel:+972544549014" class="header-cta">התקשר עכשיו</a>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <aside class="cred-bubbles" aria-label="סמכויות ושירות">
+        <ul class="cred-bubbles__list">
+          <li class="cred-bubbles__item">משווק מורשה מיקרוסופט</li>
+          <li class="cred-bubbles__item">מוסמך MCSA</li>
+          <li class="cred-bubbles__item">טכנאי מעל עשור</li>
+          <li class="cred-bubbles__item">שירות מרחוק ובאתר הלקוח</li>
+          <li class="cred-bubbles__item">שירות 24/7</li>
+        </ul>
+      </aside>
+      <section id="top" class="hero" aria-labelledby="hero-title">
+        <div class="hero-inner">
+          <div class="hero-photo-layer" id="hero-profile-layer">
+            <img src="profile.jpg" alt="" class="hero-bg-profile" width="400" height="400" decoding="async"
+              onerror="document.getElementById('hero-profile-layer').classList.add('no-img')">
+          </div>
+          <div class="hero-copy">
+            <h1 id="hero-title">עידן אוחנה</h1>
+            <p class="hero-lead">פתרונות מחשוב מקצועיים</p>
+            <div class="hero-actions">
+              <a href="#contact" class="btn-primary">צור קשר</a>
+              <a href="#services" class="btn-secondary">השירותים</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="services" class="section section--services">
+        <div class="section-inner services-stack">
+          <header class="services-stack__intro">
+            <p class="section-kicker">מה אני מציע</p>
+            <h2 class="section-title">השירותים שלי</h2>
+            <p class="section-sub">סמכויות · ניסיון · זמינות</p>
+          </header>
+          <div class="service-showcase" aria-label="תמונות לדוגמה לשירותים">
+            <article class="service-hero-card" aria-label="מחשוב ומשרד דיגיטלי">
+              <div class="service-hero-card__visual">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="eager" decoding="async" fetchpriority="high">
+              </div>
+            </article>
+            <article class="service-hero-card" aria-label="תשתיות ושרתים">
+              <div class="service-hero-card__visual">
+                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="lazy" decoding="async">
+              </div>
+            </article>
+            <article class="service-hero-card" aria-label="צוות ועבודה מקצועית">
+              <div class="service-hero-card__visual">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="lazy" decoding="async">
+              </div>
+            </article>
+            <article class="service-hero-card" aria-label="תמיכה מרחוק">
+              <div class="service-hero-card__visual">
+                <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8e6?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="lazy" decoding="async">
+              </div>
+            </article>
+            <article class="service-hero-card" aria-label="עבודה וזמינות">
+              <div class="service-hero-card__visual">
+                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42154?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="lazy" decoding="async">
+              </div>
+            </article>
+          </div>
+          <div class="t-testimonials-block" id="testimonials-carousel">
+            <p class="t-carousel-title">לקוחות ממליצים</p>
+            <div class="t-carousel-standalone">
+              <div class="t-carousel-main">
+                <div class="t-wheel-viewport" id="t-wheel-viewport" role="region" aria-roledescription="קרוסלה" aria-label="המלצות לקוחות לדוגמה">
+                  <div class="t-panorama" id="t-panorama">
+                    <div class="t-slot t-slot--prev" id="t-slot-prev" aria-hidden="true"></div>
+                    <div class="t-slot t-slot--curr" id="t-slot-curr" aria-live="polite"></div>
+                    <div class="t-slot t-slot--next" id="t-slot-next" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="t-carousel-dots" id="t-carousel-dots"></div>
+              </div>
+            </div>
+            <aside class="t-review-box" id="leave-review" aria-label="הוספת ביקורת">
+              <div class="t-review-box__head">
+                <p class="t-review-box__title">הוספת ביקורת</p>
+              </div>
+              <div class="field"><label for="t-review-name">שם</label><input id="t-review-name" type="text" autocomplete="name" placeholder="למשל: יוסי · ירושלים"></div>
+              <div class="field"><label for="t-review-text">ההמלצה</label><textarea id="t-review-text" placeholder="קצר וברור…" rows="3"></textarea></div>
+              <fieldset class="t-review-stars-field">
+                <legend class="u-visually-hidden">דירוג בכוכבים</legend>
+                <input type="hidden" id="t-review-rating" value="5" name="t-review-rating">
+                <div class="t-review-stars-track" id="t-review-stars-bar" role="radiogroup" aria-label="בחירת דירוג בין 1 ל־5 כוכבים">
+                  <button type="button" class="t-review-star-btn is-on" data-value="1" aria-label="כוכב 1">★</button>
+                  <button type="button" class="t-review-star-btn is-on" data-value="2" aria-label="כוכב 2">★</button>
+                  <button type="button" class="t-review-star-btn is-on" data-value="3" aria-label="כוכב 3">★</button>
+                  <button type="button" class="t-review-star-btn is-on" data-value="4" aria-label="כוכב 4">★</button>
+                  <button type="button" class="t-review-star-btn is-on" data-value="5" aria-label="כוכב 5">★</button>
+                </div>
+              </fieldset>
+              <p class="t-review-box__foot">לפנייה לשירות — <a href="#contact-form-panel">צור קשר</a></p>
+            </aside>
+          </div>
+        </div>
+      </section>
+      <section id="about" class="section" style="background:var(--surface-alt)">
+        <div class="section-inner about-body">
+          <p class="role">פתרונות מחשוב מקצועיים</p>
+          <p>תיקון מחשבים, תמיכה, רשתות וגיבוי — לפרטיים ולעסקים קטנים. שירות אישי ובשפה פשוטה.</p>
+        </div>
+      </section>
+      <section id="contact" class="section contact-section">
+        <div class="section-inner">
+          <h2 class="u-visually-hidden">צור קשר</h2>
+          <div class="contact-split">
+            <div class="contact-form-wrap" id="contact-form-panel">
+              <h3>טופס פנייה</h3>
+              <p class="form-note">טופס הדגמה (האתר סטטי). לתיאום — טלפון או וואטסאפ.</p>
+              <form action="#" method="get" onsubmit="return false;">
+                <div class="field"><label for="c-name">שם מלא</label><input id="c-name" type="text" autocomplete="name"></div>
+                <div class="field"><label for="c-phone">טלפון</label><input id="c-phone" type="tel" autocomplete="tel" placeholder="054-454-9014"></div>
+                <div class="field"><textarea id="c-msg" name="message" aria-label="תיאור קצר של הבעיה או הבקשה" placeholder="תיאור קצר של הבעיה או הבקשה — אחזור עם המשך"></textarea></div>
+                <button type="submit" class="btn-submit" disabled>שליחה (בקרוב)</button>
+              </form>
+            </div>
+            <div class="contact-channels">
+              <div class="contact-channel contact-channel--static contact-channel--reveal">
+                <span class="contact-channel-label">טלפון</span>
+                <button type="button" class="contact-reveal-btn" aria-controls="reveal-phone">הצג בלחיצה למי שמעוניין</button>
+                <a href="tel:+972544549014" id="reveal-phone" class="contact-channel-value contact-reveal-target" hidden>054-454-9014</a>
+              </div>
+              <div class="contact-channel contact-channel--static">
+                <span class="contact-channel-label">וואטסאפ</span>
+                <a href="https://wa.me/972544549014" class="whatsapp-link" target="_blank" rel="noopener" aria-label="WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+                <p class="contact-wa-hint">לחיצה על האייקון פותחת שיחה</p>
+              </div>
+              <div class="contact-channel contact-channel--static contact-channel--reveal">
+                <span class="contact-channel-label">אימייל</span>
+                <button type="button" class="contact-reveal-btn" aria-controls="reveal-email">הצג בלחיצה למי שמעוניין</button>
+                <a href="mailto:Idan1991ohana@gmail.com" id="reveal-email" class="contact-channel-value contact-channel-value--email contact-reveal-target" hidden>Idan1991ohana@gmail.com</a>
+              </div>
+              <div class="contact-channel contact-channel--static">
+                <span class="contact-channel-label">אזור שירות</span>
+                <span class="contact-channel-value">ירושלים והסביבה</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-col"><h4>עידן</h4><p style="margin:0;font-size:0.82rem">פתרונות מחשוב מקצועיים</p></div>
+        <div class="footer-col"><h4>ניווט</h4><ul>
+          <li><a href="#top">דף הבית</a></li><li><a href="#services">שירותים</a></li><li><a href="#about">אודות</a></li><li><a href="#contact">צור קשר</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>יצירת קשר</h4><p style="margin:0;font-size:0.88rem"><a href="tel:+972544549014" style="color:#94a3b8">054-454-9014</a></p></div>
+      </div>
+      <p class="footer-bottom">© <span id="y"></span> עידן · פתרונות מחשוב מקצועיים</p>
+    </footer>
+  </div>
+  <script>
+    (function () {
+      document.getElementById("y").textContent = new Date().getFullYear();
+      document.querySelectorAll(".contact-reveal-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var t = document.getElementById(btn.getAttribute("aria-controls"));
+          if (!t) return;
+          btn.setAttribute("hidden", "");
+          t.removeAttribute("hidden");
+          t.focus({ preventScroll: true });
+        });
+      });
+      var tData = [
+        { stars: 5, quote: "מקצועי, סבלני והגיע מהר. המחשב עובד מצוין מאז התיקון.", name: "דנה כהן · ירושלים" },
+        { stars: 4, quote: "הסביר הכל בשפה פשוטה וברורה. ממליצה בחום על השירות.", name: "רונית פרידמן · מודיעין" },
+        { stars: 5, quote: "תיקנו לנו את הרשת הביתית — היום הכל יציב. תודה רבה!", name: "משפחת לוי · בית שמש" },
+        { stars: 3, quote: "שירות טוב ומחיר הוגן. חזרתי אחרי שנה עם עוד תקלה ועזר שוב.", name: "עומר מזרחי · ירושלים" },
+        { stars: 5, quote: "מענה מהיר בוואטסאפ ותיקון מרחוק — חסך לי זמן יקר.", name: "אלחנן ביטון · מעלה אדומים" },
+        { stars: 4, quote: "הקימו לעסק הקטן גיבוי ואנטי־וירוס. שקט נפשי.", name: "ניר אזולאי · גבעת זאב" },
+        { stars: 5, quote: "ייעוץ נכון לפני רכישה — חסך לי כסף על חומרה מיותרת.", name: "גלעד דהן · הר חוצבים" },
+        { stars: 4, quote: "תיקון מסודר אחרי וירוס. הכל עובד חלק מאז.", name: "שרה גבאי · פסגת זאב" }
+      ];
+      var panorama = document.getElementById("t-panorama");
+      var wheelViewport = document.getElementById("t-wheel-viewport");
+      var slotPrev = document.getElementById("t-slot-prev");
+      var slotCurr = document.getElementById("t-slot-curr");
+      var slotNext = document.getElementById("t-slot-next");
+      var dots = document.getElementById("t-carousel-dots");
+      var tSlide = 0;
+      var tTimer = null;
+      var tAnimating = false;
+      function esc(s) {
+        if (!s) return "";
+        return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+      }
+      function starsHtml(n) {
+        var h = "";
+        for (var s = 1; s <= 5; s++) {
+          h += s <= n ? '<span class="star-full">★</span>' : '<span class="star-empty">☆</span>';
+        }
+        return h;
+      }
+      function cardInner(d) {
+        return (
+          '<div class="t-card">' +
+          '<div class="t-card-stars" aria-hidden="true">' +
+          starsHtml(d.stars) +
+          "</div>" +
+          '<p class="t-card-quote">' +
+          esc(d.quote) +
+          "</p>" +
+          '<p class="t-card-name">— ' +
+          esc(d.name) +
+          "</p></div>"
+        );
+      }
+      function renderTriplet(ix) {
+        var n = tData.length;
+        if (n < 1 || !slotPrev || !slotCurr || !slotNext) return;
+        var i = ((ix % n) + n) % n;
+        tSlide = i;
+        slotPrev.innerHTML = cardInner(tData[(i - 1 + n) % n]);
+        slotCurr.innerHTML = cardInner(tData[i]);
+        slotNext.innerHTML = cardInner(tData[(i + 1) % n]);
+        if (dots) {
+          dots.querySelectorAll(".t-carousel-dot").forEach(function (b, j) {
+            b.classList.toggle("is-active", j === tSlide);
+          });
+        }
+      }
+      function slideTo(ix, skipAnim) {
+        var n = tData.length;
+        if (n < 1) return;
+        if (skipAnim) {
+          tAnimating = false;
+          if (panorama) {
+            panorama.style.transition = "";
+            panorama.style.transform = "";
+          }
+          if (wheelViewport) {
+            wheelViewport.style.transition = "";
+            wheelViewport.style.opacity = "";
+            wheelViewport.style.filter = "";
+          }
+          renderTriplet(ix);
+          return;
+        }
+        if (tAnimating) return;
+        var target = ((ix % n) + n) % n;
+        if (target === tSlide) return;
+        tAnimating = true;
+        var wv = wheelViewport;
+        var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var fadeOutMs = reduceMotion ? 120 : 520;
+        var fadeInMs = reduceMotion ? 160 : 720;
+        function clearWv() {
+          if (!wv) return;
+          wv.style.transition = "";
+          wv.style.opacity = "";
+          wv.style.filter = "";
+        }
+        function goIn() {
+          if (!wv) {
+            renderTriplet(target);
+            tAnimating = false;
+            return;
+          }
+          wv.style.transition = reduceMotion
+            ? "opacity 0.18s ease"
+            : "opacity " + fadeInMs / 1000 + "s cubic-bezier(0.22, 1, 0.36, 1), filter " + fadeInMs / 1000 + "s ease";
+          wv.style.opacity = "1";
+          wv.style.filter = "none";
+          window.setTimeout(function () {
+            tAnimating = false;
+            clearWv();
+          }, fadeInMs + 40);
+        }
+        if (wv) {
+          wv.style.transition = reduceMotion
+            ? "opacity 0.15s ease"
+            : "opacity " + fadeOutMs / 1000 + "s cubic-bezier(0.45, 0, 0.55, 1), filter " + fadeOutMs / 1000 + "s ease";
+          wv.style.opacity = "0.14";
+          wv.style.filter = reduceMotion ? "none" : "blur(3px)";
+        }
+        window.setTimeout(function () {
+          renderTriplet(target);
+          if (!wv) {
+            tAnimating = false;
+            return;
+          }
+          wv.style.transition = "none";
+          wv.style.opacity = "0";
+          wv.style.filter = reduceMotion ? "none" : "blur(4px)";
+          window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(goIn);
+          });
+        }, fadeOutMs);
+      }
+      function nextSlide() {
+        slideTo(tSlide + 1, false);
+      }
+      if (dots) {
+        tData.forEach(function (_, ix) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "t-carousel-dot";
+          b.setAttribute("aria-label", "המלצה " + (ix + 1));
+          b.addEventListener("click", function () {
+            if (tTimer) window.clearInterval(tTimer);
+            slideTo(ix, true);
+            tTimer = window.setInterval(nextSlide, 3000);
+          });
+          dots.appendChild(b);
+        });
+      }
+      renderTriplet(0);
+      tTimer = window.setInterval(nextSlide, 3000);
+      var ratingInput = document.getElementById("t-review-rating");
+      document.querySelectorAll(".t-review-star-btn").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var v = +b.getAttribute("data-value");
+          document.querySelectorAll(".t-review-star-btn").forEach(function (x) {
+            x.classList.toggle("is-on", +x.getAttribute("data-value") <= v);
+          });
+          if (ratingInput) ratingInput.value = String(v);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
