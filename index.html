@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="theme-color" content="#1e3a5f">
+  <meta name="theme-color" content="#1a2332">
   <meta name="description" content="עידן אוחנה — פתרונות מחשוב מקצועיים בירושלים והסביבה.">
   <title>עידן אוחנה | פתרונות מחשוב מקצועיים</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,34 +29,247 @@
       --font-review: "Assistant", "Heebo", system-ui, sans-serif;
       --max: 800px;
       --nav-rail-w: 184px;
+      --side-rail-w: 0px;
+      --ease-spring: cubic-bezier(0.33, 1.24, 0.45, 1);
+      --ease-spring-soft: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-panel: cubic-bezier(0.34, 1.12, 0.48, 1);
+      --motion-panel: clamp(0.38s, 0.32s + 0.6vw, 0.62s);
+      --motion-reveal: clamp(0.52s, 0.45s + 0.8vw, 0.78s);
+      --lift-hover: clamp(4px, 0.4vw + 3px, 9px);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --hero-bg: linear-gradient(145deg, #0e1014 0%, #161a21 48%, #1e2430 100%);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --surface: #22262e;
+      --surface-alt: #15181d;
+      --border: #334155;
+      --accent: #5b9fd4;
+      --accent-soft: #8ec5ef;
+      --accent-strong: #93c5ef;
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.38);
+    }
+    html[data-theme="dark"] header.site-header {
+      background: rgba(21, 24, 29, 0.96);
+    }
+    html[data-theme="dark"] .btn-primary {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    html[data-theme="dark"] .service-hero-card__tag {
+      background: rgba(21, 24, 29, 0.78);
+      border-color: rgba(91, 159, 212, 0.45);
+      color: #bae6fd;
+    }
+    html[data-theme="dark"] .service-hero-card__visual {
+      background: linear-gradient(145deg, #1c1f26, #2c313a);
+    }
+    html[data-theme="dark"] .t-review-box .field input,
+    html[data-theme="dark"] .t-review-box .field textarea {
+      background: #15181d;
+      color: var(--text);
+      border-color: var(--border);
+    }
+    html[data-theme="dark"] .contact-channel {
+      border-color: var(--border);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+    html[data-theme="dark"] .contact-reveal-btn {
+      background: rgba(91, 159, 212, 0.12);
+      border-color: rgba(147, 197, 253, 0.35);
+    }
+    .site-prefs {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 5px 12px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    html[data-theme="dark"] .site-prefs {
+      background: rgba(15, 23, 42, 0.92);
+    }
+    .site-prefs__theme {
+      border: 1px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--text);
+      min-width: 44px;
+      min-height: 44px;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: transform 0.42s var(--ease-spring), border-color 0.25s ease, background 0.25s ease;
+    }
+    .site-prefs__theme:hover,
+    .site-prefs__flag:hover {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+    @media (hover: hover) {
+      .site-prefs__theme:active,
+      .site-prefs__flag:active {
+        transform: scale(0.92);
+      }
+      .site-prefs__theme:hover {
+        transform: translateY(-1px);
+      }
+      .site-prefs__flag:hover {
+        transform: translateY(-1px) scale(1.03);
+      }
+    }
+    .site-prefs__lang {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .site-prefs__flag {
+      border: 1px solid var(--border);
+      background: var(--surface-alt);
+      min-width: 44px;
+      min-height: 44px;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.42s var(--ease-spring), border-color 0.25s ease, box-shadow 0.35s var(--ease-spring-soft);
+    }
+    .site-prefs__flag.is-active {
+      border-color: var(--accent-strong);
+      box-shadow: 0 0 0 2px rgba(74, 144, 200, 0.25);
+    }
+    html[data-theme="dark"] .site-prefs__flag.is-active {
+      box-shadow: 0 0 0 2px rgba(147, 197, 239, 0.28);
     }
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body { margin: 0; font-family: var(--font); color: var(--text); line-height: 1.55; background: var(--surface-alt); }
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid var(--accent-soft);
+      outline-offset: 2px;
+    }
+    button:focus:not(:focus-visible),
+    a:focus:not(:focus-visible) {
+      outline: none;
+    }
     .skip-link { position: absolute; top: -100px; right: 16px; background: var(--accent); color: #fff; padding: 10px 18px; border-radius: 8px; font-weight: 600; z-index: 100; text-decoration: none; }
-    .skip-link:focus { top: 16px; }
+    .skip-link:focus {
+      top: 16px;
+      outline: 3px solid #fff;
+      outline-offset: 3px;
+    }
     @media (min-width: 900px) { .skip-link { right: auto; left: 16px; } }
     .u-visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
     .shell { min-height: 100vh; display: flex; flex-direction: column; overflow-x: clip; }
-    header.site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
     .header-inner { max-width: var(--max); margin: 0 auto; padding: 8px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .header-end { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; justify-content: flex-end; }
     .nav-main { display: flex; flex-wrap: wrap; gap: 4px 8px; list-style: none; margin: 0; padding: 0; }
-    .nav-main a { color: var(--muted); text-decoration: none; font-size: 0.8rem; font-weight: 500; padding: 6px 8px; border-radius: 8px; }
+    .nav-main a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 10px 12px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
     .nav-main a:hover { color: var(--accent-strong); background: rgba(74,144,200,.1); }
-    .header-cta { font-weight: 700; font-size: 0.8rem; padding: 8px 16px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-soft)); color: #fff; text-decoration: none; display: inline-flex; align-items: center; }
+    .header-cta {
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      color: #fff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+    }
     @media (min-width: 900px) {
-      header.site-header { position: fixed; top: 0; right: 0; bottom: 0; left: auto; width: var(--nav-rail-w); border-bottom: none; border-inline-end: 1px solid var(--border); display: flex; align-items: stretch; }
+      header.site-header {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: auto;
+        width: var(--nav-rail-w);
+        border-bottom: none;
+        border-inline-end: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
       .header-inner { flex-direction: column; max-width: none; width: 100%; margin: 0; padding: 28px 14px 32px; flex: 1; }
       .header-end { flex-direction: column; gap: 20px; width: 100%; flex-wrap: nowrap; }
       .nav-main { flex-direction: column; gap: 8px; width: 100%; }
       .nav-main li { width: 100%; }
-      .nav-main a { display: block; text-align: center; font-size: 0.92rem; font-weight: 600; padding: 12px 10px; }
+      .nav-main a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 0.92rem;
+        font-weight: 600;
+        padding: 12px 10px;
+        min-height: 44px;
+      }
       .header-cta { font-size: 0.82rem; padding: 12px; justify-content: center; width: 100%; }
-      .shell { padding-inline-start: var(--nav-rail-w); }
+      :root { --side-rail-w: 204px; }
+      .shell { padding-inline-start: var(--nav-rail-w); padding-inline-end: var(--side-rail-w); }
       [dir="rtl"] .a11y-widget { right: auto; left: 16px; }
+      [dir="ltr"] header.site-header {
+        right: auto;
+        left: 0;
+        border-inline-end: none;
+        border-inline-start: 1px solid var(--border);
+      }
     }
-    .hero { background: var(--hero-bg); color: #f1f5f9; padding: clamp(24px,5vw,40px) 16px; position: relative; overflow: hidden; isolation: isolate; }
+    .hero {
+      background: var(--hero-bg);
+      color: #f1f5f9;
+      padding-top: max(clamp(24px, 5vw, 40px), env(safe-area-inset-top, 0px));
+      padding-bottom: max(clamp(24px, 5vw, 40px), env(safe-area-inset-bottom, 0px));
+      padding-inline: max(16px, env(safe-area-inset-inline-start, 0px)) max(16px, env(safe-area-inset-inline-end, 0px));
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
     .hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to left, transparent 0%, transparent 10%, rgba(15,23,42,.32) 28%, rgba(15,23,42,.72) 54%, rgba(15,23,42,.9) 100%); z-index: 1; pointer-events: none; }
     .hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 52% 50% at 78% 36%, rgba(255,255,255,.08), transparent 58%); z-index: 1; pointer-events: none; }
     .hero-inner { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; display: flex; flex-direction: row; align-items: center; gap: clamp(14px,3.5vw,28px); flex-wrap: wrap; }
@@ -67,7 +280,7 @@
         background: linear-gradient(to left, transparent 0%, transparent 4%, rgba(15,23,42,.22) 22%, rgba(15,23,42,.65) 48%, rgba(15,23,42,.92) 78%, rgba(15,23,42,.96) 100%);
       }
       .hero-inner {
-        max-width: min(1120px, calc(100vw - var(--nav-rail-w) - 32px));
+        max-width: min(1120px, calc(100vw - var(--nav-rail-w) - var(--side-rail-w) - 32px));
         width: 100%;
         margin-inline-end: auto;
         margin-inline-start: 0;
@@ -94,8 +307,44 @@
     .hero h1 { margin: 0 0 8px; font-size: clamp(1.35rem,4vw,1.85rem); font-weight: 800; }
     .hero-lead { margin: 0 0 14px; font-size: 0.88rem; max-width: 26rem; color: rgba(241,245,249,.9); }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 8px; }
-    .btn-primary { font-weight: 700; font-size: 0.82rem; padding: 10px 18px; border-radius: 999px; background: #fff; color: var(--accent-strong); text-decoration: none; display: inline-flex; }
-    .btn-secondary { font-weight: 600; font-size: 0.82rem; padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,.35); color: #f1f5f9; text-decoration: none; display: inline-flex; }
+    .btn-primary {
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--accent-strong);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-spring-soft);
+    }
+    .btn-secondary {
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 12px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #f1f5f9;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      transition: transform 0.4s var(--ease-spring), background 0.35s ease, border-color 0.35s ease;
+    }
+    @media (hover: hover) {
+      .btn-primary:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.18);
+      }
+      .btn-secondary:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.12);
+      }
+    }
     @media (max-width: 480px) {
       .hero-inner { justify-content: center; text-align: center; }
       .hero-copy { flex-basis: 100%; text-align: center; }
@@ -104,10 +353,10 @@
     .hero-inner:has(.hero-photo-layer.no-img) { justify-content: center; }
     .hero-inner:has(.hero-photo-layer.no-img) .hero-copy { text-align: center; }
     .hero-inner:has(.hero-photo-layer.no-img) .hero-actions { justify-content: center; }
-    .section { padding: clamp(22px,3.5vw,36px) 16px; }
+    .section { padding: clamp(20px, 4vw, 34px) clamp(16px, 4vw, 22px); }
     .section-inner { max-width: var(--max); margin: 0 auto; }
     @media (min-width: 900px) {
-      .section-inner { max-width: min(1120px, calc(100vw - var(--nav-rail-w) - 32px)); }
+      .section-inner { max-width: min(1120px, calc(100vw - var(--nav-rail-w) - var(--side-rail-w) - 32px)); }
     }
     .section-kicker { text-align: center; font-size: 0.72rem; font-weight: 700; color: var(--accent-strong); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 4px; }
     .section-title { text-align: center; font-size: clamp(1.2rem,3vw,1.55rem); font-weight: 800; margin: 0 0 6px; }
@@ -118,16 +367,16 @@
       gap: clamp(20px, 3vw, 32px);
     }
     .services-stack__intro { text-align: center; }
+    #services .services-stack__intro .section-title {
+      margin-block-start: clamp(28px, 5vw, 56px);
+      margin-block-end: clamp(14px, 2.5vw, 28px);
+    }
     @media (min-width: 900px) {
-      .services-stack__intro .section-kicker,
-      .services-stack__intro .section-title,
-      .services-stack__intro .section-sub {
+      .services-stack__intro .section-title {
         text-align: right;
       }
-      .services-stack__intro .section-sub {
-        margin-inline-start: 0;
-        margin-inline-end: auto;
-        max-width: 34rem;
+      [dir="ltr"] .services-stack__intro .section-title {
+        text-align: left;
       }
     }
     #services.section--services {
@@ -146,20 +395,25 @@
     }
     .service-showcase {
       display: grid;
-      gap: clamp(14px, 2.2vw, 22px);
+      gap: clamp(8px, 1.2vw, 12px);
       grid-template-columns: 1fr;
       width: 100%;
+      max-width: min(760px, 100%);
+      margin-inline: auto;
     }
-    @media (min-width: 680px) {
+    @media (min-width: 600px) {
       .service-showcase { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-    @media (min-width: 1024px) {
-      .service-showcase { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    @media (min-width: 1080px) {
+      .service-showcase {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        max-width: min(960px, 100%);
+      }
     }
     .service-hero-card {
       display: flex;
       flex-direction: column;
-      border-radius: 18px;
+      border-radius: 11px;
       overflow: hidden;
       min-height: 0;
       background: var(--surface);
@@ -167,9 +421,9 @@
       box-shadow: var(--shadow);
     }
     .service-hero-card__visual {
-      aspect-ratio: 16 / 10;
-      min-height: clamp(150px, 22vw, 220px);
-      max-height: min(280px, 38vw);
+      aspect-ratio: 16 / 9;
+      min-height: clamp(56px, 9vw, 88px);
+      max-height: min(108px, 18vw);
       overflow: hidden;
       background: linear-gradient(145deg, #e8f0fa, #d4e6f4);
     }
@@ -179,6 +433,75 @@
       object-fit: cover;
       object-position: center;
       display: block;
+      transition: transform calc(var(--motion-panel) * 1.15) var(--ease-spring-soft);
+    }
+    .service-hero-card__body {
+      padding: 8px 9px 10px;
+      text-align: start;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .service-hero-card__icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, rgba(45, 106, 156, 0.95), rgba(74, 144, 200, 0.88));
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      margin-block: 0 4px;
+      margin-inline: 0 auto;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(30, 58, 95, 0.1);
+    }
+    .service-hero-card h3 {
+      margin: 0 0 4px;
+      font-size: clamp(0.76rem, 1.15vw, 0.88rem);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.28;
+      letter-spacing: -0.02em;
+    }
+    .service-hero-card p {
+      margin: 0 0 6px;
+      font-size: 0.68rem;
+      color: var(--muted);
+      line-height: 1.46;
+    }
+    @media (max-width: 599px) {
+      .service-hero-card p { font-size: 0.8rem; }
+      .service-hero-card h3 { font-size: clamp(0.88rem, 3.8vw, 0.98rem); }
+    }
+    .service-hero-card__tags {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: flex-start;
+    }
+    .service-hero-card__tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.58rem;
+      font-weight: 600;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(74, 144, 200, 0.38);
+      color: var(--accent-strong);
+      background: rgba(255, 255, 255, 0.92);
+      transition: transform 0.38s var(--ease-spring), border-color 0.3s ease, box-shadow 0.38s var(--ease-spring-soft);
+    }
+    .service-hero-card__check {
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 0.72rem;
+      line-height: 1;
     }
     .about-body { max-width: 36rem; margin: 0 auto; text-align: center; }
     .about-body .role { color: var(--accent-strong); font-weight: 600; margin: 0 0 10px; }
@@ -207,22 +530,87 @@
     .contact-form-wrap .field { margin-bottom: 8px; }
     .contact-form-wrap .field label { font-size: 0.72rem; margin-bottom: 3px; }
     .contact-form-wrap .field input,
-    .contact-form-wrap .field textarea { padding: 6px 9px; font-size: 0.82rem; border-radius: 7px; }
+    .contact-form-wrap .field textarea {
+      padding: 12px 11px;
+      font-size: 0.95rem;
+      border-radius: 9px;
+      min-height: 44px;
+    }
     .field { margin-bottom: 10px; }
     .field label { display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 4px; }
-    .field input, .field textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.88rem; }
-    .contact-form-wrap .field textarea { min-height: 64px; resize: vertical; }
-    .btn-submit { width: 100%; margin-top: 4px; padding: 8px 12px; border: none; border-radius: 999px; background: var(--accent-strong); color: #fff; font-weight: 700; font-size: 0.78rem; cursor: not-allowed; opacity: 0.7; }
+    .field input, .field textarea {
+      width: 100%;
+      padding: 12px 12px;
+      min-height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .field textarea { min-height: 120px; }
+    .contact-form-wrap .field textarea { min-height: 120px; resize: vertical; }
+    .btn-submit {
+      width: 100%;
+      margin-top: 8px;
+      padding: 12px 14px;
+      min-height: 48px;
+      border: none;
+      border-radius: 999px;
+      background: var(--accent-strong);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
     .contact-channels { display: flex; flex-direction: column; gap: 12px; }
-    .contact-channel { display: block; background: var(--surface); border: 1px solid rgba(219,228,240,.95); border-radius: 16px; padding: 16px 18px; text-decoration: none; color: inherit; box-shadow: 0 4px 20px rgba(30,58,95,.05); }
+    .contact-channel {
+      display: block;
+      background: var(--surface);
+      border: 1px solid rgba(219, 228, 240, 0.95);
+      border-radius: 16px;
+      padding: 16px 18px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 4px 20px rgba(30, 58, 95, 0.05);
+    }
     .contact-channel--static { cursor: default; }
     .contact-channel-label { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
     .contact-channel-value { font-size: 1.05rem; font-weight: 700; color: var(--accent-strong); }
     .contact-channel-value--email { font-size: 0.88rem; font-weight: 600; word-break: break-word; }
-    .contact-reveal-btn { font: inherit; font-size: 1.05rem; font-weight: 700; color: var(--accent-strong); background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+    .contact-reveal-btn {
+      font: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent-strong);
+      background: rgba(74, 144, 200, 0.08);
+      border: 1px solid rgba(74, 144, 200, 0.35);
+      border-radius: 10px;
+      padding: 10px 14px;
+      min-height: 44px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact-reveal-btn:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
     a.contact-reveal-target { text-decoration: none; color: var(--accent-strong); }
     a.contact-reveal-target:hover { text-decoration: underline; }
-    .whatsapp-link { display: inline-flex; width: 54px; height: 54px; color: #fff; background: #25d366; border-radius: 16px; align-items: center; justify-content: center; }
+    .whatsapp-link {
+      display: inline-flex;
+      width: 54px;
+      height: 54px;
+      color: #fff;
+      background: #25d366;
+      border-radius: 16px;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.45s var(--ease-spring), box-shadow 0.45s var(--ease-spring-soft);
+    }
     .whatsapp-link svg { width: 30px; height: 30px; }
     .contact-wa-hint { margin: 0; font-size: 0.78rem; color: var(--muted); }
     .t-carousel-title { text-align: center; margin: 0 0 16px; font-size: 0.78rem; font-weight: 800; color: var(--accent-strong); text-transform: uppercase; letter-spacing: 0.06em; }
@@ -307,8 +695,13 @@
       z-index: 2;
       max-width: 38%;
     }
-    .t-slot .t-card {
+    [dir="rtl"] .t-slot .t-card {
       direction: rtl;
+    }
+    [dir="ltr"] .t-slot .t-card {
+      direction: ltr;
+    }
+    .t-slot .t-card {
       background: var(--surface);
       border: 2px solid var(--accent-strong);
       border-radius: 18px;
@@ -422,13 +815,17 @@
     .t-review-star-btn {
       border: 1px solid var(--border);
       background: var(--surface);
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       line-height: 1;
       cursor: pointer;
       color: #cbd5e1;
-      padding: 4px 7px;
-      min-width: 32px;
-      border-radius: 8px;
+      padding: 0;
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       transition: color 0.15s ease, transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
     }
     .t-review-star-btn:hover {
@@ -455,132 +852,465 @@
       color: var(--accent-strong);
       font-weight: 600;
     }
+    .t-review-feedback {
+      margin: 8px 0 0;
+      min-height: 0;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: var(--accent-strong);
+      font-weight: 600;
+    }
+    .t-review-feedback:empty { margin: 0; }
+    .t-review-submit {
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px 14px;
+      min-height: 48px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.9rem;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(45, 106, 156, 0.28);
+    }
+    .t-review-submit:hover {
+      filter: brightness(1.05);
+    }
+    .t-review-submit:active {
+      transform: scale(0.98);
+    }
+    html[data-theme="dark"] .t-review-submit {
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+    }
     footer.site-footer { background: linear-gradient(180deg, #152a45 0%, #0f172a 100%); color: #94a3b8; padding: 22px 16px; margin-top: auto; }
     .footer-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 18px; }
     @media (min-width: 900px) {
       .footer-inner,
-      .footer-bottom { max-width: min(1120px, calc(100vw - var(--nav-rail-w) - 32px)); }
+      .footer-bottom { max-width: min(1120px, calc(100vw - var(--nav-rail-w) - var(--side-rail-w) - 32px)); }
     }
     .footer-col h4 { color: #f1f5f9; font-size: 0.9rem; margin: 0 0 14px; }
     .footer-col ul { list-style: none; margin: 0; padding: 0; }
-    .footer-col a { color: #94a3b8; text-decoration: none; font-size: 0.88rem; }
+    .footer-col a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: inline-block;
+      padding: 6px 2px;
+      min-height: 44px;
+      line-height: 1.5;
+    }
     .footer-bottom { max-width: var(--max); margin: 18px auto 0; padding-top: 12px; border-top: 1px solid rgba(148,163,184,.2); text-align: center; font-size: 0.82rem; }
     .a11y-widget { position: fixed; bottom: 16px; right: 16px; z-index: 90; font-size: 0.85rem; }
     @media (prefers-reduced-motion: reduce) {
       .t-wheel-viewport { transition-duration: 0.15s !important; }
       .t-slot { transition: none !important; }
+      .service-hero-card,
+      .service-hero-card__visual img,
+      .service-hero-card__tag,
+      .contact-form-wrap,
+      .contact-channel,
+      .t-review-box,
+      .whatsapp-link,
+      .footer-col,
+      .btn-primary,
+      .btn-secondary,
+      .site-prefs__theme,
+      .site-prefs__flag,
+      [data-reveal] {
+        transition-duration: 0.01ms !important;
+        transition-delay: 0s !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        animation-name: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+      }
     }
-    /* בועות סמכויות בצד (מול סרגל הניווט) */
-    .cred-bubbles { display: none; }
-    @media (min-width: 900px) {
-      .cred-bubbles {
-        display: block;
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: max(10px, env(safe-area-inset-left, 0px));
-        margin-block: auto;
-        height: fit-content;
-        z-index: 25;
-        width: min(158px, calc((100vw - var(--nav-rail-w)) * 0.22));
-        max-height: min(88vh, 520px);
-        overflow-y: auto;
-        overflow-x: hidden;
-        scrollbar-width: thin;
-        pointer-events: none;
+    @media (hover: hover) and (pointer: fine) {
+      .service-hero-card:hover {
+        transform: translateY(calc(-1 * var(--lift-hover)));
+        box-shadow: 0 14px 36px rgba(30, 58, 95, 0.12);
       }
-      .cred-bubbles__list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 9px;
+      .service-hero-card:hover .service-hero-card__visual img {
+        transform: scale(1.045);
       }
-      .cred-bubbles__item {
-        pointer-events: auto;
-        margin: 0;
-        padding: 9px 11px;
-        border-radius: 999px;
-        text-align: center;
-        font-size: 0.68rem;
-        font-weight: 600;
-        line-height: 1.38;
-        letter-spacing: 0.01em;
-        color: #1a4a72;
-        background: linear-gradient(160deg, rgba(240, 248, 255, 0.94), rgba(220, 236, 252, 0.9));
-        border: 1px solid rgba(74, 144, 200, 0.28);
-        box-shadow:
-          0 3px 14px rgba(30, 74, 120, 0.07),
-          inset 0 1px 0 rgba(255, 255, 255, 0.75);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+      .service-hero-card:hover .service-hero-card__tag {
+        transform: translateY(-2px);
       }
-      .cred-bubbles__item:nth-child(even) {
-        margin-inline-start: 10px;
+      .contact-form-wrap:hover,
+      .contact-channel:hover,
+      .t-review-box:hover {
+        transform: translateY(calc(-1 * var(--lift-hover)));
+        box-shadow: 0 14px 34px rgba(30, 58, 95, 0.11);
+      }
+      .whatsapp-link:hover {
+        transform: scale(1.06) translateY(-2px);
+        box-shadow: 0 8px 22px rgba(37, 211, 102, 0.35);
+      }
+      .footer-col:hover {
+        transform: translateY(-3px);
+      }
+    }
+    @keyframes reveal-panel-pop {
+      0% {
+        opacity: 0;
+        transform: translateY(clamp(18px, 3.5vw, 40px)) scale(0.94);
+      }
+      58% {
+        opacity: 1;
+        transform: translateY(calc(-1 * clamp(4px, 0.8vw, 9px))) scale(1.012);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
       }
     }
     @media (prefers-reduced-motion: no-preference) {
-      @media (min-width: 900px) {
-        .cred-bubbles__item {
-          animation: cred-float 7s ease-in-out infinite;
-        }
-        .cred-bubbles__item:nth-child(2) { animation-delay: -1.2s; }
-        .cred-bubbles__item:nth-child(3) { animation-delay: -2.4s; }
-        .cred-bubbles__item:nth-child(4) { animation-delay: -3.6s; }
-        .cred-bubbles__item:nth-child(5) { animation-delay: -4.8s; }
+      [data-reveal]:not(.is-revealed) {
+        opacity: 0;
+        transform: translateY(clamp(16px, 3vw, 36px)) scale(0.96);
+        pointer-events: none;
+      }
+      [data-reveal].is-revealed {
+        animation: reveal-panel-pop 0.78s var(--ease-spring) both;
+        pointer-events: auto;
+      }
+      .service-hero-card.is-revealed,
+      .contact-form-wrap.is-revealed,
+      .contact-channel.is-revealed,
+      .t-review-box.is-revealed {
+        transition: transform 0.5s var(--ease-panel), box-shadow 0.5s var(--ease-spring-soft), border-color 0.35s ease;
       }
     }
-    @keyframes cred-float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
+    /* בועות סמכויות — שורה מתחת לכותרת «השירותים שלי», כחול כהה זוהר */
+    .cred-bubbles.cred-bubbles--ribbon {
+      display: block;
+      width: 100%;
+      max-width: min(920px, 100%);
+      margin: 0 auto clamp(10px, 1.8vw, 18px);
+      padding: 0 6px;
+      pointer-events: none;
+    }
+    .cred-bubbles--ribbon .cred-bubbles__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 6px 8px;
+    }
+    .cred-bubbles--ribbon .cred-bubbles__item {
+      pointer-events: auto;
+      display: block;
+      margin: 0;
+      padding: 5px 10px;
+      border-radius: 999px;
+      text-align: center;
+      font-size: clamp(0.56rem, 1.35vw, 0.64rem);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+      color: rgba(226, 232, 240, 0.97);
+      background: linear-gradient(155deg, #0a1524 0%, #0f2744 48%, #15365a 100%);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      box-shadow:
+        0 0 14px rgba(37, 99, 235, 0.52),
+        0 0 26px rgba(30, 64, 175, 0.32),
+        0 3px 10px rgba(15, 23, 42, 0.48),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .cred-bubbles--ribbon .cred-bubbles__item {
+        animation: cred-ribbon-glow 5.2s ease-in-out infinite;
+      }
+      .cred-bubbles--ribbon .cred-bubbles__item:nth-child(2) { animation-delay: -1s; }
+      .cred-bubbles--ribbon .cred-bubbles__item:nth-child(3) { animation-delay: -2s; }
+      .cred-bubbles--ribbon .cred-bubbles__item:nth-child(4) { animation-delay: -3s; }
+      .cred-bubbles--ribbon .cred-bubbles__item:nth-child(5) { animation-delay: -4s; }
+    }
+    @keyframes cred-ribbon-glow {
+      0%, 100% {
+        box-shadow:
+          0 0 12px rgba(37, 99, 235, 0.42),
+          0 0 22px rgba(30, 64, 175, 0.26),
+          0 3px 10px rgba(15, 23, 42, 0.45),
+          inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      }
+      50% {
+        box-shadow:
+          0 0 20px rgba(59, 130, 246, 0.62),
+          0 0 34px rgba(37, 99, 235, 0.38),
+          0 4px 12px rgba(15, 23, 42, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.09);
+      }
     }
     @media (prefers-reduced-motion: reduce) {
-      .cred-bubbles__item { animation: none !important; }
+      .cred-bubbles--ribbon .cred-bubbles__item { animation: none !important; }
+    }
+    .side-rail-panel { display: none; }
+    @media (min-width: 900px) {
+      .side-rail-panel {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: auto;
+        width: var(--side-rail-w);
+        z-index: 40;
+        background: var(--surface);
+        border-inline-end: 1px solid var(--border);
+      }
+      [dir="ltr"] .side-rail-panel {
+        left: auto;
+        right: 0;
+        border-inline-end: none;
+        border-inline-start: 1px solid var(--border);
+      }
+    }
+    .side-rail-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 14px 10px 10px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .side-rail-tab {
+      font: inherit;
+      cursor: pointer;
+      padding: 9px 8px;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.8rem;
+      line-height: 1.25;
+      text-align: center;
+      margin: 0;
+    }
+    .side-rail-tab:hover {
+      background: rgba(74, 144, 200, 0.1);
+    }
+    .side-rail-tab[aria-selected="true"] {
+      background: rgba(74, 144, 200, 0.16);
+      border-color: rgba(45, 106, 156, 0.45);
+      color: var(--accent-strong);
+    }
+    html[data-theme="dark"] .side-rail-tab[aria-selected="true"] {
+      background: rgba(91, 159, 212, 0.12);
+      border-color: rgba(147, 197, 253, 0.35);
+      color: var(--accent-soft);
+    }
+    .side-rail-scroll {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 10px 11px 20px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .side-rail-pane[hidden] { display: none !important; }
+    .side-rail-lead {
+      margin: 0 0 10px;
+      font-size: 0.72rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+    .side-rail-sub {
+      margin: 14px 0 8px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--muted);
+    }
+    .side-rail-foot {
+      margin: 12px 0 0;
+      font-size: 0.65rem;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+    .side-rail-list {
+      margin: 0;
+      padding-inline-start: 1.05em;
+      font-size: 0.72rem;
+      line-height: 1.45;
+      color: var(--text);
+    }
+    .side-rail-list li { margin-bottom: 5px; }
+    .side-rail-prices {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.74rem;
+    }
+    .side-rail-prices li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px dashed var(--border);
+      color: var(--text);
+    }
+    .side-rail-prices li:last-of-type { border-bottom: none; }
+    .side-rail-price-val {
+      font-weight: 800;
+      white-space: nowrap;
+      color: var(--accent-strong);
+      font-variant-numeric: tabular-nums;
+    }
+    html[data-theme="dark"] .side-rail-price-val { color: var(--accent-soft); }
+    .mobile-lab-prices {
+      display: block;
+      width: 100%;
+      max-width: min(920px, 100%);
+      margin: 0 auto 4px;
+      padding: 0 2px;
+    }
+    @media (min-width: 900px) {
+      .mobile-lab-prices { display: none; }
+    }
+    .mobile-lab-prices__h {
+      margin: 0 0 12px;
+      font-size: 1.02rem;
+      font-weight: 800;
+      text-align: center;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .mobile-lab-prices__block {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .mobile-lab-prices__block summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 16px;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--text);
+    }
+    .mobile-lab-prices__block summary::-webkit-details-marker { display: none; }
+    .mobile-lab-prices__block summary::after {
+      content: "+";
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--accent-strong);
+      flex-shrink: 0;
+    }
+    .mobile-lab-prices__block[open] summary::after { content: "−"; }
+    .mobile-lab-prices__block[open] summary {
+      border-bottom: 1px solid var(--border);
+      background: rgba(74, 144, 200, 0.06);
+    }
+    html[data-theme="dark"] .mobile-lab-prices__block[open] summary {
+      background: rgba(91, 159, 212, 0.08);
+    }
+    .mobile-lab-prices__body {
+      padding: 12px 14px 14px;
+    }
+    @media (max-width: 599px) {
+      .service-hero-card__tag {
+        font-size: 0.68rem;
+        padding: 5px 9px;
+      }
     }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">דלג לתוכן הראשי</a>
-  <div class="a11y-widget"><span class="u-visually-hidden">נגישות בסיסית</span></div>
+  <a class="skip-link" href="#main"><span data-i18n="skip">דלג לתוכן הראשי</span></a>
+  <div class="a11y-widget"><span class="u-visually-hidden" data-i18n="a11y_note">נגישות בסיסית</span></div>
   <div class="shell">
     <header class="site-header">
+      <div class="site-prefs" role="toolbar" id="site-prefs-bar" aria-label="">
+        <button type="button" class="site-prefs__theme" id="pref-theme" aria-label="">☀</button>
+        <div class="site-prefs__lang" role="group" id="site-prefs-lang" aria-label="">
+          <button type="button" class="site-prefs__flag is-active" id="pref-lang-he" data-set-lang="he" aria-pressed="true" aria-label="">🇮🇱</button>
+          <button type="button" class="site-prefs__flag" id="pref-lang-en" data-set-lang="en" aria-pressed="false" aria-label="">🇺🇸</button>
+        </div>
+      </div>
       <div class="header-inner">
         <div class="header-end">
-          <nav aria-label="ניווט ראשי">
+          <nav id="nav-main-el" aria-label="">
             <ul class="nav-main">
-              <li><a href="#top">דף הבית</a></li>
-              <li><a href="#services">שירותים</a></li>
-              <li><a href="#about">אודות</a></li>
-              <li><a href="#contact">צור קשר</a></li>
+              <li><a href="#top" data-i18n="nav_home">דף הבית</a></li>
+              <li><a href="#services" data-i18n="nav_services">שירותים</a></li>
+              <li><a href="#about" data-i18n="nav_about">אודות</a></li>
+              <li><a href="#contact" data-i18n="nav_contact">צור קשר</a></li>
             </ul>
           </nav>
-          <a href="tel:+972544549014" class="header-cta">התקשר עכשיו</a>
+          <a href="tel:+972544549014" class="header-cta" data-i18n="header_cta">התקשר עכשיו</a>
         </div>
       </div>
     </header>
+    <aside class="side-rail-panel" id="side-rail-panel" aria-label="">
+      <div class="side-rail-tabs" role="tablist" id="side-rail-tablist" aria-orientation="vertical" aria-label="">
+        <button type="button" class="side-rail-tab" role="tab" id="side-tab-lab" aria-selected="true" aria-controls="side-panel-lab" data-i18n="side_tab_lab">מעבדה</button>
+        <button type="button" class="side-rail-tab" role="tab" id="side-tab-prices" aria-selected="false" aria-controls="side-panel-prices" tabindex="-1" data-i18n="side_tab_prices">מחירונים</button>
+      </div>
+      <div class="side-rail-scroll">
+        <div class="side-rail-pane" role="tabpanel" id="side-panel-lab" aria-labelledby="side-tab-lab">
+          <p class="side-rail-lead" data-i18n="side_lab_p">במעבדה: אבחון מדויק, החלפת רכיבים ושחזורים — לפי תור והמצאת הציוד.</p>
+          <ul class="side-rail-list">
+            <li data-i18n="side_lab_1">אבחון חומרה ואיתור תקלה</li>
+            <li data-i18n="side_lab_2">ניקוי אבק ושיפור קירור</li>
+            <li data-i18n="side_lab_3">החלפת רכיבים על לוח אם</li>
+            <li data-i18n="side_lab_4">שחזור מידע מכוננים</li>
+            <li data-i18n="side_lab_5">התקנות מנהלי התקן וריענון מערכת</li>
+          </ul>
+        </div>
+        <div class="side-rail-pane" role="tabpanel" id="side-panel-prices" aria-labelledby="side-tab-prices" hidden>
+          <ul class="side-rail-prices">
+            <li><span data-i18n="price_lbl_screen">החלפת מסך</span> <span class="side-rail-price-val" data-i18n="price_val_screen">500–700 ₪</span></li>
+            <li><span data-i18n="price_lbl_visit">הגעת טכנאי לבית הלקוח</span> <span class="side-rail-price-val" data-i18n="price_val_visit">300 ₪</span></li>
+            <li><span data-i18n="price_lbl_battery">החלפת סוללה</span> <span class="side-rail-price-val" data-i18n="price_val_battery">300–500 ₪</span></li>
+          </ul>
+          <p class="side-rail-sub" data-i18n="more_issues_h">עוד תקלות נפוצות (ללא מחיר — לפי אבחון)</p>
+          <ul class="side-rail-list">
+            <li data-i18n="issue_nop_1">מחשב לא נדלק / נכבה באמצע</li>
+            <li data-i18n="issue_nop_2">איטיות קיצונית או קפיצות</li>
+            <li data-i18n="issue_nop_3">וירוסים, חלונות קופצים והסרת תוכנות</li>
+            <li data-i18n="issue_nop_4">מקלדת או משטח עכבר לא מגיבים</li>
+            <li data-i18n="issue_nop_5">לא טוען / תקלת שקע טעינה</li>
+            <li data-i18n="issue_nop_6">רעש חריג מהמאוורר או חימום יתר</li>
+            <li data-i18n="issue_nop_7">כרטיס מסך מובנה (בתוך המארז)</li>
+            <li data-i18n="issue_nop_8">שדרוג SSD או זיכרון RAM</li>
+          </ul>
+          <p class="side-rail-foot" data-i18n="price_disclaimer">מחירים לדוגמה בלבד; הסכום הסופי אחרי בדיקה בשטח או במעבדה.</p>
+        </div>
+      </div>
+    </aside>
     <main id="main">
-      <aside class="cred-bubbles" aria-label="סמכויות ושירות">
-        <ul class="cred-bubbles__list">
-          <li class="cred-bubbles__item">משווק מורשה מיקרוסופט</li>
-          <li class="cred-bubbles__item">מוסמך MCSA</li>
-          <li class="cred-bubbles__item">טכנאי מעל עשור</li>
-          <li class="cred-bubbles__item">שירות מרחוק ובאתר הלקוח</li>
-          <li class="cred-bubbles__item">שירות 24/7</li>
-        </ul>
-      </aside>
       <section id="top" class="hero" aria-labelledby="hero-title">
-        <div class="hero-inner">
+        <div class="hero-inner" data-reveal>
           <div class="hero-photo-layer" id="hero-profile-layer">
-            <img src="profile.jpg" alt="" class="hero-bg-profile" width="400" height="400" decoding="async"
+            <img src="profile.jpg" alt="" class="hero-bg-profile" id="hero-profile-img" width="400" height="400" decoding="async" data-i18n-alt="hero_img_alt"
               onerror="document.getElementById('hero-profile-layer').classList.add('no-img')">
           </div>
           <div class="hero-copy">
             <h1 id="hero-title">עידן אוחנה</h1>
-            <p class="hero-lead">פתרונות מחשוב מקצועיים</p>
+            <p class="hero-lead" data-i18n="hero_lead">פתרונות מחשוב מקצועיים</p>
             <div class="hero-actions">
-              <a href="#contact" class="btn-primary">צור קשר</a>
-              <a href="#services" class="btn-secondary">השירותים</a>
+              <a href="#contact" class="btn-primary" data-i18n="btn_contact">צור קשר</a>
+              <a href="#services" class="btn-secondary" data-i18n="btn_services">השירותים</a>
             </div>
           </div>
         </div>
@@ -588,42 +1318,122 @@
       <section id="services" class="section section--services">
         <div class="section-inner services-stack">
           <header class="services-stack__intro">
-            <p class="section-kicker">מה אני מציע</p>
-            <h2 class="section-title">השירותים שלי</h2>
-            <p class="section-sub">סמכויות · ניסיון · זמינות</p>
+            <h2 class="section-title" data-i18n="sec_title" data-reveal>השירותים שלי</h2>
           </header>
-          <div class="service-showcase" aria-label="תמונות לדוגמה לשירותים">
-            <article class="service-hero-card" aria-label="מחשוב ומשרד דיגיטלי">
+          <aside class="cred-bubbles cred-bubbles--ribbon" id="cred-bubbles-aside" data-reveal aria-label="">
+            <ul class="cred-bubbles__list">
+              <li class="cred-bubbles__item"><span data-i18n="cred1">משווק מורשה מיקרוסופט</span></li>
+              <li class="cred-bubbles__item"><span data-i18n="cred2">מוסמך MCSA</span></li>
+              <li class="cred-bubbles__item"><span data-i18n="cred3">טכנאי מעל עשור</span></li>
+              <li class="cred-bubbles__item"><span data-i18n="cred4">שירות מרחוק ובאתר הלקוח</span></li>
+              <li class="cred-bubbles__item"><span data-i18n="cred5">שירות 24/7</span></li>
+            </ul>
+          </aside>
+          <section class="mobile-lab-prices" id="mobile-lab-prices" aria-labelledby="mobile-lab-prices-h" data-reveal>
+            <h3 id="mobile-lab-prices-h" class="mobile-lab-prices__h" data-i18n="mobile_lab_prices_h">מעבדה ומחירונים</h3>
+            <details class="mobile-lab-prices__block">
+              <summary data-i18n="side_tab_lab">מעבדה</summary>
+              <div class="mobile-lab-prices__body">
+                <p class="side-rail-lead" data-i18n="side_lab_p">במעבדה: אבחון מדויק, החלפת רכיבים ושחזורים — לפי תור והמצאת הציוד.</p>
+                <ul class="side-rail-list">
+                  <li data-i18n="side_lab_1">אבחון חומרה ואיתור תקלה</li>
+                  <li data-i18n="side_lab_2">ניקוי אבק ושיפור קירור</li>
+                  <li data-i18n="side_lab_3">החלפת רכיבים על לוח אם</li>
+                  <li data-i18n="side_lab_4">שחזור מידע מכוננים</li>
+                  <li data-i18n="side_lab_5">התקנות מנהלי התקן וריענון מערכת</li>
+                </ul>
+              </div>
+            </details>
+            <details class="mobile-lab-prices__block">
+              <summary data-i18n="side_tab_prices">מחירונים</summary>
+              <div class="mobile-lab-prices__body">
+                <ul class="side-rail-prices">
+                  <li><span data-i18n="price_lbl_screen">החלפת מסך</span> <span class="side-rail-price-val" data-i18n="price_val_screen">500–700 ₪</span></li>
+                  <li><span data-i18n="price_lbl_visit">הגעת טכנאי לבית הלקוח</span> <span class="side-rail-price-val" data-i18n="price_val_visit">300 ₪</span></li>
+                  <li><span data-i18n="price_lbl_battery">החלפת סוללה</span> <span class="side-rail-price-val" data-i18n="price_val_battery">300–500 ₪</span></li>
+                </ul>
+                <p class="side-rail-sub" data-i18n="more_issues_h">עוד תקלות נפוצות (ללא מחיר — לפי אבחון)</p>
+                <ul class="side-rail-list">
+                  <li data-i18n="issue_nop_1">מחשב לא נדלק / נכבה באמצע</li>
+                  <li data-i18n="issue_nop_2">איטיות קיצונית או קפיצות</li>
+                  <li data-i18n="issue_nop_3">וירוסים, חלונות קופצים והסרת תוכנות</li>
+                  <li data-i18n="issue_nop_4">מקלדת או משטח עכבר לא מגיבים</li>
+                  <li data-i18n="issue_nop_5">לא טוען / תקלת שקע טעינה</li>
+                  <li data-i18n="issue_nop_6">רעש חריג מהמאוורר או חימום יתר</li>
+                  <li data-i18n="issue_nop_7">כרטיס מסך מובנה (בתוך המארז)</li>
+                  <li data-i18n="issue_nop_8">שדרוג SSD או זיכרון RAM</li>
+                </ul>
+                <p class="side-rail-foot" data-i18n="price_disclaimer">מחירים לדוגמה בלבד; הסכום הסופי אחרי בדיקה בשטח או במעבדה.</p>
+              </div>
+            </details>
+          </section>
+          <div class="service-showcase" id="service-showcase-el" aria-label="">
+            <article class="service-hero-card" data-reveal>
               <div class="service-hero-card__visual">
                 <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="eager" decoding="async" fetchpriority="high">
               </div>
+              <div class="service-hero-card__body">
+                <span class="service-hero-card__icon" aria-hidden="true">📊</span>
+                <h3><span data-i18n="svc1_h3">ניהול ודיווח דיגיטלי</span></h3>
+                <p><span data-i18n="svc1_p">סידור קבצים, דשבורדים ותהליכי עבודה במחשב — כדי שתדע בכל רגע איפה אתה עומד ומה הצעד הבא.</span></p>
+                <ul class="service-hero-card__tags">
+                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc1_t1">Office ו־Excel</span></li>
+                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc1_t2">ארגון מסמכים</span></li>
+                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc1_t3">קבצים בענן</span></li>
+                </ul>
+              </div>
             </article>
-            <article class="service-hero-card" aria-label="תשתיות ושרתים">
+            <article class="service-hero-card" data-reveal>
               <div class="service-hero-card__visual">
                 <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="lazy" decoding="async">
               </div>
+              <div class="service-hero-card__body">
+                <span class="service-hero-card__icon" aria-hidden="true">🗄️</span>
+                <h3><span data-i18n="svc2_h3">תקלות תקשורת</span></h3>
+                <p><span data-i18n="svc2_p">איבוד חיבור, WiFi לא יציב או איטיות ברשת — אבחון ותיקון בנתבים, במתגים ובכבילה עד שהתקשורת חוזרת לעבוד חלק.</span></p>
+                <ul class="service-hero-card__tags">
+                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc2_t1">WiFi ונתבים</span></li>
+                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc2_t2">מתגים וכבילה</span></li>
+                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc2_t3">רשת ביתית ועסקית</span></li>
+                </ul>
+              </div>
             </article>
-            <article class="service-hero-card" aria-label="צוות ועבודה מקצועית">
+            <article class="service-hero-card" data-reveal>
               <div class="service-hero-card__visual">
                 <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="lazy" decoding="async">
               </div>
-            </article>
-            <article class="service-hero-card" aria-label="תמיכה מרחוק">
-              <div class="service-hero-card__visual">
-                <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8e6?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="lazy" decoding="async">
+              <div class="service-hero-card__body">
+                <span class="service-hero-card__icon" aria-hidden="true">🏢</span>
+                <h3><span data-i18n="svc3_h3">שירותי IT לעסקים</span></h3>
+                <p><span data-i18n="svc3_p">ליווי טכנולוגי לצוותים קטנים — מהגדרה ראשונית ועד תחזוקה שוטפת, בשפה פשוטה ובלי מילים מסובכות.</span></p>
+                <ul class="service-hero-card__tags">
+                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc3_t1">חוזי שירות</span></li>
+                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc3_t2">הדרכות קצרות</span></li>
+                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc3_t3">ליווי שוטף</span></li>
+                </ul>
               </div>
             </article>
-            <article class="service-hero-card" aria-label="עבודה וזמינות">
+            <article class="service-hero-card" data-reveal>
               <div class="service-hero-card__visual">
-                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42154?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="lazy" decoding="async">
+                <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="lazy" decoding="async">
+              </div>
+              <div class="service-hero-card__body">
+                <span class="service-hero-card__icon" aria-hidden="true">🎧</span>
+                <h3><span data-i18n="svc4_h3">תמיכה מרחוק</span></h3>
+                <p><span data-i18n="svc4_p">חיבור מאובטח, פתרון תקלות והדרכה על המסך — בלי לחכות ובלי להסביר את אותה בעיה פעמיים.</span></p>
+                <ul class="service-hero-card__tags">
+                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc4_t1">שליטה מרחוק</span></li>
+                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc4_t2">קביעת תורים</span></li>
+                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc4_t3">הדרכת משתמש</span></li>
+                </ul>
               </div>
             </article>
           </div>
           <div class="t-testimonials-block" id="testimonials-carousel">
-            <p class="t-carousel-title">לקוחות ממליצים</p>
-            <div class="t-carousel-standalone">
+            <p class="t-carousel-title" data-i18n="carousel_title" data-reveal>לקוחות ממליצים</p>
+            <div class="t-carousel-standalone" data-reveal>
               <div class="t-carousel-main">
-                <div class="t-wheel-viewport" id="t-wheel-viewport" role="region" aria-roledescription="קרוסלה" aria-label="המלצות לקוחות לדוגמה">
+                <div class="t-wheel-viewport" id="t-wheel-viewport" role="region" aria-roledescription="" aria-label="">
                   <div class="t-panorama" id="t-panorama">
                     <div class="t-slot t-slot--prev" id="t-slot-prev" aria-hidden="true"></div>
                     <div class="t-slot t-slot--curr" id="t-slot-curr" aria-live="polite"></div>
@@ -633,67 +1443,69 @@
                 <div class="t-carousel-dots" id="t-carousel-dots"></div>
               </div>
             </div>
-            <aside class="t-review-box" id="leave-review" aria-label="הוספת ביקורת">
+            <aside class="t-review-box" id="leave-review" aria-label="" data-reveal>
               <div class="t-review-box__head">
-                <p class="t-review-box__title">הוספת ביקורת</p>
+                <p class="t-review-box__title" data-i18n="review_title">הוספת ביקורת</p>
               </div>
-              <div class="field"><label for="t-review-name">שם</label><input id="t-review-name" type="text" autocomplete="name" placeholder="למשל: יוסי · ירושלים"></div>
-              <div class="field"><label for="t-review-text">ההמלצה</label><textarea id="t-review-text" placeholder="קצר וברור…" rows="3"></textarea></div>
+              <div class="field"><label for="t-review-name" data-i18n="review_name_lbl">שם</label><input id="t-review-name" type="text" autocomplete="name" data-i18n-placeholder="review_name_ph" placeholder="למשל: יוסי · ירושלים"></div>
+              <div class="field"><label for="t-review-text" data-i18n="review_text_lbl">ההמלצה</label><textarea id="t-review-text" data-i18n-placeholder="review_text_ph" placeholder="קצר וברור…" rows="3"></textarea></div>
               <fieldset class="t-review-stars-field">
-                <legend class="u-visually-hidden">דירוג בכוכבים</legend>
+                <legend class="u-visually-hidden" id="t-review-stars-legend">דירוג בכוכבים</legend>
                 <input type="hidden" id="t-review-rating" value="5" name="t-review-rating">
-                <div class="t-review-stars-track" id="t-review-stars-bar" role="radiogroup" aria-label="בחירת דירוג בין 1 ל־5 כוכבים">
-                  <button type="button" class="t-review-star-btn is-on" data-value="1" aria-label="כוכב 1">★</button>
-                  <button type="button" class="t-review-star-btn is-on" data-value="2" aria-label="כוכב 2">★</button>
-                  <button type="button" class="t-review-star-btn is-on" data-value="3" aria-label="כוכב 3">★</button>
-                  <button type="button" class="t-review-star-btn is-on" data-value="4" aria-label="כוכב 4">★</button>
-                  <button type="button" class="t-review-star-btn is-on" data-value="5" aria-label="כוכב 5">★</button>
+                <div class="t-review-stars-track" id="t-review-stars-bar" role="radiogroup" aria-label="">
+                  <button type="button" class="t-review-star-btn is-on" data-value="1" aria-label="">★</button>
+                  <button type="button" class="t-review-star-btn is-on" data-value="2" aria-label="">★</button>
+                  <button type="button" class="t-review-star-btn is-on" data-value="3" aria-label="">★</button>
+                  <button type="button" class="t-review-star-btn is-on" data-value="4" aria-label="">★</button>
+                  <button type="button" class="t-review-star-btn is-on" data-value="5" aria-label="">★</button>
                 </div>
               </fieldset>
-              <p class="t-review-box__foot">לפנייה לשירות — <a href="#contact-form-panel">צור קשר</a></p>
+              <p id="t-review-feedback" class="t-review-feedback" aria-live="polite"></p>
+              <button type="button" class="t-review-submit" id="t-review-submit" data-i18n="review_submit">שלח</button>
+              <p class="t-review-box__foot"><span data-i18n="review_foot_before">לפנייה לשירות —</span> <a href="#contact-form-panel" data-i18n="review_foot_link">צור קשר</a></p>
             </aside>
           </div>
         </div>
       </section>
       <section id="about" class="section" style="background:var(--surface-alt)">
-        <div class="section-inner about-body">
-          <p class="role">פתרונות מחשוב מקצועיים</p>
-          <p>תיקון מחשבים, תמיכה, רשתות וגיבוי — לפרטיים ולעסקים קטנים. שירות אישי ובשפה פשוטה.</p>
+        <div class="section-inner about-body" data-reveal>
+          <p class="role" data-i18n="about_role">פתרונות מחשוב מקצועיים</p>
+          <p data-i18n="about_p">תיקון מחשבים, תמיכה, רשתות וגיבוי — לפרטיים ולעסקים קטנים. שירות אישי ובשפה פשוטה.</p>
         </div>
       </section>
       <section id="contact" class="section contact-section">
         <div class="section-inner">
-          <h2 class="u-visually-hidden">צור קשר</h2>
+          <h2 class="u-visually-hidden" id="contact-section-h2" data-i18n="contact_h2">צור קשר</h2>
           <div class="contact-split">
-            <div class="contact-form-wrap" id="contact-form-panel">
-              <h3>טופס פנייה</h3>
-              <p class="form-note">טופס הדגמה (האתר סטטי). לתיאום — טלפון או וואטסאפ.</p>
+            <div class="contact-form-wrap" id="contact-form-panel" data-reveal>
+              <h3 data-i18n="contact_form_h3">טופס פנייה</h3>
+              <p class="form-note" data-i18n="contact_form_note">טופס הדגמה (האתר סטטי). לתיאום — טלפון או וואטסאפ.</p>
               <form action="#" method="get" onsubmit="return false;">
-                <div class="field"><label for="c-name">שם מלא</label><input id="c-name" type="text" autocomplete="name"></div>
-                <div class="field"><label for="c-phone">טלפון</label><input id="c-phone" type="tel" autocomplete="tel" placeholder="054-454-9014"></div>
-                <div class="field"><textarea id="c-msg" name="message" aria-label="תיאור קצר של הבעיה או הבקשה" placeholder="תיאור קצר של הבעיה או הבקשה — אחזור עם המשך"></textarea></div>
-                <button type="submit" class="btn-submit" disabled>שליחה (בקרוב)</button>
+                <div class="field"><label for="c-name" data-i18n="c_name_lbl">שם מלא</label><input id="c-name" type="text" autocomplete="name"></div>
+                <div class="field"><label for="c-phone" data-i18n="c_phone_lbl">טלפון</label><input id="c-phone" type="tel" autocomplete="tel" placeholder="054-454-9014"></div>
+                <div class="field"><textarea id="c-msg" name="message" aria-label="" data-i18n-placeholder="c_msg_ph" placeholder="תיאור קצר של הבעיה או הבקשה — אחזור עם המשך"></textarea></div>
+                <button type="submit" class="btn-submit" disabled data-i18n="c_submit">שליחה (בקרוב)</button>
               </form>
             </div>
             <div class="contact-channels">
-              <div class="contact-channel contact-channel--static contact-channel--reveal">
-                <span class="contact-channel-label">טלפון</span>
-                <button type="button" class="contact-reveal-btn" aria-controls="reveal-phone">הצג בלחיצה למי שמעוניין</button>
+              <div class="contact-channel contact-channel--static contact-channel--reveal" data-reveal>
+                <span class="contact-channel-label" data-i18n="ch_phone">טלפון</span>
+                <button type="button" class="contact-reveal-btn" aria-controls="reveal-phone" data-i18n="reveal">הצג</button>
                 <a href="tel:+972544549014" id="reveal-phone" class="contact-channel-value contact-reveal-target" hidden>054-454-9014</a>
               </div>
-              <div class="contact-channel contact-channel--static">
-                <span class="contact-channel-label">וואטסאפ</span>
-                <a href="https://wa.me/972544549014" class="whatsapp-link" target="_blank" rel="noopener" aria-label="WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
-                <p class="contact-wa-hint">לחיצה על האייקון פותחת שיחה</p>
+              <div class="contact-channel contact-channel--static" data-reveal>
+                <span class="contact-channel-label" data-i18n="ch_wa">וואטסאפ</span>
+                <a href="https://wa.me/972544549014" class="whatsapp-link" id="wa-link" target="_blank" rel="noopener" aria-label=""><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+                <p class="contact-wa-hint" data-i18n="wa_hint">לחיצה על האייקון פותחת שיחה</p>
               </div>
-              <div class="contact-channel contact-channel--static contact-channel--reveal">
-                <span class="contact-channel-label">אימייל</span>
-                <button type="button" class="contact-reveal-btn" aria-controls="reveal-email">הצג בלחיצה למי שמעוניין</button>
+              <div class="contact-channel contact-channel--static contact-channel--reveal" data-reveal>
+                <span class="contact-channel-label" data-i18n="ch_email">אימייל</span>
+                <button type="button" class="contact-reveal-btn" aria-controls="reveal-email" data-i18n="reveal">הצג</button>
                 <a href="mailto:Idan1991ohana@gmail.com" id="reveal-email" class="contact-channel-value contact-channel-value--email contact-reveal-target" hidden>Idan1991ohana@gmail.com</a>
               </div>
-              <div class="contact-channel contact-channel--static">
-                <span class="contact-channel-label">אזור שירות</span>
-                <span class="contact-channel-value">ירושלים והסביבה</span>
+              <div class="contact-channel contact-channel--static" data-reveal>
+                <span class="contact-channel-label" data-i18n="ch_area">אזור שירות</span>
+                <span class="contact-channel-value" data-i18n="area_val">ירושלים והסביבה</span>
               </div>
             </div>
           </div>
@@ -702,183 +1514,799 @@
     </main>
     <footer class="site-footer">
       <div class="footer-inner">
-        <div class="footer-col"><h4>עידן</h4><p style="margin:0;font-size:0.82rem">פתרונות מחשוב מקצועיים</p></div>
-        <div class="footer-col"><h4>ניווט</h4><ul>
-          <li><a href="#top">דף הבית</a></li><li><a href="#services">שירותים</a></li><li><a href="#about">אודות</a></li><li><a href="#contact">צור קשר</a></li>
+        <div class="footer-col" data-reveal><h4 data-i18n="foot_brand">עידן</h4><p style="margin:0;font-size:0.82rem" data-i18n="foot_tagline">פתרונות מחשוב מקצועיים</p></div>
+        <div class="footer-col" data-reveal><h4 data-i18n="foot_nav_h">ניווט</h4><ul>
+          <li><a href="#top" data-i18n="nav_home">דף הבית</a></li><li><a href="#services" data-i18n="nav_services">שירותים</a></li><li><a href="#about" data-i18n="nav_about">אודות</a></li><li><a href="#contact" data-i18n="nav_contact">צור קשר</a></li>
         </ul></div>
-        <div class="footer-col"><h4>יצירת קשר</h4><p style="margin:0;font-size:0.88rem"><a href="tel:+972544549014" style="color:#94a3b8">054-454-9014</a></p></div>
+        <div class="footer-col" data-reveal><h4 data-i18n="foot_contact_h">יצירת קשר</h4><p style="margin:0;font-size:0.88rem"><a href="tel:+972544549014" style="color:#94a3b8">054-454-9014</a></p></div>
       </div>
-      <p class="footer-bottom">© <span id="y"></span> עידן · פתרונות מחשוב מקצועיים</p>
+      <p class="footer-bottom">© <span id="y"></span> <span data-i18n="foot_copy">עידן · פתרונות מחשוב מקצועיים</span></p>
     </footer>
   </div>
   <script>
-    (function () {
-      document.getElementById("y").textContent = new Date().getFullYear();
-      document.querySelectorAll(".contact-reveal-btn").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          var t = document.getElementById(btn.getAttribute("aria-controls"));
-          if (!t) return;
-          btn.setAttribute("hidden", "");
-          t.removeAttribute("hidden");
-          t.focus({ preventScroll: true });
-        });
+(function () {
+  var STORAGE_THEME = "idan-www-theme";
+  var STORAGE_LANG = "idan-www-lang";
+
+  var I18N = {
+    he: {
+      page_title: "עידן אוחנה | פתרונות מחשוב מקצועיים",
+      meta_desc: "עידן אוחנה — פתרונות מחשוב מקצועיים בירושלים והסביבה.",
+      skip: "דלג לתוכן הראשי",
+      a11y_note: "נגישות בסיסית",
+      prefs_toolbar_aria: "תצוגה ושפה",
+      prefs_lang_group_aria: "בחירת שפה",
+      lang_he_aria: "עברית",
+      lang_en_aria: "English",
+      theme_use_dark: "מעבר לתצוגה כהה",
+      theme_use_light: "מעבר לתצוגה בהירה",
+      nav_aria: "ניווט ראשי",
+      nav_home: "דף הבית",
+      nav_services: "שירותים",
+      nav_about: "אודות",
+      nav_contact: "צור קשר",
+      header_cta: "התקשר עכשיו",
+      cred_aria: "סמכויות ושירות",
+      cred1: "משווק מורשה מיקרוסופט",
+      cred2: "מוסמך MCSA",
+      cred3: "טכנאי מעל עשור",
+      cred4: "שירות מרחוק ובאתר הלקוח",
+      cred5: "שירות 24/7",
+      side_rail_aria: "מעבדה ומחירונים",
+      side_tablist_aria: "בחירת מקטע",
+      side_tab_lab: "מעבדה",
+      side_tab_prices: "מחירונים",
+      side_lab_p: "במעבדה: אבחון מדויק, החלפת רכיבים ושחזורים — לפי תור והמצאת הציוד.",
+      side_lab_1: "אבחון חומרה ואיתור תקלה",
+      side_lab_2: "ניקוי אבק ושיפור קירור",
+      side_lab_3: "החלפת רכיבים על לוח אם",
+      side_lab_4: "שחזור מידע מכוננים",
+      side_lab_5: "התקנות מנהלי התקן וריענון מערכת",
+      price_lbl_screen: "החלפת מסך",
+      price_val_screen: "500–700 ₪",
+      price_lbl_visit: "הגעת טכנאי לבית הלקוח",
+      price_val_visit: "300 ₪",
+      price_lbl_battery: "החלפת סוללה",
+      price_val_battery: "300–500 ₪",
+      more_issues_h: "עוד תקלות נפוצות (ללא מחיר — לפי אבחון)",
+      issue_nop_1: "מחשב לא נדלק / נכבה באמצע",
+      issue_nop_2: "איטיות קיצונית או קפיצות",
+      issue_nop_3: "וירוסים, חלונות קופצים והסרת תוכנות",
+      issue_nop_4: "מקלדת או משטח עכבר לא מגיבים",
+      issue_nop_5: "לא טוען / תקלת שקע טעינה",
+      issue_nop_6: "רעש חריג מהמאוורר או חימום יתר",
+      issue_nop_7: "כרטיס מסך מובנה (בתוך המארז)",
+      issue_nop_8: "שדרוג SSD או זיכרון RAM",
+      price_disclaimer: "מחירים לדוגמה בלבד; הסכום הסופי אחרי בדיקה בשטח או במעבדה.",
+      hero_lead: "פתרונות מחשוב מקצועיים",
+      btn_contact: "צור קשר",
+      btn_services: "השירותים",
+      sec_title: "השירותים שלי",
+      mobile_lab_prices_h: "מעבדה ומחירונים",
+      hero_img_alt: "תמונת פרופיל — עידן אוחנה",
+      services_aria: "שירותים",
+      svc1_h3: "ניהול ודיווח דיגיטלי",
+      svc1_p: "סידור קבצים, דשבורדים ותהליכי עבודה במחשב — כדי שתדע בכל רגע איפה אתה עומד ומה הצעד הבא.",
+      svc1_t1: "Office ו־Excel",
+      svc1_t2: "ארגון מסמכים",
+      svc1_t3: "קבצים בענן",
+      svc2_h3: "תקלות תקשורת",
+      svc2_p: "איבוד חיבור, WiFi לא יציב או איטיות ברשת — אבחון ותיקון בנתבים, במתגים ובכבילה עד שהתקשורת חוזרת לעבוד חלק.",
+      svc2_t1: "WiFi ונתבים",
+      svc2_t2: "מתגים וכבילה",
+      svc2_t3: "רשת ביתית ועסקית",
+      svc3_h3: "שירותי IT לעסקים",
+      svc3_p: "ליווי טכנולוגי לצוותים קטנים — מהגדרה ראשונית ועד תחזוקה שוטפת, בשפה פשוטה ובלי מילים מסובכות.",
+      svc3_t1: "חוזי שירות",
+      svc3_t2: "הדרכות קצרות",
+      svc3_t3: "ליווי שוטף",
+      svc4_h3: "תמיכה מרחוק",
+      svc4_p: "חיבור מאובטח, פתרון תקלות והדרכה על המסך — בלי לחכות ובלי להסביר את אותה בעיה פעמיים.",
+      svc4_t1: "שליטה מרחוק",
+      svc4_t2: "קביעת תורים",
+      svc4_t3: "הדרכת משתמש",
+      carousel_title: "לקוחות ממליצים",
+      carousel_role: "קרוסלה",
+      carousel_region_label: "המלצות לקוחות לדוגמה",
+      dot_aria: "המלצה {n}",
+      review_title: "הוספת ביקורת",
+      review_name_lbl: "שם",
+      review_name_ph: "למשל: יוסי · ירושלים",
+      review_text_lbl: "ההמלצה",
+      review_text_ph: "קצר וברור…",
+      review_foot_before: "לפנייה לשירות —",
+      review_foot_link: "צור קשר",
+      review_submit: "שלח",
+      review_submit_msg: "תודה! הטופס כאן להדגמה בלבד — כדי לפרסם את הביקורת שלך, שלח בוואטסאפ או התקשר.",
+      review_submit_need_text: "כתוב את נוסח ההמלצה לפני השליחה.",
+      review_aside_aria: "הוספת ביקורת",
+      stars_legend: "דירוג בכוכבים",
+      stars_radiogroup_aria: "בחירת דירוג בין 1 ל־5 כוכבים",
+      star_aria_1: "כוכב 1 מתוך 5",
+      star_aria_2: "כוכב 2 מתוך 5",
+      star_aria_3: "כוכב 3 מתוך 5",
+      star_aria_4: "כוכב 4 מתוך 5",
+      star_aria_5: "כוכב 5 מתוך 5",
+      about_role: "פתרונות מחשוב מקצועיים",
+      about_p: "תיקון מחשבים, תמיכה, רשתות וגיבוי — לפרטיים ולעסקים קטנים. שירות אישי ובשפה פשוטה.",
+      contact_h2: "צור קשר",
+      contact_form_h3: "טופס פנייה",
+      contact_form_note: "טופס הדגמה (האתר סטטי). לתיאום — טלפון או וואטסאפ.",
+      c_name_lbl: "שם מלא",
+      c_phone_lbl: "טלפון",
+      c_msg_ph: "תיאור קצר של הבעיה או הבקשה — אחזור עם המשך",
+      c_msg_aria: "תיאור קצר של הבעיה או הבקשה",
+      c_submit: "שליחה (בקרוב)",
+      ch_phone: "טלפון",
+      ch_wa: "וואטסאפ",
+      ch_email: "אימייל",
+      ch_area: "אזור שירות",
+      wa_hint: "לחיצה על האייקון פותחת שיחה",
+      area_val: "ירושלים והסביבה",
+      reveal: "הצג",
+      wa_aria: "וואטסאפ",
+      foot_brand: "עידן",
+      foot_tagline: "פתרונות מחשוב מקצועיים",
+      foot_nav_h: "ניווט",
+      foot_contact_h: "יצירת קשר",
+      foot_copy: "עידן · פתרונות מחשוב מקצועיים"
+    },
+    en: {
+      page_title: "Idan Ohana | Professional IT services",
+      meta_desc: "Idan Ohana — professional computer services in Jerusalem and the area.",
+      skip: "Skip to main content",
+      a11y_note: "Basic accessibility",
+      prefs_toolbar_aria: "Display and language",
+      prefs_lang_group_aria: "Choose language",
+      lang_he_aria: "Hebrew",
+      lang_en_aria: "English",
+      theme_use_dark: "Switch to dark mode",
+      theme_use_light: "Switch to light mode",
+      nav_aria: "Main navigation",
+      nav_home: "Home",
+      nav_services: "Services",
+      nav_about: "About",
+      nav_contact: "Contact",
+      header_cta: "Call now",
+      cred_aria: "Credentials and services",
+      cred1: "Authorized Microsoft reseller",
+      cred2: "MCSA certified",
+      cred3: "Technician for 10+ years",
+      cred4: "Remote and on-site service",
+      cred5: "24/7 service",
+      side_rail_aria: "Lab and price list",
+      side_tablist_aria: "Choose a section",
+      side_tab_lab: "Lab",
+      side_tab_prices: "Prices",
+      side_lab_p: "In the lab: precise diagnostics, component replacement and data recovery — by appointment when you bring the device in.",
+      side_lab_1: "Hardware diagnostics and fault tracing",
+      side_lab_2: "Dust cleaning and better cooling",
+      side_lab_3: "Motherboard-level component replacement",
+      side_lab_4: "Data recovery from drives",
+      side_lab_5: "Driver installs and system refresh",
+      price_lbl_screen: "Screen replacement",
+      price_val_screen: "₪500–700",
+      price_lbl_visit: "Technician visit (on-site)",
+      price_val_visit: "₪300",
+      price_lbl_battery: "Battery replacement",
+      price_val_battery: "₪300–500",
+      more_issues_h: "More common issues (no fixed price — per diagnosis)",
+      issue_nop_1: "Won’t power on / shuts off randomly",
+      issue_nop_2: "Very slow or freezing",
+      issue_nop_3: "Viruses, pop-ups and unwanted software removal",
+      issue_nop_4: "Keyboard or touchpad not responding",
+      issue_nop_5: "Not charging / charging port fault",
+      issue_nop_6: "Fan noise or overheating",
+      issue_nop_7: "Built-in graphics (inside the chassis)",
+      issue_nop_8: "SSD or RAM upgrade",
+      price_disclaimer: "Sample prices only; final amount after on-site or lab inspection.",
+      hero_lead: "Professional IT solutions",
+      btn_contact: "Contact",
+      btn_services: "Services",
+      sec_title: "My services",
+      mobile_lab_prices_h: "Lab and prices",
+      hero_img_alt: "Profile photo — Idan Ohana",
+      services_aria: "Services",
+      svc1_h3: "Digital filing and reporting",
+      svc1_p: "Files, dashboards and workflows on your computer — so you always know where you stand and the next step.",
+      svc1_t1: "Office and Excel",
+      svc1_t2: "Document organization",
+      svc1_t3: "Cloud files",
+      svc2_h3: "Connectivity issues",
+      svc2_p: "Dropped connection, unstable WiFi or slow network — troubleshooting routers, switches and cabling until everything runs smoothly.",
+      svc2_t1: "WiFi and routers",
+      svc2_t2: "Switches and cabling",
+      svc2_t3: "Home and office networks",
+      svc3_h3: "Business IT services",
+      svc3_p: "Technology support for small teams — from initial setup to ongoing maintenance, in plain language.",
+      svc3_t1: "Service contracts",
+      svc3_t2: "Short training sessions",
+      svc3_t3: "Ongoing support",
+      svc4_h3: "Remote support",
+      svc4_p: "Secure connection, troubleshooting and on-screen guidance — without the wait.",
+      svc4_t1: "Remote control",
+      svc4_t2: "Scheduling",
+      svc4_t3: "User guidance",
+      carousel_title: "Client testimonials",
+      carousel_role: "carousel",
+      carousel_region_label: "Sample client testimonials",
+      dot_aria: "Review {n}",
+      review_title: "Leave a review",
+      review_name_lbl: "Name",
+      review_name_ph: "e.g. John · Jerusalem",
+      review_text_lbl: "Your testimonial",
+      review_text_ph: "Short and clear…",
+      review_foot_before: "For service —",
+      review_foot_link: "contact",
+      review_submit: "Send",
+      review_submit_msg: "Thanks! This form is for demo only — to publish your review, WhatsApp or call.",
+      review_submit_need_text: "Write your testimonial before sending.",
+      review_aside_aria: "Leave a review",
+      stars_legend: "Star rating",
+      stars_radiogroup_aria: "Choose a rating from 1 to 5 stars",
+      star_aria_1: "Star 1 of 5",
+      star_aria_2: "Star 2 of 5",
+      star_aria_3: "Star 3 of 5",
+      star_aria_4: "Star 4 of 5",
+      star_aria_5: "Star 5 of 5",
+      about_role: "Professional IT solutions",
+      about_p: "Computer repair, support, networking and backup — for individuals and small businesses. Personal service in plain language.",
+      contact_h2: "Contact",
+      contact_form_h3: "Contact form",
+      contact_form_note: "Demo form (static site). To schedule — phone or WhatsApp.",
+      c_name_lbl: "Full name",
+      c_phone_lbl: "Phone",
+      c_msg_ph: "Short description of the issue or request — I will follow up",
+      c_msg_aria: "Short description of the issue or request",
+      c_submit: "Send (coming soon)",
+      ch_phone: "Phone",
+      ch_wa: "WhatsApp",
+      ch_email: "Email",
+      ch_area: "Service area",
+      wa_hint: "Tap the icon to open a chat",
+      area_val: "Jerusalem and surrounding area",
+      reveal: "Show",
+      wa_aria: "WhatsApp",
+      foot_brand: "Idan",
+      foot_tagline: "Professional IT solutions",
+      foot_nav_h: "Navigation",
+      foot_contact_h: "Contact",
+      foot_copy: "Idan · professional IT solutions"
+    }
+  };
+
+  function getLang() {
+    return document.documentElement.getAttribute("lang") === "en" ? "en" : "he";
+  }
+
+  function getDict() {
+    return I18N[getLang()];
+  }
+
+  function applyTheme(theme) {
+    var isDark = theme === "dark";
+    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+    localStorage.setItem(STORAGE_THEME, isDark ? "dark" : "light");
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", isDark ? "#1a2332" : "#1e3a5f");
+    updateThemeToggleUi();
+  }
+
+  function updateThemeToggleUi() {
+    var btn = document.getElementById("pref-theme");
+    if (!btn) return;
+    var dark = document.documentElement.getAttribute("data-theme") === "dark";
+    var d = getDict();
+    btn.textContent = dark ? "☀" : "🌙";
+    btn.setAttribute("aria-label", dark ? d.theme_use_light : d.theme_use_dark);
+  }
+
+  function applyLang(lang) {
+    var isEn = lang === "en";
+    document.documentElement.lang = isEn ? "en" : "he";
+    document.documentElement.dir = isEn ? "ltr" : "rtl";
+    localStorage.setItem(STORAGE_LANG, isEn ? "en" : "he");
+
+    var d = I18N[isEn ? "en" : "he"];
+
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n");
+      if (k && d[k] != null) el.textContent = d[k];
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n-placeholder");
+      if (k && d[k] != null) el.setAttribute("placeholder", d[k]);
+    });
+    document.querySelectorAll("[data-i18n-alt]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n-alt");
+      if (k && d[k] != null) el.setAttribute("alt", d[k]);
+    });
+
+    document.title = d.page_title;
+    var md = document.querySelector('meta[name="description"]');
+    if (md) md.setAttribute("content", d.meta_desc);
+
+    var prefsBar = document.getElementById("site-prefs-bar");
+    if (prefsBar) prefsBar.setAttribute("aria-label", d.prefs_toolbar_aria);
+    var prefsLang = document.getElementById("site-prefs-lang");
+    if (prefsLang) prefsLang.setAttribute("aria-label", d.prefs_lang_group_aria);
+    var heB = document.getElementById("pref-lang-he");
+    var enB = document.getElementById("pref-lang-en");
+    if (heB) {
+      heB.setAttribute("aria-label", d.lang_he_aria);
+      heB.classList.toggle("is-active", !isEn);
+      heB.setAttribute("aria-pressed", !isEn ? "true" : "false");
+    }
+    if (enB) {
+      enB.setAttribute("aria-label", d.lang_en_aria);
+      enB.classList.toggle("is-active", isEn);
+      enB.setAttribute("aria-pressed", isEn ? "true" : "false");
+    }
+
+    var navEl = document.getElementById("nav-main-el");
+    if (navEl) navEl.setAttribute("aria-label", d.nav_aria);
+    var srp = document.getElementById("side-rail-panel");
+    if (srp) srp.setAttribute("aria-label", d.side_rail_aria);
+    var srtl = document.getElementById("side-rail-tablist");
+    if (srtl) srtl.setAttribute("aria-label", d.side_tablist_aria);
+    var cred = document.getElementById("cred-bubbles-aside");
+    if (cred) cred.setAttribute("aria-label", d.cred_aria);
+    var showcase = document.getElementById("service-showcase-el");
+    if (showcase) showcase.setAttribute("aria-label", d.services_aria);
+    var wv = document.getElementById("t-wheel-viewport");
+    if (wv) {
+      wv.setAttribute("aria-roledescription", d.carousel_role);
+      wv.setAttribute("aria-label", d.carousel_region_label);
+    }
+    var lr = document.getElementById("leave-review");
+    if (lr) lr.setAttribute("aria-label", d.review_aside_aria);
+    var cmsg = document.getElementById("c-msg");
+    if (cmsg) cmsg.setAttribute("aria-label", d.c_msg_aria);
+    var starsBar = document.getElementById("t-review-stars-bar");
+    if (starsBar) starsBar.setAttribute("aria-label", d.stars_radiogroup_aria);
+    var leg = document.getElementById("t-review-stars-legend");
+    if (leg) leg.textContent = d.stars_legend;
+    document.querySelectorAll(".t-review-star-btn").forEach(function (b, i) {
+      b.setAttribute("aria-label", d["star_aria_" + (i + 1)]);
+    });
+    var wa = document.getElementById("wa-link");
+    if (wa) wa.setAttribute("aria-label", d.wa_aria);
+
+    var taSync = document.getElementById("t-review-text");
+    tCarouselUsingDemo = !!(taSync && taSync.value.trim().length > 0);
+
+    var rowsClamp = getReviewRows();
+    if (rowsClamp.length) {
+      tSlide = Math.min(Math.max(0, tSlide), rowsClamp.length - 1);
+    } else {
+      tSlide = 0;
+    }
+
+    updateThemeToggleUi();
+    rebuildCarouselDots();
+    renderTriplet(tSlide, true);
+
+    var fbClear = document.getElementById("t-review-feedback");
+    if (fbClear) fbClear.textContent = "";
+  }
+
+  document.getElementById("y").textContent = new Date().getFullYear();
+
+  (function initSideRailTabs() {
+    var root = document.getElementById("side-rail-panel");
+    if (!root) return;
+    var tabs = [].slice.call(root.querySelectorAll('[role="tab"]'));
+    function selectTab(activeBtn) {
+      tabs.forEach(function (t) {
+        var on = t === activeBtn;
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        t.tabIndex = on ? 0 : -1;
+        var pid = t.getAttribute("aria-controls");
+        var p = pid ? document.getElementById(pid) : null;
+        if (p) {
+          if (on) p.removeAttribute("hidden");
+          else p.setAttribute("hidden", "");
+        }
       });
-      var tData = [
-        { stars: 5, quote: "מקצועי, סבלני והגיע מהר. המחשב עובד מצוין מאז התיקון.", name: "דנה כהן · ירושלים" },
-        { stars: 4, quote: "הסביר הכל בשפה פשוטה וברורה. ממליצה בחום על השירות.", name: "רונית פרידמן · מודיעין" },
-        { stars: 5, quote: "תיקנו לנו את הרשת הביתית — היום הכל יציב. תודה רבה!", name: "משפחת לוי · בית שמש" },
-        { stars: 3, quote: "שירות טוב ומחיר הוגן. חזרתי אחרי שנה עם עוד תקלה ועזר שוב.", name: "עומר מזרחי · ירושלים" },
-        { stars: 5, quote: "מענה מהיר בוואטסאפ ותיקון מרחוק — חסך לי זמן יקר.", name: "אלחנן ביטון · מעלה אדומים" },
-        { stars: 4, quote: "הקימו לעסק הקטן גיבוי ואנטי־וירוס. שקט נפשי.", name: "ניר אזולאי · גבעת זאב" },
-        { stars: 5, quote: "ייעוץ נכון לפני רכישה — חסך לי כסף על חומרה מיותרת.", name: "גלעד דהן · הר חוצבים" },
-        { stars: 4, quote: "תיקון מסודר אחרי וירוס. הכל עובד חלק מאז.", name: "שרה גבאי · פסגת זאב" }
-      ];
-      var panorama = document.getElementById("t-panorama");
-      var wheelViewport = document.getElementById("t-wheel-viewport");
-      var slotPrev = document.getElementById("t-slot-prev");
-      var slotCurr = document.getElementById("t-slot-curr");
-      var slotNext = document.getElementById("t-slot-next");
-      var dots = document.getElementById("t-carousel-dots");
-      var tSlide = 0;
-      var tTimer = null;
-      var tAnimating = false;
-      function esc(s) {
-        if (!s) return "";
-        return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    }
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        selectTab(tab);
+      });
+    });
+  })();
+
+  document.querySelectorAll(".contact-reveal-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var t = document.getElementById(btn.getAttribute("aria-controls"));
+      if (!t) return;
+      btn.setAttribute("hidden", "");
+      t.removeAttribute("hidden");
+      t.focus({ preventScroll: true });
+    });
+  });
+
+  var tCarouselUsingDemo = false;
+
+  var tDataRaw = [
+    {
+      stars: 5,
+      quote: {
+        he: "מקצועי, סבלני והגיע מהר. המחשב עובד מצוין מאז התיקון.",
+        en: "Professional, patient, and arrived quickly. The computer has been running great since the repair."
+      },
+      name: { he: "דנה כהן · ירושלים", en: "Dana Cohen · Jerusalem" }
+    },
+    {
+      stars: 4,
+      quote: {
+        he: "הסביר הכל בשפה פשוטה וברורה. ממליצה בחום על השירות.",
+        en: "Explained everything in simple, clear language. I highly recommend the service."
+      },
+      name: { he: "רונית פרידמן · מודיעין", en: "Ronit Friedman · Modi'in" }
+    },
+    {
+      stars: 5,
+      quote: {
+        he: "תיקנו לנו את הרשת הביתית — היום הכל יציב. תודה רבה!",
+        en: "They fixed our home network — everything has been stable since. Thank you!"
+      },
+      name: { he: "משפחת לוי · בית שמש", en: "Levy family · Beit Shemesh" }
+    },
+    {
+      stars: 3,
+      quote: {
+        he: "שירות טוב ומחיר הוגן. חזרתי אחרי שנה עם עוד תקלה ועזר שוב.",
+        en: "Good service and fair pricing. I came back a year later with another issue and got help again."
+      },
+      name: { he: "עומר מזרחי · ירושלים", en: "Omer Mizrachi · Jerusalem" }
+    },
+    {
+      stars: 5,
+      quote: {
+        he: "מענה מהיר בוואטסאפ ותיקון מרחוק — חסך לי זמן יקר.",
+        en: "Fast WhatsApp response and remote fix — saved me valuable time."
+      },
+      name: { he: "אלחנן ביטון · מעלה אדומים", en: "Elhanan Biton · Ma'ale Adumim" }
+    },
+    {
+      stars: 4,
+      quote: {
+        he: "הקימו לעסק הקטן גיבוי ואנטי־וירוס. שקט נפשי.",
+        en: "Set up backup and antivirus for our small business. Peace of mind."
+      },
+      name: { he: "ניר אזולאי · גבעת זאב", en: "Nir Azulai · Givat Ze'ev" }
+    },
+    {
+      stars: 5,
+      quote: {
+        he: "ייעוץ נכון לפני רכישה — חסך לי כסף על חומרה מיותרת.",
+        en: "Good advice before buying — saved me money on unnecessary hardware."
+      },
+      name: { he: "גלעד דהן · הר חוצבים", en: "Gilad Dahan · Har Hatsofim" }
+    },
+    {
+      stars: 4,
+      quote: {
+        he: "תיקון מסודר אחרי וירוס. הכל עובד חלק מאז.",
+        en: "Clean repair after a virus. Everything has been smooth since."
+      },
+      name: { he: "שרה גבאי · פסגת זאב", en: "Sarah Gabai · Pisgat Ze'ev" }
+    }
+  ];
+
+  var tDataPlaceholder = [
+    {
+      stars: 5,
+      quote: {
+        he: "זוהי שקופית לדוגמה בלבד — לא ביקורת לקוח אמיתית. בזמן שאתה כותב המלצה אמיתית למטה, הקרוסלה מציגה טקסטים מומצאים להמחשה.",
+        en: "This slide is for illustration only — not a real customer review. While you write a real testimonial below, the carousel shows made-up sample text."
+      },
+      name: { he: "דוגמה · לא שם אמיתי", en: "Sample · not a real person" }
+    },
+    {
+      stars: 4,
+      quote: {
+        he: "שקופית שנייה לדוגמה. אין כאן לקוח אמיתי — רק כדי שלא יתבלבלו בין הביקורת שלך לבין דוגמאות ישנות.",
+        en: "Second sample slide. No real client here — so your own words are not mixed with old examples."
+      },
+      name: { he: "תצוגה לדוגמה", en: "Placeholder" }
+    },
+    {
+      stars: 5,
+      quote: {
+        he: "כשתמחק את הטקסט בשדה ההמלצה — חוזרות כאן ההמלצות לדוגמה המקוריות של האתר.",
+        en: "When you clear the testimonial field — the site’s original sample reviews appear here again."
+      },
+      name: { he: "מצב תצוגה", en: "Preview mode" }
+    }
+  ];
+
+  function getCarouselSource() {
+    return tCarouselUsingDemo ? tDataPlaceholder : tDataRaw;
+  }
+
+  function getReviewRows() {
+    var lang = getLang();
+    return getCarouselSource().map(function (r) {
+      return { stars: r.stars, quote: r.quote[lang], name: r.name[lang] };
+    });
+  }
+
+  var panorama = document.getElementById("t-panorama");
+  var wheelViewport = document.getElementById("t-wheel-viewport");
+  var slotPrev = document.getElementById("t-slot-prev");
+  var slotCurr = document.getElementById("t-slot-curr");
+  var slotNext = document.getElementById("t-slot-next");
+  var dots = document.getElementById("t-carousel-dots");
+  var tSlide = 0;
+  var tTimer = null;
+  var tAnimating = false;
+
+  function esc(s) {
+    if (!s) return "";
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  }
+
+  function starsHtml(n) {
+    var h = "";
+    for (var s = 1; s <= 5; s++) {
+      h += s <= n ? '<span class="star-full">★</span>' : '<span class="star-empty">☆</span>';
+    }
+    return h;
+  }
+
+  function cardInner(d) {
+    return (
+      '<div class="t-card">' +
+      '<div class="t-card-stars" aria-hidden="true">' +
+      starsHtml(d.stars) +
+      "</div>" +
+      '<p class="t-card-quote">' +
+      esc(d.quote) +
+      "</p>" +
+      '<p class="t-card-name">— ' +
+      esc(d.name) +
+      "</p></div>"
+    );
+  }
+
+  function renderTriplet(ix, skipAnim) {
+    var rows = getReviewRows();
+    var n = rows.length;
+    if (n < 1 || !slotPrev || !slotCurr || !slotNext) return;
+    var i = ((ix % n) + n) % n;
+    tSlide = i;
+    slotPrev.innerHTML = cardInner(rows[(i - 1 + n) % n]);
+    slotCurr.innerHTML = cardInner(rows[i]);
+    slotNext.innerHTML = cardInner(rows[(i + 1 + n) % n]);
+    if (dots) {
+      dots.querySelectorAll(".t-carousel-dot").forEach(function (b, j) {
+        b.classList.toggle("is-active", j === tSlide);
+      });
+    }
+  }
+
+  function rebuildCarouselDots() {
+    if (!dots) return;
+    var d = getDict();
+    var rows = getReviewRows();
+    dots.innerHTML = "";
+    rows.forEach(function (_, ix) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "t-carousel-dot";
+      b.setAttribute("aria-label", d.dot_aria.replace("{n}", String(ix + 1)));
+      b.addEventListener("click", function () {
+        if (tTimer) window.clearInterval(tTimer);
+        slideTo(ix, true);
+        tTimer = window.setInterval(nextSlide, 3000);
+      });
+      dots.appendChild(b);
+    });
+  }
+
+  function syncCarouselDemoFromTextarea() {
+    var ta = document.getElementById("t-review-text");
+    var on = !!(ta && ta.value.trim().length > 0);
+    if (on === tCarouselUsingDemo) return;
+    tCarouselUsingDemo = on;
+    if (tTimer) window.clearInterval(tTimer);
+    tSlide = 0;
+    rebuildCarouselDots();
+    renderTriplet(0, true);
+    tTimer = window.setInterval(nextSlide, 3000);
+  }
+
+  function slideTo(ix, skipAnim) {
+    var rows = getReviewRows();
+    var n = rows.length;
+    if (n < 1) return;
+    if (skipAnim) {
+      tAnimating = false;
+      if (panorama) {
+        panorama.style.transition = "";
+        panorama.style.transform = "";
       }
-      function starsHtml(n) {
-        var h = "";
-        for (var s = 1; s <= 5; s++) {
-          h += s <= n ? '<span class="star-full">★</span>' : '<span class="star-empty">☆</span>';
-        }
-        return h;
+      if (wheelViewport) {
+        wheelViewport.style.transition = "";
+        wheelViewport.style.opacity = "";
+        wheelViewport.style.filter = "";
       }
-      function cardInner(d) {
-        return (
-          '<div class="t-card">' +
-          '<div class="t-card-stars" aria-hidden="true">' +
-          starsHtml(d.stars) +
-          "</div>" +
-          '<p class="t-card-quote">' +
-          esc(d.quote) +
-          "</p>" +
-          '<p class="t-card-name">— ' +
-          esc(d.name) +
-          "</p></div>"
-        );
+      renderTriplet(ix, true);
+      return;
+    }
+    if (tAnimating) return;
+    var target = ((ix % n) + n) % n;
+    if (target === tSlide) return;
+    tAnimating = true;
+    var wv = wheelViewport;
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var fadeOutMs = reduceMotion ? 120 : 520;
+    var fadeInMs = reduceMotion ? 160 : 720;
+    function clearWv() {
+      if (!wv) return;
+      wv.style.transition = "";
+      wv.style.opacity = "";
+      wv.style.filter = "";
+    }
+    function goIn() {
+      if (!wv) {
+        renderTriplet(target, true);
+        tAnimating = false;
+        return;
       }
-      function renderTriplet(ix) {
-        var n = tData.length;
-        if (n < 1 || !slotPrev || !slotCurr || !slotNext) return;
-        var i = ((ix % n) + n) % n;
-        tSlide = i;
-        slotPrev.innerHTML = cardInner(tData[(i - 1 + n) % n]);
-        slotCurr.innerHTML = cardInner(tData[i]);
-        slotNext.innerHTML = cardInner(tData[(i + 1) % n]);
-        if (dots) {
-          dots.querySelectorAll(".t-carousel-dot").forEach(function (b, j) {
-            b.classList.toggle("is-active", j === tSlide);
-          });
-        }
+      wv.style.transition = reduceMotion
+        ? "opacity 0.18s ease"
+        : "opacity " + fadeInMs / 1000 + "s cubic-bezier(0.22, 1, 0.36, 1), filter " + fadeInMs / 1000 + "s ease";
+      wv.style.opacity = "1";
+      wv.style.filter = "none";
+      window.setTimeout(function () {
+        tAnimating = false;
+        clearWv();
+      }, fadeInMs + 40);
+    }
+    if (wv) {
+      wv.style.transition = reduceMotion
+        ? "opacity 0.15s ease"
+        : "opacity " + fadeOutMs / 1000 + "s cubic-bezier(0.45, 0, 0.55, 1), filter " + fadeOutMs / 1000 + "s ease";
+      wv.style.opacity = "0.14";
+      wv.style.filter = reduceMotion ? "none" : "blur(3px)";
+    }
+    window.setTimeout(function () {
+      renderTriplet(target, true);
+      if (!wv) {
+        tAnimating = false;
+        return;
       }
-      function slideTo(ix, skipAnim) {
-        var n = tData.length;
-        if (n < 1) return;
-        if (skipAnim) {
-          tAnimating = false;
-          if (panorama) {
-            panorama.style.transition = "";
-            panorama.style.transform = "";
-          }
-          if (wheelViewport) {
-            wheelViewport.style.transition = "";
-            wheelViewport.style.opacity = "";
-            wheelViewport.style.filter = "";
-          }
-          renderTriplet(ix);
-          return;
-        }
-        if (tAnimating) return;
-        var target = ((ix % n) + n) % n;
-        if (target === tSlide) return;
-        tAnimating = true;
-        var wv = wheelViewport;
-        var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        var fadeOutMs = reduceMotion ? 120 : 520;
-        var fadeInMs = reduceMotion ? 160 : 720;
-        function clearWv() {
-          if (!wv) return;
-          wv.style.transition = "";
-          wv.style.opacity = "";
-          wv.style.filter = "";
-        }
-        function goIn() {
-          if (!wv) {
-            renderTriplet(target);
-            tAnimating = false;
-            return;
-          }
-          wv.style.transition = reduceMotion
-            ? "opacity 0.18s ease"
-            : "opacity " + fadeInMs / 1000 + "s cubic-bezier(0.22, 1, 0.36, 1), filter " + fadeInMs / 1000 + "s ease";
-          wv.style.opacity = "1";
-          wv.style.filter = "none";
-          window.setTimeout(function () {
-            tAnimating = false;
-            clearWv();
-          }, fadeInMs + 40);
-        }
-        if (wv) {
-          wv.style.transition = reduceMotion
-            ? "opacity 0.15s ease"
-            : "opacity " + fadeOutMs / 1000 + "s cubic-bezier(0.45, 0, 0.55, 1), filter " + fadeOutMs / 1000 + "s ease";
-          wv.style.opacity = "0.14";
-          wv.style.filter = reduceMotion ? "none" : "blur(3px)";
-        }
+      wv.style.transition = "none";
+      wv.style.opacity = "0";
+      wv.style.filter = reduceMotion ? "none" : "blur(4px)";
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(goIn);
+      });
+    }, fadeOutMs);
+  }
+
+  function nextSlide() {
+    slideTo(tSlide + 1, false);
+  }
+
+  var themeBtn = document.getElementById("pref-theme");
+  if (themeBtn) {
+    themeBtn.addEventListener("click", function () {
+      var cur = document.documentElement.getAttribute("data-theme") === "dark";
+      applyTheme(cur ? "light" : "dark");
+    });
+  }
+
+  var heLang = document.getElementById("pref-lang-he");
+  var enLang = document.getElementById("pref-lang-en");
+  if (heLang) heLang.addEventListener("click", function () { applyLang("he"); });
+  if (enLang) enLang.addEventListener("click", function () { applyLang("en"); });
+
+  var savedTheme = localStorage.getItem(STORAGE_THEME);
+  if (savedTheme === "dark" || savedTheme === "light") {
+    applyTheme(savedTheme);
+  } else {
+    applyTheme("dark");
+  }
+
+  var savedLang = localStorage.getItem(STORAGE_LANG);
+  applyLang(savedLang === "en" ? "en" : "he");
+
+  tTimer = window.setInterval(nextSlide, 3000);
+
+  var taReview = document.getElementById("t-review-text");
+  if (taReview) taReview.addEventListener("input", syncCarouselDemoFromTextarea);
+
+  var btnReview = document.getElementById("t-review-submit");
+  if (btnReview) {
+    btnReview.addEventListener("click", function () {
+      var ta = document.getElementById("t-review-text");
+      var fb = document.getElementById("t-review-feedback");
+      var d = getDict();
+      if (!ta || !ta.value.trim()) {
+        if (fb) fb.textContent = d.review_submit_need_text;
+        if (ta) ta.focus();
+        return;
+      }
+      if (fb) fb.textContent = d.review_submit_msg;
+    });
+  }
+
+  var ratingInput = document.getElementById("t-review-rating");
+  document.querySelectorAll(".t-review-star-btn").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var v = +b.getAttribute("data-value");
+      document.querySelectorAll(".t-review-star-btn").forEach(function (x) {
+        x.classList.toggle("is-on", +x.getAttribute("data-value") <= v);
+      });
+      if (ratingInput) ratingInput.value = String(v);
+    });
+  });
+
+  (function initScrollReveal() {
+    var nodes = [].slice.call(document.querySelectorAll("[data-reveal]"));
+    if (!nodes.length) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      nodes.forEach(function (el) {
+        el.classList.add("is-revealed");
+      });
+      return;
+    }
+    var revealIo = null;
+    function reveal(el) {
+      if (!el || el.classList.contains("is-revealed")) return;
+      if (revealIo) revealIo.unobserve(el);
+      el.classList.add("is-revealed");
+    }
+    function queueRevealInViewport() {
+      var vh = window.innerHeight || 800;
+      var margin = Math.min(140, Math.round(vh * 0.18));
+      var pending = [];
+      nodes.forEach(function (el) {
+        if (el.classList.contains("is-revealed")) return;
+        var r = el.getBoundingClientRect();
+        if (r.top < vh + margin && r.bottom > -margin) pending.push(el);
+      });
+      pending.forEach(function (el, i) {
         window.setTimeout(function () {
-          renderTriplet(target);
-          if (!wv) {
-            tAnimating = false;
-            return;
-          }
-          wv.style.transition = "none";
-          wv.style.opacity = "0";
-          wv.style.filter = reduceMotion ? "none" : "blur(4px)";
-          window.requestAnimationFrame(function () {
-            window.requestAnimationFrame(goIn);
-          });
-        }, fadeOutMs);
-      }
-      function nextSlide() {
-        slideTo(tSlide + 1, false);
-      }
-      if (dots) {
-        tData.forEach(function (_, ix) {
-          var b = document.createElement("button");
-          b.type = "button";
-          b.className = "t-carousel-dot";
-          b.setAttribute("aria-label", "המלצה " + (ix + 1));
-          b.addEventListener("click", function () {
-            if (tTimer) window.clearInterval(tTimer);
-            slideTo(ix, true);
-            tTimer = window.setInterval(nextSlide, 3000);
-          });
-          dots.appendChild(b);
-        });
-      }
-      renderTriplet(0);
-      tTimer = window.setInterval(nextSlide, 3000);
-      var ratingInput = document.getElementById("t-review-rating");
-      document.querySelectorAll(".t-review-star-btn").forEach(function (b) {
-        b.addEventListener("click", function () {
-          var v = +b.getAttribute("data-value");
-          document.querySelectorAll(".t-review-star-btn").forEach(function (x) {
-            x.classList.toggle("is-on", +x.getAttribute("data-value") <= v);
-          });
-          if (ratingInput) ratingInput.value = String(v);
-        });
+          reveal(el);
+        }, 70 * i);
       });
-    })();
+    }
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(queueRevealInViewport);
+    });
+    revealIo = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          var tgt = e.target;
+          if (tgt.classList.contains("is-revealed")) return;
+          window.setTimeout(function () {
+            reveal(tgt);
+          }, 32);
+        });
+      },
+      { root: null, rootMargin: "0px 0px 14% 0px", threshold: 0.03 }
+    );
+    nodes.forEach(function (el) {
+      revealIo.observe(el);
+    });
+    var resizeT = null;
+    window.addEventListener(
+      "resize",
+      function () {
+        if (resizeT) window.clearTimeout(resizeT);
+        resizeT = window.setTimeout(queueRevealInViewport, 120);
+      },
+      { passive: true }
+    );
+  })();
+})();
+
   </script>
 </body>
 </html>
