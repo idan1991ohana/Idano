@@ -30,8 +30,9 @@
       --max: 800px;
       --nav-rail-w: 184px;
       --side-rail-w: 0px;
-      --ease-spring: cubic-bezier(0.33, 1.24, 0.45, 1);
+      --ease-spring: cubic-bezier(0.28, 1.42, 0.32, 1);
       --ease-spring-soft: cubic-bezier(0.22, 1, 0.36, 1);
+      --reveal-bounce-dur: clamp(0.85s, 0.72s + 1.1vw, 1.08s);
       --ease-panel: cubic-bezier(0.34, 1.12, 0.48, 1);
       --motion-panel: clamp(0.38s, 0.32s + 0.6vw, 0.62s);
       --motion-reveal: clamp(0.52s, 0.45s + 0.8vw, 0.78s);
@@ -406,8 +407,8 @@
     }
     @media (min-width: 1080px) {
       .service-showcase {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        max-width: min(960px, 100%);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        max-width: min(900px, 100%);
       }
     }
     .service-hero-card {
@@ -503,8 +504,31 @@
       font-size: 0.72rem;
       line-height: 1;
     }
-    .about-body { max-width: 36rem; margin: 0 auto; text-align: center; }
-    .about-body .role { color: var(--accent-strong); font-weight: 600; margin: 0 0 10px; }
+    .about-body {
+      max-width: min(40rem, 100%);
+      margin: 0 auto;
+      padding-inline: 4px;
+    }
+    .about-heading {
+      margin: 0 0 18px;
+      font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+      font-weight: 800;
+      text-align: center;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .about-bio {
+      text-align: start;
+    }
+    .about-bio p {
+      margin: 0 0 14px;
+      font-size: clamp(0.88rem, 1.9vw, 0.98rem);
+      line-height: 1.65;
+      color: var(--text);
+    }
+    .about-bio p:last-child {
+      margin-bottom: 0;
+    }
     .contact-split { display: grid; gap: 18px; align-items: start; }
     @media (min-width: 768px) {
       .contact-split {
@@ -958,11 +982,17 @@
     @keyframes reveal-panel-pop {
       0% {
         opacity: 0;
-        transform: translateY(clamp(18px, 3.5vw, 40px)) scale(0.94);
+        transform: translateY(clamp(24px, 4.2vw, 52px)) scale(0.9);
       }
-      58% {
+      50% {
         opacity: 1;
-        transform: translateY(calc(-1 * clamp(4px, 0.8vw, 9px))) scale(1.012);
+        transform: translateY(calc(-1 * clamp(7px, 1.3vw, 16px))) scale(1.028);
+      }
+      72% {
+        transform: translateY(clamp(3px, 0.55vw, 7px)) scale(0.992);
+      }
+      88% {
+        transform: translateY(calc(-1 * clamp(2px, 0.35vw, 4px))) scale(1.006);
       }
       100% {
         opacity: 1;
@@ -972,18 +1002,20 @@
     @media (prefers-reduced-motion: no-preference) {
       [data-reveal]:not(.is-revealed) {
         opacity: 0;
-        transform: translateY(clamp(16px, 3vw, 36px)) scale(0.96);
+        transform: translateY(clamp(20px, 3.5vw, 44px)) scale(0.93);
         pointer-events: none;
+        will-change: transform, opacity;
       }
       [data-reveal].is-revealed {
-        animation: reveal-panel-pop 0.78s var(--ease-spring) both;
+        animation: reveal-panel-pop var(--reveal-bounce-dur) var(--ease-spring) both;
         pointer-events: auto;
+        will-change: auto;
       }
       .service-hero-card.is-revealed,
       .contact-form-wrap.is-revealed,
       .contact-channel.is-revealed,
       .t-review-box.is-revealed {
-        transition: transform 0.5s var(--ease-panel), box-shadow 0.5s var(--ease-spring-soft), border-color 0.35s ease;
+        transition: transform 0.55s var(--ease-spring), box-shadow 0.55s var(--ease-spring-soft), border-color 0.35s ease;
       }
     }
     /* בועות סמכויות — שורה מתחת לכותרת «השירותים שלי», כחול כהה זוהר */
@@ -1302,7 +1334,7 @@
       <section id="top" class="hero" aria-labelledby="hero-title">
         <div class="hero-inner" data-reveal>
           <div class="hero-photo-layer" id="hero-profile-layer">
-            <img src="profile.jpg" alt="" class="hero-bg-profile" id="hero-profile-img" width="400" height="400" decoding="async" data-i18n-alt="hero_img_alt"
+            <img src="profile.jpg?v=2026041912" alt="" class="hero-bg-profile" id="hero-profile-img" width="400" height="400" loading="eager" decoding="async" fetchpriority="high" data-i18n-alt="hero_img_alt"
               onerror="document.getElementById('hero-profile-layer').classList.add('no-img')">
           </div>
           <div class="hero-copy">
@@ -1370,22 +1402,7 @@
           <div class="service-showcase" id="service-showcase-el" aria-label="">
             <article class="service-hero-card" data-reveal>
               <div class="service-hero-card__visual">
-                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="eager" decoding="async" fetchpriority="high">
-              </div>
-              <div class="service-hero-card__body">
-                <span class="service-hero-card__icon" aria-hidden="true">📊</span>
-                <h3><span data-i18n="svc1_h3">ניהול ודיווח דיגיטלי</span></h3>
-                <p><span data-i18n="svc1_p">סידור קבצים, דשבורדים ותהליכי עבודה במחשב — כדי שתדע בכל רגע איפה אתה עומד ומה הצעד הבא.</span></p>
-                <ul class="service-hero-card__tags">
-                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc1_t1">Office ו־Excel</span></li>
-                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc1_t2">ארגון מסמכים</span></li>
-                  <li class="service-hero-card__tag"><span class="service-hero-card__check" aria-hidden="true">✓</span> <span data-i18n="svc1_t3">קבצים בענן</span></li>
-                </ul>
-              </div>
-            </article>
-            <article class="service-hero-card" data-reveal>
-              <div class="service-hero-card__visual">
-                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="lazy" decoding="async">
+                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&amp;fit=crop&amp;w=960&amp;q=85" alt="" width="960" height="600" loading="eager" decoding="async" fetchpriority="high">
               </div>
               <div class="service-hero-card__body">
                 <span class="service-hero-card__icon" aria-hidden="true">🗄️</span>
@@ -1467,10 +1484,16 @@
           </div>
         </div>
       </section>
-      <section id="about" class="section" style="background:var(--surface-alt)">
-        <div class="section-inner about-body" data-reveal>
-          <p class="role" data-i18n="about_role">פתרונות מחשוב מקצועיים</p>
-          <p data-i18n="about_p">תיקון מחשבים, תמיכה, רשתות וגיבוי — לפרטיים ולעסקים קטנים. שירות אישי ובשפה פשוטה.</p>
+      <section id="about" class="section" style="background:var(--surface-alt)" aria-labelledby="about-h2" data-reveal>
+        <div class="section-inner about-body">
+          <h2 id="about-h2" class="about-heading" data-i18n="about_title">קצת עליי</h2>
+          <div class="about-bio">
+            <p data-i18n="about_p1">טכנאי מחשבים בן 35 עם מעל 10 שנות ניסיון בתחום ה־IT וניסיון רחב בעבודה עם עסקים ולקוחות פרטיים.</p>
+            <p data-i18n="about_p2">מתמחה בפתרון תקלות מורכבות, בניהול ותחזוקת רשתות, שרתים ועמדות קצה — תוך דגש על עבודה יסודית ויעילה.</p>
+            <p data-i18n="about_p3">בעל ניסיון בהקמה ושדרוג מערכות מחשוב, בהתקנות תוכנה וחומרה, ובאופטימיזציה לשיפור ביצועים ויציבות.</p>
+            <p data-i18n="about_p4">נותן שירות מקצועי, אמין ומהיר, עם יחס אישי, זמינות גבוהה וליווי מלא עד לפתרון מלא של כל תקלה.</p>
+            <p data-i18n="about_p5">שמים דגש על שקיפות מול הלקוח, הסברים ברורים ושירות שמייצר שקט וביטחון לאורך זמן.</p>
+          </div>
         </div>
       </section>
       <section id="contact" class="section contact-section">
@@ -1512,13 +1535,13 @@
         </div>
       </section>
     </main>
-    <footer class="site-footer">
+    <footer class="site-footer" data-reveal>
       <div class="footer-inner">
-        <div class="footer-col" data-reveal><h4 data-i18n="foot_brand">עידן</h4><p style="margin:0;font-size:0.82rem" data-i18n="foot_tagline">פתרונות מחשוב מקצועיים</p></div>
-        <div class="footer-col" data-reveal><h4 data-i18n="foot_nav_h">ניווט</h4><ul>
+        <div class="footer-col"><h4 data-i18n="foot_brand">עידן</h4><p style="margin:0;font-size:0.82rem" data-i18n="foot_tagline">פתרונות מחשוב מקצועיים</p></div>
+        <div class="footer-col"><h4 data-i18n="foot_nav_h">ניווט</h4><ul>
           <li><a href="#top" data-i18n="nav_home">דף הבית</a></li><li><a href="#services" data-i18n="nav_services">שירותים</a></li><li><a href="#about" data-i18n="nav_about">אודות</a></li><li><a href="#contact" data-i18n="nav_contact">צור קשר</a></li>
         </ul></div>
-        <div class="footer-col" data-reveal><h4 data-i18n="foot_contact_h">יצירת קשר</h4><p style="margin:0;font-size:0.88rem"><a href="tel:+972544549014" style="color:#94a3b8">054-454-9014</a></p></div>
+        <div class="footer-col"><h4 data-i18n="foot_contact_h">יצירת קשר</h4><p style="margin:0;font-size:0.88rem"><a href="tel:+972544549014" style="color:#94a3b8">054-454-9014</a></p></div>
       </div>
       <p class="footer-bottom">© <span id="y"></span> <span data-i18n="foot_copy">עידן · פתרונות מחשוב מקצועיים</span></p>
     </footer>
@@ -1585,11 +1608,6 @@
       mobile_lab_prices_h: "מעבדה ומחירונים",
       hero_img_alt: "תמונת פרופיל — עידן אוחנה",
       services_aria: "שירותים",
-      svc1_h3: "ניהול ודיווח דיגיטלי",
-      svc1_p: "סידור קבצים, דשבורדים ותהליכי עבודה במחשב — כדי שתדע בכל רגע איפה אתה עומד ומה הצעד הבא.",
-      svc1_t1: "Office ו־Excel",
-      svc1_t2: "ארגון מסמכים",
-      svc1_t3: "קבצים בענן",
       svc2_h3: "תקלות תקשורת",
       svc2_p: "איבוד חיבור, WiFi לא יציב או איטיות ברשת — אבחון ותיקון בנתבים, במתגים ובכבילה עד שהתקשורת חוזרת לעבוד חלק.",
       svc2_t1: "WiFi ונתבים",
@@ -1627,8 +1645,12 @@
       star_aria_3: "כוכב 3 מתוך 5",
       star_aria_4: "כוכב 4 מתוך 5",
       star_aria_5: "כוכב 5 מתוך 5",
-      about_role: "פתרונות מחשוב מקצועיים",
-      about_p: "תיקון מחשבים, תמיכה, רשתות וגיבוי — לפרטיים ולעסקים קטנים. שירות אישי ובשפה פשוטה.",
+      about_title: "קצת עליי",
+      about_p1: "טכנאי מחשבים בן 35 עם מעל 10 שנות ניסיון בתחום ה־IT וניסיון רחב בעבודה עם עסקים ולקוחות פרטיים.",
+      about_p2: "מתמחה בפתרון תקלות מורכבות, בניהול ותחזוקת רשתות, שרתים ועמדות קצה — תוך דגש על עבודה יסודית ויעילה.",
+      about_p3: "בעל ניסיון בהקמה ושדרוג מערכות מחשוב, בהתקנות תוכנה וחומרה, ובאופטימיזציה לשיפור ביצועים ויציבות.",
+      about_p4: "נותן שירות מקצועי, אמין ומהיר, עם יחס אישי, זמינות גבוהה וליווי מלא עד לפתרון מלא של כל תקלה.",
+      about_p5: "שמים דגש על שקיפות מול הלקוח, הסברים ברורים ושירות שמייצר שקט וביטחון לאורך זמן.",
       contact_h2: "צור קשר",
       contact_form_h3: "טופס פנייה",
       contact_form_note: "טופס הדגמה (האתר סטטי). לתיאום — טלפון או וואטסאפ.",
@@ -1707,11 +1729,6 @@
       mobile_lab_prices_h: "Lab and prices",
       hero_img_alt: "Profile photo — Idan Ohana",
       services_aria: "Services",
-      svc1_h3: "Digital filing and reporting",
-      svc1_p: "Files, dashboards and workflows on your computer — so you always know where you stand and the next step.",
-      svc1_t1: "Office and Excel",
-      svc1_t2: "Document organization",
-      svc1_t3: "Cloud files",
       svc2_h3: "Connectivity issues",
       svc2_p: "Dropped connection, unstable WiFi or slow network — troubleshooting routers, switches and cabling until everything runs smoothly.",
       svc2_t1: "WiFi and routers",
@@ -1749,8 +1766,12 @@
       star_aria_3: "Star 3 of 5",
       star_aria_4: "Star 4 of 5",
       star_aria_5: "Star 5 of 5",
-      about_role: "Professional IT solutions",
-      about_p: "Computer repair, support, networking and backup — for individuals and small businesses. Personal service in plain language.",
+      about_title: "A little about me",
+      about_p1: "I’m a computer technician, 35, with over 10 years in IT and broad experience with businesses and private clients.",
+      about_p2: "I focus on complex troubleshooting, managing and maintaining networks, servers and endpoints — with an emphasis on thorough, efficient work.",
+      about_p3: "Experienced in deploying and upgrading IT systems, software and hardware installations, and performance and stability tuning.",
+      about_p4: "I provide professional, reliable and fast service, with a personal touch, high availability and full support until every issue is fully resolved.",
+      about_p5: "I emphasize transparency with clients, clear explanations, and service that brings long-term peace of mind.",
       contact_h2: "Contact",
       contact_form_h3: "Contact form",
       contact_form_note: "Demo form (static site). To schedule — phone or WhatsApp.",
@@ -2100,7 +2121,7 @@
       b.addEventListener("click", function () {
         if (tTimer) window.clearInterval(tTimer);
         slideTo(ix, true);
-        tTimer = window.setInterval(nextSlide, 3000);
+        tTimer = window.setInterval(nextSlide, 5000);
       });
       dots.appendChild(b);
     });
@@ -2115,7 +2136,7 @@
     tSlide = 0;
     rebuildCarouselDots();
     renderTriplet(0, true);
-    tTimer = window.setInterval(nextSlide, 3000);
+    tTimer = window.setInterval(nextSlide, 5000);
   }
 
   function slideTo(ix, skipAnim) {
@@ -2215,7 +2236,7 @@
   var savedLang = localStorage.getItem(STORAGE_LANG);
   applyLang(savedLang === "en" ? "en" : "he");
 
-  tTimer = window.setInterval(nextSlide, 3000);
+  tTimer = window.setInterval(nextSlide, 5000);
 
   var taReview = document.getElementById("t-review-text");
   if (taReview) taReview.addEventListener("input", syncCarouselDemoFromTextarea);
@@ -2273,7 +2294,7 @@
       pending.forEach(function (el, i) {
         window.setTimeout(function () {
           reveal(el);
-        }, 70 * i);
+        }, 48 + i * 54);
       });
     }
     window.requestAnimationFrame(function () {
@@ -2281,16 +2302,17 @@
     });
     revealIo = new IntersectionObserver(
       function (entries) {
-        entries.forEach(function (e) {
-          if (!e.isIntersecting) return;
+        var batch = entries.filter(function (e) {
+          return e.isIntersecting && e.target && !e.target.classList.contains("is-revealed");
+        });
+        batch.forEach(function (e, i) {
           var tgt = e.target;
-          if (tgt.classList.contains("is-revealed")) return;
           window.setTimeout(function () {
             reveal(tgt);
-          }, 32);
+          }, 36 + i * 50);
         });
       },
-      { root: null, rootMargin: "0px 0px 14% 0px", threshold: 0.03 }
+      { root: null, rootMargin: "0px 0px 26% 0px", threshold: 0.04 }
     );
     nodes.forEach(function (el) {
       revealIo.observe(el);
